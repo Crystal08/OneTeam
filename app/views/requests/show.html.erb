@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Employee:</b>
+  <%= @request.employee_id %>
+</p>
+
+<p>
+  <b>Task:</b>
+  <%= @request.task %>
+</p>
+
+<p>
+  <b>Skills needed:</b>
+  <%= @request.skills_needed %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @request.location %>
+</p>
+
+<p>
+  <b>Dates:</b>
+  <%= @request.dates %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%= @request.group %>
+</p>
+
+<p>
+  <b>Lead:</b>
+  <%= @request.lead %>
+</p>
+
+<p>
+  <b>Contact:</b>
+  <%= @request.contact %>
+</p>
+
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>

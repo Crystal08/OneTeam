@@ -6,8 +6,6 @@ OneTeam::Application.routes.draw do
 
   resources :employees
 
-  resources :requests
 
-  resources :responses
 
 end
