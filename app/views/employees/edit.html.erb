@@ -1,6 +1,8 @@
-<h1>Editing employee</h1>
+<h1>Editing account</h1>
 
 <%= render 'form' %>
-
+<%= form_for(@employee) do |f| %>
+<%= f.submit "Edit my account", class: "btn btn-large btn-primary" %>
+<% end %>
 <%= link_to 'Show', @employee %> |
 <%= link_to 'Back', employees_path %>
