@@ -10,4 +10,10 @@ OneTeam::Application.routes.draw do
 
   resources :responses
 
+  resources :sessions, only: [:new, :create, :destroy]
+
+  match '/signup', to: 'employees#new'
+  match '/signin', to: 'sessions#new'
+  match '/signout', to: 'sessions#destroy', via: :delete
+
 end

@@ -1,9 +1,7 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @employee.name %>
-</p>
+<% provide(:title, @employee.name) %>
+<h1><%= @employee.name %></h1>
 
 <p>
   <b>Years with company:</b>
