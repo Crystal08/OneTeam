@@ -42,12 +42,16 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(params[:employee])
 
-    if @employee.save
-      sign_in @employee
-      flash[:success] = "Welcome to OneTeam!"
-      redirect_to @employee
-    else
-      render 'new'
+    respond_to do |format|
+      if @employee.save
+	sign_in @employee
+	flash[:success] = "Welcome to OneTeam!"
+        redirect_to @employee
+        format.json { render json: @employee, status: :created, location: @employee }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      end
     end
   end
 

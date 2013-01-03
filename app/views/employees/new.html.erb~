@@ -1,0 +1,18 @@
+<div class="span6 offset3">
+  <% provide(:title, 'Sign up') %>
+  <h1>Sign up</h1>
+</div>
+
+<%= form_for(@employee) do |f| %>
+	
+  <%= render 'form' %>
+  
+  <div class="row">
+    <div class="span6 offset3">
+      <%= f.submit "Create my OneTeam account", class: "btn btn-large btn-primary" %>
+    </div>
+  </div>
+
+<% end %>
+
+<%= link_to 'Back', signin_path %>

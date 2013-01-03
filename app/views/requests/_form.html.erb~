@@ -1,0 +1,50 @@
+<%= form_for(@request) do |f| %>
+  <% if @request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% @request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :employee_id %><br />
+    <%= f.number_field :employee_id %>
+  </div>
+  <div class="field">
+    <%= f.label :task %><br />
+    <%= f.text_field :task %>
+  </div>
+  <div class="field">
+    <%= f.label :skills_needed %><br />
+    <%= f.text_field :skills_needed %>
+  </div>
+  <div class="field">
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </div>
+  <div class="field">
+    <%= f.label :dates %><br />
+    <%= f.text_field :dates %>
+  </div>
+  <div class="field">
+    <%= f.label :group %><br />
+    <%= f.text_field :group %>
+  </div>
+  <div class="field">
+    <%= f.label :lead %><br />
+    <%= f.text_field :lead %>
+  </div>
+  <div class="field">
+    <%= f.label :contact %><br />
+    <%= f.text_field :contact %>
+  </div>
+  <div class="btn btn-large btn-primary">	  
+    <%= f.submit "Create Request" %>
+  </div>
+<% end %>
+
