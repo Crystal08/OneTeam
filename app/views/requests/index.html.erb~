@@ -1,4 +1,5 @@
-<h1>Listing requests</h1>
+<% provide(:title, 'Current Requests') %>
+<h1>Current requests</h1>
 
 <table>
   <tr>
@@ -32,6 +33,8 @@
   </tr>
 <% end %>
 </table>
+
+<%= will_paginate @requests %>
 
 <br />
 

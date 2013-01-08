@@ -1,4 +1,20 @@
 <% provide(:title, "Sign in") %>
+<% if signed_in? %>
+	
+<div class="span6 offset3">
+  <h1>Sign out</h1></br>
+</div> 
+
+<div class="row">
+  <div class="span6 offset3">
+	  <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-large btn-primary" %>
+          </br>
+	  <p>Not done yet? <%= link_to "Keep going!", requests_path %></p>
+  </div>
+</div>
+
+<% else %>
+
 <div class="span6 offset3">
   <h1>Sign in</h1>
 </div>  
@@ -20,6 +36,5 @@
 	  <p>New to OneTeam? <%= link_to "Sign up now!", signup_path %></p>
   </div>
 </div>
-
-
+<% end %>
 

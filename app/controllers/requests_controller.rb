@@ -1,8 +1,8 @@
 class RequestsController < ApplicationController
-  # GET /requests
-  # GET /requests.json
+  before_filter :signed_in_employee
+
   def index
-    @requests = Request.all
+    @requests = Request.paginate :page => params[:page], :per_page => 10
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +10,6 @@ class RequestsController < ApplicationController
     end
   end
 
-  # GET /requests/1
-  # GET /requests/1.json
   def show
     @request = Request.find(params[:id])
 
@@ -21,8 +19,6 @@ class RequestsController < ApplicationController
     end
   end
 
-  # GET /requests/new
-  # GET /requests/new.json
   def new
     @request = Request.new
 
@@ -32,13 +28,10 @@ class RequestsController < ApplicationController
     end
   end
 
-  # GET /requests/1/edit
   def edit
     @request = Request.find(params[:id])
   end
 
-  # POST /requests
-  # POST /requests.json
   def create
     @request = Request.new(params[:request])
 
@@ -53,8 +46,6 @@ class RequestsController < ApplicationController
     end
   end
 
-  # PUT /requests/1
-  # PUT /requests/1.json
   def update
     @request = Request.find(params[:id])
 
@@ -69,8 +60,6 @@ class RequestsController < ApplicationController
     end
   end
 
-  # DELETE /requests/1
-  # DELETE /requests/1.json
   def destroy
     @request = Request.find(params[:id])
     @request.destroy
@@ -81,3 +70,4 @@ class RequestsController < ApplicationController
     end
   end
 end
+

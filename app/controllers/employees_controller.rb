@@ -1,8 +1,9 @@
 class EmployeesController < ApplicationController
-  # GET /employees
-  # GET /employees.json
+  before_filter :signed_in_employee, only: [:index, :show, :edit, :update, :destroy]
+  before_filter :correct_user, only: [:edit, :update, :destroy]
+ 
   def index
-    @employees = Employee.all
+    @employees = Employee.paginate :page => params[:page], :per_page => 10
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,8 +11,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # GET /employees/1
-  # GET /employees/1.json
   def show
     @employee = Employee.find(params[:id])
 
@@ -21,8 +20,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # GET /employees/new
-  # GET /employees/new.json
   def new
     @employee = Employee.new
 
@@ -32,13 +29,10 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # GET /employees/1/edit
   def edit
     @employee = Employee.find(params[:id])
   end
 
-  # POST /employees
-  # POST /employees.json
   def create
     @employee = Employee.new(params[:employee])
 
@@ -51,8 +45,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # PUT /employees/1
-  # PUT /employees/1.json
   def update
     @employee = Employee.find(params[:id])
 
@@ -67,8 +59,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  # DELETE /employees/1
-  # DELETE /employees/1.json
   def destroy
     @employee = Employee.find(params[:id])
     @employee.destroy
@@ -78,4 +68,11 @@ class EmployeesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+    def correct_user
+      @employee = Employee.find(params[:id])
+      redirect_to(root_path) unless current_employee?(@employee)
+    end      
 end

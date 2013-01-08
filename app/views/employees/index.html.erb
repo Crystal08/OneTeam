@@ -1,4 +1,5 @@
-<h1>Listing employees</h1>
+<% provide(:title, 'All Employees') %>
+<h1>Employees</h1>
 
 <table>
   <tr>
@@ -29,10 +30,15 @@
     <td><%= employee.skills_interested_in %></td>
     <td><%= link_to 'Show', employee %></td>
     <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-    <td><%= link_to 'Destroy', employee, confirm: 'Are you sure?', method: :delete %></td>
+      <% if current_employee.admin? && !current_employee?(employee) %>
+	    <td><%= link_to 'Delete', employee, method: :delete,
+		  data: { confirm: "Are you sure?" } %></td>
+      <% end %>
   </tr>
 <% end %>
 </table>
+
+<%= will_paginate @employees %>
 
 <br />
 

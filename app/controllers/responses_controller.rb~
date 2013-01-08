@@ -1,8 +1,9 @@
 class ResponsesController < ApplicationController
+  before_filter :signed_in_employee
   
   def index
     @request = Request.find_by_id(params[:request_id])
-    @responses = Response.all
+    @response = Response.paginate :page => params[:page], :per_page => 10
 
     respond_to do |format|
       format.html 
@@ -42,7 +43,8 @@ class ResponsesController < ApplicationController
   def create
     @request = Request.find_by_id(params[:request_id])
     @response = @request.responses.build(params[:response])
-
+    @response.current_employee = Employee.find_by_id(params[:employee_id])
+   
     respond_to do |format|
       if @response.save
         format.html { redirect_to request_response_path(@request,@response), notice: 'Response was successfully created.' }
@@ -69,7 +71,6 @@ class ResponsesController < ApplicationController
       end
     end
   end
-
  
   def destroy
     @response = Response.find(params[:id])
