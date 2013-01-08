@@ -1,5 +1,5 @@
 <div class="span6 offset3">
-  <h1>Editing account</h1>
+  <h1>Edit account</h1>
 </div>
 
 <% if @employee.errors.any? %>
@@ -17,10 +17,16 @@
 <%= form_for(@employee) do |f| %>
 	  
   <%= render 'form', :f => f %> </br>
+      
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+  
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
   
   <div class="row">
     <div class="span6 offset3">
-    <%= f.submit "Edit my account", class: "btn btn-large btn-primary" %>
+    <%= f.submit "Edit my OneTeam account", class: "btn btn-large btn-primary" %>
     </div>
   </div>
 

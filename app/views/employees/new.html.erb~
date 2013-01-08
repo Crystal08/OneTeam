@@ -4,14 +4,20 @@
 </div>
 
 <%= form_for(@employee) do |f| %>
-	
-  <%= render 'form' %>
-  
-  <div class="row">
+	  
+    <%= render 'form', :f => f %> </br>
+     
+ 
     <div class="span6 offset3">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  
+    <%= f.label :password_confirmation, "Confirmation" %>
+    <%= f.password_field :password_confirmation %>
+ 
       <%= f.submit "Create my OneTeam account", class: "btn btn-large btn-primary" %>
     </div>
-  </div>
+  
 
 <% end %>
 

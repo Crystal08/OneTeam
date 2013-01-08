@@ -7,9 +7,6 @@ class Employee < ActiveRecord::Base
 
   before_save :create_remember_token
 
-  validates :name, presence: true, length: { maximum: 50 }
-  validates :password_confirmation, presence: true
-
  private
 
     def create_remember_token

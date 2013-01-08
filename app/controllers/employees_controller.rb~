@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_filter :signed_in_user, only: [:index, :show, :edit, :update, :destroy]
+  before_filter :signed_in_employee, only: [:index, :show, :edit, :update, :destroy]
   before_filter :correct_user, only: [:edit, :update, :destroy]
  
   def index
@@ -70,10 +70,6 @@ class EmployeesController < ApplicationController
   end
 
   private
-
-    def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
-    end
 
     def correct_user
       @employee = Employee.find(params[:id])
