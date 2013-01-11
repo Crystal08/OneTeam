@@ -3,7 +3,7 @@ class Employee < ActiveRecord::Base
   has_secure_password
 
   has_many :requests
-  has_many :responses
+  has_many :responses, dependent: :destroy
 
   before_save :create_remember_token
 

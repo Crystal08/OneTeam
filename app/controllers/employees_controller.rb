@@ -47,16 +47,16 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-
-    respond_to do |format|
+ 
       if @employee.update_attributes(params[:employee])
-        format.html { redirect_to @employee, notice: 'Account was successfully updated.' }
-        format.json { head :no_content }
+      flash[:success] = "Account was successfully updated."
+      sign_in @employee
+      redirect_to @employee
+        
       else
-        format.html { render action: "edit" }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      render 'edit'
+     
       end
-    end
   end
 
   def destroy

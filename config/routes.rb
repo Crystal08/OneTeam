@@ -14,6 +14,7 @@ OneTeam::Application.routes.draw do
 
   root :to => 'requests#index'
 
+  match '/employees/:employee_id/requests', to: 'requests#index'
   match '/signup', to: 'employees#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

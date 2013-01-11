@@ -1,73 +1,60 @@
 class RequestsController < ApplicationController
   before_filter :signed_in_employee
+  before_filter :correct_employee, only: [:edit, :update, :destroy]
 
   def index
     @requests = Request.paginate :page => params[:page], :per_page => 10
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @requests }
+    
+    if signed_in?
+      Request.where("employee_id = ?", id)  
+    else  
+      render 'index'
     end
-  end
+  end  
 
   def show
     @request = Request.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @request }
-    end
+    render 'show'
   end
 
   def new
     @request = Request.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @request }
-    end
+    render 'new'
   end
 
   def edit
-    @request = Request.find(params[:id])
   end
 
   def create
-    @request = Request.new(params[:request])
+    @request = current_employee.requests.build(params[:request]) 
 
-    respond_to do |format|
-      if @request.save
-        format.html { redirect_to @request, notice: 'Request was successfully created.' }
-        format.json { render json: @request, status: :created, location: @request }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
-      end
+    if @request.save
+      flash[:success] = "Request was successfully created."
+      redirect_to root_url
+    else
+      render 'new'     
     end
   end
 
   def update
-    @request = Request.find(params[:id])
-
-    respond_to do |format|
-      if @request.update_attributes(params[:request])
-        format.html { redirect_to @request, notice: 'Request was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
-      end
+    
+    if @request.update_attributes(params[:request])
+      flash[:success] = "Request was successfully updated."
+    else
+      render 'edit'
     end
   end
 
   def destroy
-    @request = Request.find(params[:id])
     @request.destroy
-
-    respond_to do |format|
-      format.html { redirect_to requests_url }
-      format.json { head :no_content }
-    end
+    redirect_to root_url
   end
+
+  private
+
+    def correct_employee
+      @request = current_employee.requests.find_by_id(params[:id])
+      redirect_to root_url if @request.nil?
+    end  
 end
 

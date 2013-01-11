@@ -44,7 +44,7 @@
     <%= f.text_field :contact %>
   </div>
   <div class="btn btn-large btn-primary">	  
-    <%= f.submit "Create Request" %>
+    <%= f.submit %>
   </div>
 <% end %>
 
