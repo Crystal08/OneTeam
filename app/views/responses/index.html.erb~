@@ -13,7 +13,7 @@
 
 <% @response.each do |response| %>
   <tr>
-    <td><%= request.response_id %></td>	  
+    <td><%= response.id %></td>	  
     <td><%= response.request_id %></td>
     <td><%= response.employee_id %></td>
     <td><%= response.comments %></td>

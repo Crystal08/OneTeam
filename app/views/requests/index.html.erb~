@@ -1,10 +1,11 @@
-<% provide(:title, 'Current Requests') %>
+<% provide(:title, 'All Requests') %>
 <h1>All requests</h1>
 
 <table>
   <tr>
-    <th>Employee</th>
-    <th>Task</th>
+    <th>Request</th>
+    <th>Posted by</th>
+    <th>Description</th>
     <th>Skills needed</th>
     <th>Location</th>
     <th>Dates</th>
@@ -18,7 +19,8 @@
 
 <% @requests.each do |request| %>
   <tr>
-    <td><%= request.employee_id %></td>
+    <td><%= request.id %></td>
+    <td><%= Employee.find(params[:employee_id]) %></td>
     <td><%= request.task %></td>
     <td><%= request.skills_needed %></td>
     <td><%= request.location %></td>
@@ -39,3 +41,4 @@
 <br />
 
 <%= link_to 'New Request', new_request_path %>
+

@@ -5,9 +5,10 @@ class RequestsController < ApplicationController
   def index
     if params[:employee_id]
       @my_requests = Request.where("employee_id = ?", params[:employee_id])
-      @requests = @my_requests.paginate :page => params[:page], :per_page => 10  
+      @requests = @my_requests.paginate :page => params[:page], :per_page => 10 
+      render 'my_requests' 
     else 
-      @requests = Request.paginate :page => params[:page], :per_page => 10	 
+      @requests = Request.paginate :page => params[:page], :per_page => 10   
     end
   end  
 
