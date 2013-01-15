@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     employee = Employee.find_by_name(params[:session][:name])
     if employee && employee.authenticate(params[:session][:password])
       sign_in employee
-      redirect_to employee
+      redirect_to root_url
     else
       flash.now[:error] = 'Invalid email/password combination'
       render 'new'

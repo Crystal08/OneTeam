@@ -3,12 +3,11 @@ class RequestsController < ApplicationController
   before_filter :correct_employee, only: [:edit, :update, :destroy]
 
   def index
-    @requests = Request.paginate :page => params[:page], :per_page => 10
-    
-    if signed_in?
-      Request.where("employee_id = ?", id)  
-    else  
-      render 'index'
+    if params[:employee_id]
+      @my_requests = Request.where("employee_id = ?", params[:employee_id])
+      @requests = @my_requests.paginate :page => params[:page], :per_page => 10  
+    else 
+      @requests = Request.paginate :page => params[:page], :per_page => 10	 
     end
   end  
 

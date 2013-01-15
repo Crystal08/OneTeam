@@ -77,7 +77,7 @@ class ResponsesController < ApplicationController
     @response.destroy
 
     respond_to do |format|
-      format.html { redirect_to responses_url }
+      format.html { redirect_to request_responses_url }
       format.json { head :no_content }
     end
   end
