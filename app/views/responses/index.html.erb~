@@ -1,10 +1,9 @@
-<h1>Listing responses</h1>
-
+<h1>Responses</h1> 
+(Request <%= params[:request_id] %>)
 <table>
-  <tr>
-    <th>Response</th>	 
-    <th>Request</th>
-    <th>Employee</th>
+  <tr>	 
+    <th>Response</th>
+    <th>Posted by</th>
     <th>Comments</th>
     <th></th>
     <th></th>
@@ -12,14 +11,12 @@
   </tr>
 
 <% @response.each do |response| %>
-  <tr>
-    <td><%= response.id %></td>	  
-    <td><%= response.request_id %></td>
-    <td><%= response.employee_id %></td>
+  <tr>  
+    <td><%= response.id %></td>
+    <td><%= link_to response.employee_name, employee_path(response.employee_id)%></td>
     <td><%= response.comments %></td>
     <td><%= link_to 'Show', request_response_path(@request,response) %></td>    
-    <td><%= link_to 'Edit', edit_request_response_path(@request, response
-						      ) %></td>
+    <td><%= link_to 'Edit', edit_request_response_path(@request, response) %></td>
     <td><%= link_to 'Destroy', [@request,response], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
