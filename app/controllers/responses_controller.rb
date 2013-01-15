@@ -3,12 +3,7 @@ class ResponsesController < ApplicationController
   
   def index
     @request = Request.find_by_id(params[:request_id])
-    @response = Response.paginate :page => params[:page], :per_page => 10
-
-    respond_to do |format|
-      format.html 
-      format.json { render json: @responses }
-    end
+    @response = @request.responses.paginate :page => params[:page], :per_page => 10
   end
 
 

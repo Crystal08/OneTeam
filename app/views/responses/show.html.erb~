@@ -1,5 +1,3 @@
-
-
 <p>
   <b>Request:</b>
   <%= @response.request_id %>

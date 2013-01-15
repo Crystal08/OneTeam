@@ -1,6 +1,5 @@
-
 <% provide(:title, 'Current Requests') %>
-<h1>Current requests</h1>
+<h1>All requests</h1>
 
 <table>
   <tr>
