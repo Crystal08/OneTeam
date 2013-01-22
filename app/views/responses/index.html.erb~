@@ -1,21 +1,23 @@
 <h1>Responses</h1> 
-to Request <%= params[:request_id] %>
+(Request <%= params[:request_id] %>)
 <table>
   <tr>	 
     <th>Response</th>
     <th>Posted by</th>
     <th>Comments</th>
-    <th>Choose One:</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
 <% @response.each do |response| %>
   <tr>  
     <td><%= response.id %></td>
-    <td><%= link_to  Employee.find(response.employee_id).name, 
-	    employee_path(response.employee_id)%></td>
+    <td><%= link_to response.employee_name, employee_path(response.employee_id)%></td>
     <td><%= response.comments %></td>
-    <td><%= link_to 'Select this developer?', 
-	    response_selected_employee_path(response.id,@selected_employee)%></td>
+    <td><%= link_to 'Show', request_response_path(@request,response) %></td>    
+    <td><%= link_to 'Edit', edit_request_response_path(@request, response) %></td>
+    <td><%= link_to 'Destroy', [@request,response], method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>

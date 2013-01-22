@@ -4,7 +4,6 @@ class Employee < ActiveRecord::Base
 
   has_many :requests
   has_many :responses, :dependent => :destroy
-  has_many :selected_employees
 
   before_save :create_remember_token
 

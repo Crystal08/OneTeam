@@ -22,6 +22,11 @@ class EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @employee }
+    end
   end
 
   def edit

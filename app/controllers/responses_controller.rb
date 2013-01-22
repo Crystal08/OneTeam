@@ -10,12 +10,22 @@ class ResponsesController < ApplicationController
   def show
     @request = Request.find_by_id(params[:request_id])   
     @response = Response.find(params[:id])
+
+    respond_to do |format|
+      format.html 
+      format.json { render json: @response }
+    end
   end
 
  
   def new
     @request = Request.find_by_id(params[:request_id])
     @response = @request.responses.build
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @response }
+    end
   end
 
 
