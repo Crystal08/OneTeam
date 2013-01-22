@@ -1,0 +1,45 @@
+<% provide(:title, 'All Employees') %>
+<h1>All employees</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Years with company</th>
+    <th>Manager</th>
+    <th>Position</th>
+    <th>Department</th>
+    <th>Group</th>
+    <th>Location</th>
+    <th>Current skills</th>
+    <th>Skills interested in</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @employees.each do |employee| %>
+  <tr>
+    <td><%= employee.name %></td>
+    <td><%= employee.years_with_company %></td>
+    <td><%= employee.manager %></td>
+    <td><%= employee.position %></td>
+    <td><%= employee.department %></td>
+    <td><%= employee.group %></td>
+    <td><%= employee.location %></td>
+    <td><%= employee.current_skills %></td>
+    <td><%= employee.skills_interested_in %></td>
+    <td><%= link_to 'Show', employee %></td>
+    <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+      <% if current_employee.admin? && !current_employee?(employee) %>
+	    <td><%= link_to 'Delete', employee, method: :delete,
+		  data: { confirm: "Are you sure?" } %></td>
+      <% end %>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @employees %>
+
+<br />
+
+<%= link_to 'New Employee', new_employee_path %>
