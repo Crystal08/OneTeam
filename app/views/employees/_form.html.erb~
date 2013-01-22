@@ -40,12 +40,6 @@
       <%= f.label :skills_interested_in %>
       <%= f.text_field :skills_interested_in %>
   
-      <%= f.label :password %>
-      <%= f.password_field :password %>
-  
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation %>
-    
   </div>
 </div>
 
