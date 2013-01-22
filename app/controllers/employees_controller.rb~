@@ -23,10 +23,7 @@ class EmployeesController < ApplicationController
   def new
     @employee = Employee.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @employee }
-    end
+  
   end
 
   def edit
@@ -47,16 +44,16 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-
-    respond_to do |format|
+ 
       if @employee.update_attributes(params[:employee])
-        format.html { redirect_to @employee, notice: 'Account was successfully updated.' }
-        format.json { head :no_content }
+      flash[:success] = "Account was successfully updated."
+      sign_in @employee
+      redirect_to @employee
+        
       else
-        format.html { render action: "edit" }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      render 'edit'
+     
       end
-    end
   end
 
   def destroy
