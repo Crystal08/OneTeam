@@ -68,6 +68,9 @@ class EmployeesController < ApplicationController
 
     def correct_user
       @employee = Employee.find(params[:id])
-      redirect_to(root_path) unless current_employee?(@employee)
+      if !current_employee?(@employee)
+        flash[:notice] = "You are not authorized to edit this employee."
+        redirect_to employees_path
+      end	
     end      
 end

@@ -21,7 +21,7 @@
 <% @requests.each do |request| %>
   <tr>
     <td><%= request.id %></td>
-        <% if !SelectedEmployee.find_by_request_id(request) %>
+        <% if SelectedEmployee.find_by_request_id(request) %>
 		<td>Filled</td>
 	<% else %>
 		<td></br></td>

@@ -4,6 +4,7 @@
 <table>
   <tr>
     <th>Request</th>
+    <th>Status</th>
     <th>Description</th>
     <th>Skills needed</th>
     <th>Location</th>
@@ -20,6 +21,11 @@
 <% @requests.each do |request| %>
   <tr>
     <td><%= request.id %></td>
+        <% if Selection.find_by_request_id(request) %>
+		<td>Filled</td>
+	<% else %>
+		<td></br></td>
+        <% end %>
     <td><%= request.task %></td>
     <td><%= request.skills_needed %></td>
     <td><%= request.location %></td>

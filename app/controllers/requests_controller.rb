@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
   before_filter :signed_in_employee
   before_filter :correct_employee, only: [:edit, :update, :destroy]
 
-  def index
+  def index 
     if params[:employee_id]
       @my_requests = Request.where("employee_id = ?", params[:employee_id])
       @requests = @my_requests.paginate :page => params[:page], :per_page => 10 
@@ -19,7 +19,6 @@ class RequestsController < ApplicationController
 
   def new
     @request = Request.new
-    render 'new'
   end
 
   def edit

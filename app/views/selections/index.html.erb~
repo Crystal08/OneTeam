@@ -1,0 +1,31 @@
+<h1>Listing selected_employees</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @selected_employees.each do |selected_employee| %>
+  <tr>
+    <td><%= selected_employee. %></td>
+    <td><%= selected_employee. %></td>
+    <td><%= selected_employee. %></td>
+    <td><%= selected_employee. %></td>
+    <td><%= selected_employee. %></td>
+    <td><%= link_to 'Show', selected_employee %></td>
+    <td><%= link_to 'Edit', edit_selected_employee_path(selected_employee) %></td>
+    <td><%= link_to 'Destroy', selected_employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Selected employee', new_selected_employee_path %>

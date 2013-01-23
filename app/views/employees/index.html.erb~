@@ -1,5 +1,5 @@
 <% provide(:title, 'All Employees') %>
-<h1>All employees</h1>
+<h1>Employees</h1>
 
 <table>
   <tr>
@@ -29,11 +29,13 @@
     <td><%= employee.current_skills %></td>
     <td><%= employee.skills_interested_in %></td>
     <td><%= link_to 'Show', employee %></td>
-    <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-      <% if current_employee.admin? && !current_employee?(employee) %>
-	    <td><%= link_to 'Delete', employee, method: :delete,
+        <% if current_employee?(employee) %>
+	  <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+        <% end %>	      
+        <% if current_employee.admin? && !current_employee?(employee) %>
+          <td><%= link_to 'Delete', employee, method: :delete,
 		  data: { confirm: "Are you sure?" } %></td>
-      <% end %>
+        <% end %>
   </tr>
 <% end %>
 </table>
@@ -42,4 +44,4 @@
 
 <br />
 
-<%= link_to 'New Employee', new_employee_path %>
+<%= link_to 'Home', root_url %>

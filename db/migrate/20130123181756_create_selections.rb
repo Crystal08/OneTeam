@@ -1,6 +1,6 @@
-class CreateSelectedEmployees < ActiveRecord::Migration
+class CreateSelections < ActiveRecord::Migration
   def change
-    create_table :selected_employees do |t|
+    create_table :selections do |t|
       t.string :name
       t.integer :employee_id
       t.integer :request_id

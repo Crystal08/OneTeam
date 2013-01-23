@@ -1,5 +1,6 @@
 <h1>Responses</h1> 
-to Request <%= params[:request_id] %>
+to Request "<%= Request.find(params[:request_id]).task %>
+"
 <table>
   <tr>	 
     <th>Response</th>
@@ -15,7 +16,7 @@ to Request <%= params[:request_id] %>
 	    employee_path(response.employee_id)%></td>
     <td><%= response.comments %></td>
     <td><%= link_to 'Select this developer?', 
-	    response_selected_employee_path(response.id,@selected_employee)%></td>
+	    response_selection_path(response.id,@selection)%></td>
   </tr>
 <% end %>
 </table>
