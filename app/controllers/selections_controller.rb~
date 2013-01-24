@@ -1,60 +1,66 @@
-class SelectedEmployeesController < ApplicationController
+class SelectionsController < ApplicationController
   before_filter :signed_in_employee
   
   def index
-    @selected_employee = SelectedEmployee.all
+    @response = Response.find_by_id(params[:response_id])
+    @selection = @response.selections.all
   end
 
   def show
-    @selected_employee = SelectedEmployee.find(params[:id])
+    @response = Response.find_by_id(params[:response_id])
+    @selection = Selection.find(params[:id])
+    @selection_task = Request.find(@selection.request_id).task
   end
 
   def new
-    @selected_employee = SelectedEmployee.new
+    @response = Response.find_by_id(params[:response_id])
+    @selection = @response.selections.build
   end
 
   def edit 
-    @selected_employee = SelectedEmployee.find(params[:id])
+    @response = Response.find_by_id(params[:response_id])
+    @selection = Selection.find(params[:id])
   end
 
   def create  
-    @selected_employee = SelectedEmployee.new(params[:selected_employee])
-
+    @response = Response.find_by_id(params[:response_id])	  
+    @selection = @response.selections.build(params[:selection])
+    @selection.employee = Employee.find(@response.employee_id)
+    @selection.name = Employee.find(@response.employee_id).name
+    @selection.request = Request.find(@response.request_id)
+   
     respond_to do |format|
-      if @selected_employee.save
-        format.html { redirect_to selected_employee_path(@selected_employee), notice: 'Selected employee was successfully created.' }
-        format.json { render json: @selected_employee, status: :created, location: @selected_employee }
+      if @selection.save
+        format.html { redirect_to response_selection_path(@response,@selection), notice: 'Selection was successfully created.' }
+        format.json { render json: @selection, status: :created, location: @selection }
       else
         format.html { render action: "new" }
-        format.json { render json: @selected_employee.errors, status: :unprocessable_entity }
+        format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /selected_employees/1
-  # PUT /selected_employees/1.json
   def update
-    @selected_employee = SelectedEmployee.find(params[:id])
+    @response = Response.find_by_id(params[:response_id])
+    @selection = Selection.find(params[:id])
 
     respond_to do |format|
-      if @selected_employee.update_attributes(params[:selected_employee])
-        format.html { redirect_to @selected_employee, notice: 'Selected employee was successfully updated.' }
+      if @selection.update_attributes(params[:selection])
+        format.html { redirect_to response_selection_path(@response, @selection), notice: 'Selection was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @selected_employee.errors, status: :unprocessable_entity }
+        format.json { render json: @selection.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /selected_employees/1
-  # DELETE /selected_employees/1.json
   def destroy
-    @selected_employee = SelectedEmployee.find(params[:id])
-    @selected_employee.destroy
+    @selection = Selection.find(params[:id])
+    @selection.destroy
 
     respond_to do |format|
-      format.html { redirect_to selected_employees_url }
+      format.html { redirect_to response_selections_url }
       format.json { head :no_content }
     end
   end

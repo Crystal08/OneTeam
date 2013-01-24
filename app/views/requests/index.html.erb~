@@ -18,7 +18,7 @@
   </tr>
 
 <% @requests.each do |request| %>
-  <% if !SelectedEmployee.find_by_request_id(request) %>
+  <% if !Selection.find_by_request_id(request) %>
   <tr>
     <td><%= request.id %></td>
     <td><%= Employee.find(request.employee_id).name %></td>

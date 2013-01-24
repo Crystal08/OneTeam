@@ -21,7 +21,7 @@
   <% if !Selection.find_by_request_id(request) %>
   <tr>
     <td><%= request.id %></td>
-    <td><%= Employee.find(request.employee_id).name %></td>
+    <td><%= @employee.name %></td>
     <td><%= request.task %></td>
     <td><%= request.skills_needed %></td>
     <td><%= request.location %></td>

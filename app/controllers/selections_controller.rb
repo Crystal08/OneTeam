@@ -2,27 +2,37 @@ class SelectionsController < ApplicationController
   before_filter :signed_in_employee
   
   def index
-    @selection = Selection.all
+    @response = Response.find_by_id(params[:response_id])
+    @selection = @response.selections.all
   end
 
   def show
+    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
+    @selection_task = Request.find(@selection.request_id).task
   end
 
   def new
-    @selection = Selection.new
+    @response = Response.find_by_id(params[:response_id])
+    @selection = @response.selections.build
   end
 
   def edit 
+    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
+    @request = Request.find(@selection.request.id)
   end
 
   def create  
-    @selection = Selection.new(params[:selection])
-
+    @response = Response.find_by_id(params[:response_id])	  
+    @selection = @response.selections.build(params[:selection])
+    @selection.employee = Employee.find(@response.employee_id)
+    @selection.name = Employee.find(@response.employee_id).name
+    @selection.request = Request.find(@response.request_id)
+   
     respond_to do |format|
       if @selection.save
-        format.html { redirect_to selection_path(@selection), notice: 'Selection was successfully created.' }
+        format.html { redirect_to response_selection_path(@response,@selection), notice: 'Selection was successfully created.' }
         format.json { render json: @selection, status: :created, location: @selection }
       else
         format.html { render action: "new" }
@@ -32,11 +42,12 @@ class SelectionsController < ApplicationController
   end
 
   def update
+    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
 
     respond_to do |format|
       if @selection.update_attributes(params[:selection])
-        format.html { redirect_to @selection, notice: 'Selection was successfully updated.' }
+        format.html { redirect_to response_selection_path(@response, @selection), notice: 'Selection was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -50,7 +61,7 @@ class SelectionsController < ApplicationController
     @selection.destroy
 
     respond_to do |format|
-      format.html { redirect_to selections_url }
+      format.html { redirect_to response_selections_url }
       format.json { head :no_content }
     end
   end

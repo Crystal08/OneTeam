@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+  </br>
   <div class="field">
     <%= f.label :comments %><br />
     <%= f.text_field :comments %>

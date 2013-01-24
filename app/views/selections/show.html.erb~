@@ -1,17 +1,17 @@
 <p>
   <b>Employee:</b>
-  <%= @selected_employee.name %>
+  <%= @selection.name %>
 </p>
 
 <p>
   <b>Request:</b>
-  <%= Request.find(@selected_employee.request_id).task %>
+  <%= @selection.task %>
 </p>
 
 <p>
   <b>Notes:</b>
-  <%= @selected_employee.notes %>
+  <%= @selection.notes %>
 </p>
 
-<%= link_to 'Edit', edit_selected_employee_path(@selected_employee) %> |
+<%= link_to 'Edit', edit_response_selection_path(@response, @selection) %> |
 <%= link_to 'Back', employee_requests_path(@current_employee) %>

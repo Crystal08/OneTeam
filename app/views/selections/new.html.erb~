@@ -1,13 +1,11 @@
-<h1>Select employee</h1>
+<h1>Make selection</h1>
 
-<%= Response.find(params[:response_id]).employee.name %> to fill Request "<%= Response.find(params[:response_id]).request.task %>"
+<%=@response.employee.name %> to fill Request "<%= @response.request.task %>"
 
-<%= form_for(@selected_employee) do |f| %> 
+<%= form_for([@response, @selection]) do |f| %> 
+
   <%= render 'form', :f => f %> </br>
-  <%= f.hidden_field :request_id, :value => Response.find(params[:response_id]).request.id %>
-  <%= f.hidden_field :response_id, :value => params[:response_id] %>
-  <%= f.hidden_field :name, :value => Response.find(params[:response_id]).employee.name %>
-  <%= f.hidden_field :employee_id, :value => Response.find(params[:response_id]).employee.id %>
+
   <%= f.submit "Fill request", class: "btn btn-large btn-primary" %>
 <% end %>
 

@@ -29,7 +29,7 @@ class EmployeesController < ApplicationController
   end
 
   def create
-    @employee = Employee.new(params[:employee])
+    @employee = Employee.build(params[:employee])
 
     if @employee.save
       sign_in @employee
@@ -70,6 +70,7 @@ class EmployeesController < ApplicationController
       @employee = Employee.find(params[:id])
       if !current_employee?(@employee)
         flash[:notice] = "You are not authorized to edit this employee."
-        redirect_to employees_path 
+        redirect_to employees_path
+      end	
     end      
 end
