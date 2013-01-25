@@ -1,5 +1,14 @@
 class SelectionsController < ApplicationController
   before_filter :signed_in_employee
+  before_filter :check_response_status, only: [:new, :create]
+
+  def check_response_status
+    if Response.find_by_id(params[:response_id]).status
+      @response = Response.find_by_id(params[:response_id])
+      redirect_to request_responses_path(@response.request_id), notice: 'The response has already been selected.'
+    end
+  end  
+
   
   def index
     @response = Response.find_by_id(params[:response_id])
@@ -23,12 +32,14 @@ class SelectionsController < ApplicationController
   end
 
   def create  
-    @response = Response.find_by_id(params[:response_id])	  
+    @response = Response.find_by_id(params[:response_id])
+    @response.status = 'filled'
+    @response.save
     @selection = @response.selections.build(params[:selection])
     @selection.employee = Employee.find(@response.employee_id)
     @selection.name = Employee.find(@response.employee_id).name
     @selection.request = Request.find(@response.request_id)
-   
+
     respond_to do |format|
       if @selection.save
         format.html { redirect_to response_selection_path(@response,@selection), notice: 'Selection was successfully created.' }

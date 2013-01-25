@@ -22,8 +22,11 @@
     <%= f.label :location %>
     <%= f.text_field :location %>
   
-    <%= f.label :dates %>
-    <%= f.text_field :dates %>
+    <%= f.label :start_date %>
+    <%= f.date_select :start_date %>
+
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
 
     <%= f.label :group %>
     <%= f.text_field :group %>

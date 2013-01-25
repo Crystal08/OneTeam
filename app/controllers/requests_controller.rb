@@ -3,6 +3,7 @@ class RequestsController < ApplicationController
   before_filter :correct_employee, only: [:edit, :update, :destroy]
 
   def index 
+    @current_date = DateTime.now	  
     if params[:employee_id]
       @my_requests = Request.where("employee_id = ?", params[:employee_id])
       @requests = @my_requests.paginate :page => params[:page], :per_page => 10 

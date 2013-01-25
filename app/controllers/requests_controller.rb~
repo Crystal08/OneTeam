@@ -6,8 +6,6 @@ class RequestsController < ApplicationController
     if params[:employee_id]
       @my_requests = Request.where("employee_id = ?", params[:employee_id])
       @requests = @my_requests.paginate :page => params[:page], :per_page => 10 
-      @request = Request.find(params[:id])
-      @employee = Employee.find(@request.employee_id)
       render 'my_requests' 
     else 
       @requests = Request.paginate :page => params[:page], :per_page => 10   

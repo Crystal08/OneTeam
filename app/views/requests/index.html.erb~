@@ -4,11 +4,13 @@
 <table>
   <tr>
     <th>Request</th>
+    <th>Status</th>
     <th>Posted by</th>
     <th>Description</th>
     <th>Skills needed</th>
     <th>Location</th>
-    <th>Dates</th>
+    <th>Start Date</th>
+    <th>End Date</th>
     <th>Group</th>
     <th>Lead</th>
     <th>Contact</th>
@@ -20,12 +22,18 @@
 <% @requests.each do |request| %>
   <% if !Selection.find_by_request_id(request) %>
   <tr>
-    <td><%= request.id %></td>
+    <td><%= request.id %></td>	  
+	<% if request.start_date <= @current_date %>
+	  <td> 'Project already started.'</td>
+        <% else %>
+	  <td></br></td>
+        <% end %>
     <td><%= Employee.find(request.employee_id).name %></td>
     <td><%= request.task %></td>
     <td><%= request.skills_needed %></td>
     <td><%= request.location %></td>
-    <td><%= request.dates %></td>
+    <td><%= request.start_date %></td>
+    <td><%= request.end_date %></td>
     <td><%= request.group %></td>
     <td><%= request.lead %></td>
     <td><%= request.contact %></td>
