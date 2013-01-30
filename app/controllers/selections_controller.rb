@@ -2,14 +2,11 @@ class SelectionsController < ApplicationController
   before_filter :signed_in_employee
   
   def index
-    @response = Response.find_by_id(params[:response_id])
-    @selection = @response.selections.all
+    @selections = Selection.all
   end
 
   def show
-    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
-    @selection_task = Request.find(@selection.request_id).task
   end
 
   def new
@@ -18,21 +15,18 @@ class SelectionsController < ApplicationController
   end
 
   def edit 
-    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
-    @request = Request.find(@selection.request.id)
   end
 
   def create  
     @response = Response.find_by_id(params[:response_id])	  
     @selection = @response.selections.build(params[:selection])
-    @selection.employee = Employee.find(@response.employee_id)
-    @selection.name = Employee.find(@response.employee_id).name
-    @selection.request = Request.find(@response.request_id)
+    @selection.employee = @response.employee
+    @selection.request = @response.request
    
     respond_to do |format|
       if @selection.save
-        format.html { redirect_to response_selection_path(@response,@selection), notice: 'Selection was successfully created.' }
+        format.html { redirect_to selection_path(@selection), notice: 'Selection was successfully created.' }
         format.json { render json: @selection, status: :created, location: @selection }
       else
         format.html { render action: "new" }

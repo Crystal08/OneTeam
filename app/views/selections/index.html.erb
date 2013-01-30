@@ -8,17 +8,15 @@
     <th></th>
     <th></th>
     <th></th>
-    <th></th>
-    <th></th>
+    
   </tr>
 
 <% @selections.each do |selection| %>
   <tr>
-    <td><%= selection. %></td>
-    <td><%= selection. %></td>
-    <td><%= selection. %></td>
-    <td><%= selection. %></td>
-    <td><%= selection. %></td>
+    <td><%= selection.employee.name %></td>
+    <td><%= selection.employee_id %></td>
+    <td><%= selection.notes %></td>
+  
     <td><%= link_to 'Show', selection %></td>
     <td><%= link_to 'Edit', edit_selection_path(selection) %></td>
     <td><%= link_to 'Destroy', selection, method: :delete, data: { confirm: 'Are you sure?' } %></td>

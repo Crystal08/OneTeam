@@ -1,5 +1,6 @@
 class Response < ActiveRecord::Base
-  attr_accessible :request_id, :employee_id, :comments
+  attr_accessible :request_id, :employee_id, :comments, :status
+  
   belongs_to :employee
   belongs_to :request
   

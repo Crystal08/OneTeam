@@ -1,13 +1,13 @@
 <h1>Edit Selection</h1>
 
-Edit "<%= @selection.name %> to fill Request '<%= @request.task %>' "
+Edit "<%= @selection.employee.name %> to fill Request '<%= @selection.response.request.task %>' "
 
-<%= form_for([@response, @selection]) do |f| %>	  
+<%= form_for(@selection) do |f| %>	  
 	
     <%= render 'form', :f => f %> </br>
   
     <%= f.submit "Update", class: "btn btn-large btn-primary" %>
 <% end %>
 
-<%= link_to 'Show', response_selection_path(@response, @selection) %> |
+<%= link_to 'Show', selection_path(@selection) %> |
 <%= link_to 'Back', employee_requests_path(current_employee) %>

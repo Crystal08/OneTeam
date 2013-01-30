@@ -1,11 +1,11 @@
 <p>
   <b>Employee:</b>
-  <%= @selection.name %>
+  <%= @selection.employee.name %>
 </p>
 
 <p>
   <b>Request:</b>
-  <%= @selection_task %>
+  <%= @selection.response.request.task %>
 </p>
 
 <p>
@@ -13,5 +13,5 @@
   <%= @selection.notes %>
 </p>
 
-<%= link_to 'Edit', edit_response_selection_path(@response, @selection) %> |
+<%= link_to 'Edit', edit_selection_path(@selection) %> |
 <%= link_to 'Back', employee_requests_path(@current_employee) %>

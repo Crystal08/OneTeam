@@ -14,14 +14,14 @@ OneTeam::Application.routes.draw do
     resources :responses
   end
 
-  resources :responses do
+  resources :responses, :shallow => true do
     resources :selections
   end
 
-#I think I have redundant routes here. May want to think about user-intuitive routes and come back to clean up.
-  resources :responses
+#I think I originally had redundant routes here, have commented out for now.
+  #resources :responses
   resources :employees
-  resources :selections 
+  #resources :selections 
   resources :sessions, only: [:new, :create, :destroy]
 
 end
