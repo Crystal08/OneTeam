@@ -6,16 +6,21 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<!--  <div id="banner">
-    <%#= image_tag "oneteamlogo.png" %>
+<body class="backdrop">
+<!-- Styling Header--> 
+<div id= "banner">
+   <div id= "logo">
+    <%= image_tag "oneteamlogo.png" %>
+    </div>
     <div id="banner_text">
       <h1>OneTeam...</h1>
       <h2>Where do <em>you</em> fit?</h2>
     </div>
-  </div> --> 
+</div>   
+<!-- End Styling Header --> 
   <div id="tabbed_area">
-  <%= render 'layouts/header' %> 
   <div class="container">
+  <%= render 'layouts/header' %> 
     <% flash.each do |key, value| %>
       <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>

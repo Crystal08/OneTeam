@@ -1,23 +1,24 @@
 <header>
-    <div class="container">
+  
       <nav>
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" "pull-left">
           
 	<% if signed_in? %>
-	    <li class="<%= 'active' if current_page?(employee_requests_path(current_employee)) %>">
-	    	<%= link_to "My Requests", employee_requests_path(current_employee)%></li>          
 	    <li class="<%= 'active' if current_page?(requests_path) %>">
 	    	<%= link_to "All Requests", requests_path %></li>
 	    <li class="<%= 'active' if current_page?(employees_path) %>">
 	    	<%= link_to "Employees", employees_path %></li> 
-	    <li><%= link_to "Sign out", signout_path, method: "delete" %></li>
-	
+	    <li class="<%= 'active' if current_page?(employee_path(current_employee)) %>">
+	        <%= link_to "My Profile", employee_path(current_employee)%></li>
+	    <li class="<%= 'active' if current_page?(employee_requests_path(current_employee)) %>">
+	    	<%= link_to "My Requests", employee_requests_path(current_employee)%></li> 
+	             
+	    <li class= "pull-right"><%= link_to "Sign out", signout_path, method: "delete" %></li>
 	<% end %>
-	    
+	   
 	    </ul>
-
       </nav>
-    </div>
+ 
 </header>
 
 
