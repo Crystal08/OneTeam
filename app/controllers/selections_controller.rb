@@ -11,7 +11,13 @@ class SelectionsController < ApplicationController
 
   def new
     @response = Response.find_by_id(params[:response_id])
-    @selection = @response.selections.build
+    if !Selection.find_by_response_id(@response)
+      @selection = @response.selections.build
+    else
+      @selection = Selection.find_by_response_id(@response)
+      redirect_to edit_selection_path(@selection), notice: "You've already selected this developer."
+  end
+
   end
 
   def edit 
@@ -41,7 +47,7 @@ class SelectionsController < ApplicationController
 
     respond_to do |format|
       if @selection.update_attributes(params[:selection])
-        format.html { redirect_to response_selection_path(@response, @selection), notice: 'Selection was successfully updated.' }
+        format.html { redirect_to selection_path(@selection), notice: 'Selection was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

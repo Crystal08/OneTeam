@@ -1,4 +1,5 @@
 class RequestsController < ApplicationController
+  before_filter :non_user, only: [:index] #in case of current_employee nil when new user goes straight to root url via /
   before_filter :signed_in_employee
   before_filter :correct_employee, only: [:edit, :update, :destroy]
 
@@ -40,6 +41,7 @@ class RequestsController < ApplicationController
     
     if @request.update_attributes(params[:request])
       flash[:success] = "Request was successfully updated."
+      redirect_to request_url(@request)
     else
       render 'edit'
     end
@@ -51,10 +53,17 @@ class RequestsController < ApplicationController
   end
 
   private
+  
+  def non_user
+     if current_employee.nil?
+        store_location
+        redirect_to signin_url, notice: "Please sign in."
+      end
+  end
 
-    def correct_employee
+  def correct_employee
       @request = current_employee.requests.find_by_id(params[:id])
       redirect_to root_url if @request.nil?
-    end  
+  end  
 end
 

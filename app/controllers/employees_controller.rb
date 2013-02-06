@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
  
   def index
     @employees = Employee.paginate :page => params[:page], :per_page => 10
-
+    @page_tab = @employees_tab
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @employees }

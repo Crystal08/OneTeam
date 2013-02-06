@@ -1,6 +1,19 @@
+<div class="span6 offset3">
+  <% provide(:title, 'Editing request') %>
 <h1>Editing request</h1>
+</div>
 
-<%= render 'form' %>
+<%= form_for(@request) do |f| %>
+	  
+  <%= render 'form', :f => f %> </br>
+    
+  <div class="row">
+    <div class="span6 offset3">
+      <%= f.submit "Update request", class: "btn btn-large btn-primary" %>
+    </div>
+  </div>
+  
+<% end %>
 
 <%= link_to 'Show', @request %> |
 <%= link_to 'Back', requests_path %>

@@ -177,6 +177,7 @@ GEM
     will_paginate (3.0.3)
     xpath (0.1.4)
       nokogiri (~> 1.3)
+    yaml_db (0.2.3)
 
 PLATFORMS
   x86-mingw32
@@ -200,3 +201,4 @@ DEPENDENCIES
   sqlite3 (= 1.3.5)
   uglifier (= 1.2.3)
   will_paginate (= 3.0.3)
+  yaml_db

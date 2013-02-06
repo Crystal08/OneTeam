@@ -22,8 +22,13 @@
 </p>
 
 <p>
-  <b>Dates:</b>
-  <%= @request.dates %>
+  <b>Start Date:</b>
+  <%= @request.start_date %>
+</p>
+
+<p>
+  <b>End Date:</b>
+  <%= @request.end_date %>
 </p>
 
 <p>
@@ -43,4 +48,4 @@
 
 
 <%= link_to 'Edit', edit_request_path(@request) %> |
-<%= link_to 'Back', requests_path %>
+<%= link_to 'Back', employee_requests_path(current_employee) %>

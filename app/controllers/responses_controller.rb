@@ -2,8 +2,8 @@ class ResponsesController < ApplicationController
   before_filter :signed_in_employee
   
   def index
-    @request = Request.find_by_id(params[:request_id])
-    @response = @request.responses.paginate :page => params[:page], :per_page => 10
+      @request = Request.find_by_id(params[:request_id])
+      @response = @request.responses.paginate :page => params[:page], :per_page => 10
   end
 
 

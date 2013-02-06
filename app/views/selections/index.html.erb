@@ -17,7 +17,7 @@
     <td><%= selection.employee_id %></td>
     <td><%= selection.notes %></td>
   
-    <td><%= link_to 'Show', selection %></td>
+    <td><%= link_to 'Show', selection_path(selection) %></td>
     <td><%= link_to 'Edit', edit_selection_path(selection) %></td>
     <td><%= link_to 'Destroy', selection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
@@ -26,4 +26,4 @@
 
 <br />
 
-<%= link_to 'New Selection', new_selection_path %>
+<%= link_to 'New Selection', new_response_selection_path(@response,@selection) %>

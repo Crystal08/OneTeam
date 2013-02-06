@@ -6,7 +6,7 @@
     <th>Request</th>
     <th>Status</th>
     <th>Posted by</th>
-    <th>Description</th>
+    <th>Project</th>
     <th>Skills needed</th>
     <th>Location</th>
     <th>Start Date</th>
@@ -25,7 +25,7 @@
   <tr>
     <td><%= request.id %></td>	  
 	<% if request.start_date <= @current_date %>
-	  <td> 'Project already started.'</td>
+	  <td>Project already started</td>
         <% else %>
 	  <td></br></td>
         <% end %>
@@ -54,5 +54,6 @@
 
 <br />
 
-<%= link_to 'New Request', new_request_path %>
+<!-- I think it might be best to force new requests creation through link on My Request page, rather than having it here too. -->
+<%#= link_to 'New Request', new_request_path %> 
 

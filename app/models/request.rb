@@ -9,4 +9,11 @@ class Request < ActiveRecord::Base
   accepts_nested_attributes_for :responses
   
   validates :task, :length => { :maximum => 1500 }
+  validate :start_date_first
+
+  def start_date_first
+      if start_date > end_date
+        errors.add(:start_date, 'must occur before end date')
+      end   
+  end  
 end

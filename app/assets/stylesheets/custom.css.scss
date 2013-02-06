@@ -16,7 +16,22 @@ section {
 
 textarea {
   resize: vertical;
+  border-left: black;
 }
+
+/*.nav-tabs {
+  background-color: #990099;
+}
+
+.nav-tabs li a {
+  font-weight: bold;
+  color: white;
+}
+
+.nav-tabs li a:hover {
+  font-weight: bold;
+  background-color: gray;
+}*/
 
 .center {
   text-align: center;
@@ -24,6 +39,34 @@ textarea {
     margin-bottom: 10px;
   }
 }
+/*
+.backdrop {
+  background-color: #990099;
+}
+
+.container {
+  background-color: $white;
+}
+
+.active {
+  background-color: #990099;
+  font-weight: bold;
+}
+
+#banner {
+margin-top:-30px;
+float: left;
+}
+
+#banner_text {
+margin-top:-90px;
+margin-left: 90px;
+}
+
+#tabbed_area {
+margin-top: 6%;
+}
+*/
 
 h1,h2,h3,h4,h5,h6 {
   line-height: 1;
@@ -68,11 +111,11 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
+  color: $grayDarker;
   a {
     color: $gray;
     &:hover {
-      color: $grayDarker;
+      color: $grayLight;
     }
   }
   small {
