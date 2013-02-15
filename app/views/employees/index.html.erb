@@ -19,7 +19,7 @@
 
 <% @employees.each do |employee| %>
   <tr>
-    <td><%= employee.name %></td>
+    <td><%= employee.first_name %><%= employee.last_name %></td>
     <td><%= employee.years_with_company %></td>
     <td><%= employee.manager %></td>
     <td><%= employee.position %></td>

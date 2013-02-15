@@ -1,5 +1,5 @@
 class Request < ActiveRecord::Base
-  attr_accessible :employee_id, :task, :skills_needed, :location, :start_date, :end_date, :group, :lead, :contact, :status
+  attr_accessible :title, :employee_id, :task, :skills_needed, :location, :start_date, :end_date, :group, :lead, :contact
  
   belongs_to :employee
   
@@ -16,4 +16,24 @@ class Request < ActiveRecord::Base
         errors.add(:start_date, 'must occur before end date')
       end   
   end  
+
+  def not_selected(request)
+    !Selection.find_by_request_id(request)
+  end
+
+  def status(request)
+    @current_date = DateTime.now.to_date
+    if @current_date < request.start_date  
+      'Not Started'
+    elsif @current_date >= request.start_date && @current_date <= request.end_date
+      'In Progress' 
+    else
+      'Completed'
+    end 
+  end  
+
+  def find_responses(request)
+    @responses = Response.where(:request_id => request.id)
+  end     
+
 end

@@ -1,6 +1,6 @@
 <h1>Make selection</h1>
 
-<%=@response.employee.name %> to fill Request "<%= @response.request.task %>"
+<%=@response.employee.first_name %><%=@response.employee.last_name %> to fill Request "<%= @response.request.task %>"
 
 <%= form_for([@response,@selection]) do |f| %> 
 

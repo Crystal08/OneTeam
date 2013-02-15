@@ -11,8 +11,9 @@ to Request "<%= @request.task %>"
 <% @response.each do |response| %>
   <tr>  
     <td><%= response.id %></td>
-    <td><%= link_to  response.employee.name, 
-	    employee_path(response.employee_id)%></td>
+    <td><%= link_to(employee_path(response.employee_id)) do %>
+        <%= response.employee.first_name %> <%= response.employee.last_name %> 
+        <% end %></td>
     <td><%= response.comments %></td>
     <td><%= link_to 'Select this developer?', 
 	    new_response_selection_path(response, @selection)%></td>

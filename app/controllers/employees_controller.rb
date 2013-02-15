@@ -13,7 +13,11 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
-
+    @selections = Selection.where('employee_id' => params[:id])
+    @requests = @selections.map{|selection| selection.request_id}
+    @my_projects = @requests.map{|request| Request.find(request)}
+    
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @employee }

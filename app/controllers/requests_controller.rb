@@ -2,12 +2,13 @@ class RequestsController < ApplicationController
   before_filter :non_user, only: [:index] #in case of current_employee nil when new user goes straight to root url via /
   before_filter :signed_in_employee
   before_filter :correct_employee, only: [:edit, :update, :destroy]
-
+  
   def index 
-    @current_date = DateTime.now	  
+    @current_date = DateTime.now.to_date 
+
     if params[:employee_id]
-      @my_requests = Request.where("employee_id = ?", params[:employee_id])
-      @requests = @my_requests.paginate :page => params[:page], :per_page => 10 
+      @requests = Request.where("employee_id = ?", params[:employee_id])
+      @my_requests = @requests.paginate :page => params[:page], :per_page => 10 
       render 'my_requests' 
     else 
       @requests = Request.paginate :page => params[:page], :per_page => 10   

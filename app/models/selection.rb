@@ -3,6 +3,9 @@ class Selection < ActiveRecord::Base
 
   belongs_to :response
   belongs_to :request
-  belongs_to :employee  
+  belongs_to :employee
+
+  has_many :responses
+  has_many :requests, :through => :responses  
 
 end

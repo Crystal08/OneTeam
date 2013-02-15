@@ -7,24 +7,90 @@ html {
 }
 
 body {
+  a {
+    color: $gray;
+    &:hover {
+      color: $grayLight;
+      background-color: white;
+    }
+  }  
+}
+
+body.backdrop {
   padding-top: 60px;
+  padding-right: 10px;
+  padding-left: 10px;
+/* image credit: subtlepatterns.com */
+  background-image: url(../assets/pw_maze_white_@2X.png);
+}
+
+header {
+height: 75px;
+margin-top:-55px;
+margin-bottom: 0px;
+padding-bottom: 0px;
+float: left;
+}
+
+hgroup {
+margin-top:-95px;
+margin-left: 90px;
+}
+
+hgroup h1 {
+color: #663366;
+text-shadow: 0.1em 0.1em 0.05em grey
+}
+
+#logo {
+  font-size: 1.7em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 0px;
+  font-weight: bold;
+  line-height: 1;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+#gravatar {
+  padding-top: 10px;
+}
+
+#profile {
+  padding-left: 10px;
+  margin-left: 100px;
+}
+
+#nav_top_right {
+  margin-top: -45px;
+  margin-left: 87%;
+}
+
+#tabbed_area {
+padding-top: 0px;
+clear: both;
+padding-bottom: 0px;
+margin-bottom: 0px;
+border-radius: 10px;
 }
 
 section {
   overflow: auto;
 }
 
-textarea {
-  resize: vertical;
-  border-left: black;
-}
-/*Begin my classes*/
 .nav-tabs {
   background-color: #990099;
+  -webkit-border-radius: 10px;
+  -moz-border-radiues: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .nav-tabs li a {
-  
   color: white;
 }
 
@@ -32,16 +98,12 @@ textarea {
   font-weight: bold;
   background-color: gray;
 }
-/*end my classes*/
+
 .center {
   text-align: center;
   h1 {
     margin-bottom: 10px;
   }
-}
-/*begin my classes and ids*/
-.backdrop {
-  background-color: #990099;
 }
 
 .container {
@@ -54,35 +116,34 @@ textarea {
   box-shadow: 0px 5px 5px 5px #888;
 }
 
+.container h1 {
+  font-size: 2.25em;
+  color: #990099;
+  text-decoration: underline;
+}
+
+.textarea {
+  resize: vertical;
+  border-left: black;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.textarea p {
+  font-size: 1.1em;
+  line-height: 105%;
+}
+
+.textarea em {
+  font-weight:bold;
+  font-style: normal;
+}
+
 .active {
   background-color: #990099;
   font-weight: bold;
 }
 
-#banner {
-height: 75px;
-margin-top:-55px;
-margin-bottom: 0px;
-padding-bottom: 0px;
-float: left;
-}
-
-#banner_text {
-margin-top:-95px;
-margin-left: 90px;
-}
-
-#banner_text h1 {
-text-shadow: 0.1em 0.1em 0.05em grey
-}
-
-#tabbed_area {
-padding-top: 0px;
-clear: both;
-padding-bottom: 0px;
-margin-bottom: 0px;
-}
-/*end my classes and ids*/
 
 h1,h2,h3,h4,h5,h6 {
   line-height: 1;
@@ -107,18 +168,19 @@ p {
   line-height: 1.7em;
 }
 
-#logo {
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 0px;
-  font-weight: bold;
-  line-height: 1;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
+btn btn-med disabled> a:hover {
+  text-decoration: none;
+  cursor: default;
+  background-color: transparent;
+  background-image: none; 
+}
+
+/* Below is modification of http://css-tricks.com/examples/hrs/ */
+hr {
+ width: 30%;
+ border: 0; 
+ border-bottom: 2px dashed #990099; 
+ background: #999; 
 }
 
 footer {

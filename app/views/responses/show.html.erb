@@ -1,7 +1,7 @@
 
 <p>
   <b>Employee:</b>
-  <%= @response.employee.name %>
+  <%= @response.employee.first_name %><%= @response.employee.last_name %>
 </p>
 
 <p>
@@ -16,4 +16,4 @@
 
 
 <%= link_to 'Edit', edit_request_response_path(@request,@response) %> 
-<%= link_to 'Back to My Requests', employee_requests_path(current_employee) %>
+<%= link_to 'Back to All Requests', requests_path %>

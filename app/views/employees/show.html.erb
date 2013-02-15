@@ -1,21 +1,36 @@
 <p id="notice"><%= notice %></p>
 
-<% provide(:title, @employee.name) %>
-<h1><%= @employee.name %></h1>
+<!-- not sure what this line is doing, check Hartl? -->
+<% provide(:title, @employee) %>
+
+<h1>My Profile</h1>
+
+<%= link_to 'Edit Profile', edit_employee_path(@employee) %></br>
+
+<div id="gravatar">
+<h1 class = "pull-left">
+  <%= gravatar_for @employee %>
+</h1></div></br>
+
+<div id="profile">
+<p>
+  <b>First Name:</b>
+  <%= @employee.first_name %>
+</p> 
 
 <p>
-  <b>Years with company:</b>
-  <%= @employee.years_with_company %>
+  <b>Last Name:</b>
+  <%= @employee.last_name %>
 </p>
 
 <p>
-  <b>Manager:</b>
-  <%= @employee.manager %>
+  <b>Email:</b>
+  <%= @employee.email %>
 </p>
 
 <p>
-  <b>Position:</b>
-  <%= @employee.position %>
+  <b>Office:</b>
+  <%= @employee.location %>
 </p>
 
 <p>
@@ -29,20 +44,59 @@
 </p>
 
 <p>
-  <b>Location:</b>
-  <%= @employee.location %>
+  <b>Job Title:</b>
+  <%= @employee.position %>
 </p>
 
 <p>
-  <b>Current skills:</b>
+  <b>Immediate Supervisor:</b>
+  <%= @employee.manager %>
+</p>
+
+<p>
+  <b>Years with Company:</b>
+  <%= @employee.years_with_company %>
+</p></br>
+
+<p>
+  <b>Current Skills:</b>
   <%= @employee.current_skills %>
 </p>
 
 <p>
-  <b>Skills interested in:</b>
+  <b>Desired Skills:</b>
   <%= @employee.skills_interested_in %>
-</p>
+</p></br>
+
+<p>
+  <b>Short description about <%=@employee.first_name %>:</b>
+  <%= @employee.about_me %>
+</p></br>
+
+<p>
+  <b>Projects I've worked on:</b></br>
+<p>
+
+<% @my_projects.each do |my_project| %>
+  <% if my_project.status(my_project) != 'Completed' %>
+
+    <p><%= my_project.title %>:<%= my_project.start_date.strftime("%b %d %Y") %> - <%= my_project.end_date.strftime("%b %d %Y") %>(<%= my_project.status(my_project) %>)</p>
+    <p>Description: <%= my_project.task %></p>
+  <% end %>
+<% end %>  
+
+<hr>
+
+<% @my_projects.each do |my_project| %>
+  <% if my_project.status(my_project) == 'Completed' %> 
+
+    <p><%= my_project.title %>:<%= my_project.start_date.strftime("%b %d %Y") %> - <%= my_project.end_date.strftime("%b %d %Y") %>(<%= my_project.status(my_project) %>)</p>
+    <p>Description: <%= my_project.task %></p></br>
+  <% end %> 
+<% end %>   
+
+</div>
 
 
-<%= link_to 'Edit', edit_employee_path(@employee) %> |
-<%= link_to 'Back', employees_path %>
+<!-- Below not requested by client -->
+<%#= link_to 'Back', employees_path %>

@@ -1,59 +1,26 @@
 <% provide(:title, 'All Requests') %>
-<h1>All requests</h1>
-
-<table>
-  <tr>
-    <th>Request</th>
-    <th>Status</th>
-    <th>Posted by</th>
-    <th>Project</th>
-    <th>Skills needed</th>
-    <th>Location</th>
-    <th>Start Date</th>
-    <th>End Date</th>
-    <th>Group</th>
-    <th>Lead</th>
-    <th>Contact</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<h1>All Requests</h1>
+</br>
 
 <% @requests.each do |request| %>
-<% if !Selection.find_by_request_id(request) %>
-  <% if request.end_date > @current_date %>
-  <tr>
-    <td><%= request.id %></td>	  
-	<% if request.start_date <= @current_date %>
-	  <td>Project already started</td>
-        <% else %>
-	  <td></br></td>
-        <% end %>
-    <td><%= Employee.find(request.employee_id).name %></td>
-    <td><%= request.task %></td>
-    <td><%= request.skills_needed %></td>
-    <td><%= request.location %></td>
-    <td><%= request.start_date %></td>
-    <td><%= request.end_date %></td>
-    <td><%= request.group %></td>
-    <td><%= request.lead %></td>
-    <td><%= request.contact %></td>
-    <td><%= link_to 'Are you interested?', new_request_response_path(request) %></td>
-    <td><%= link_to 'Show', request %></td>
-        <% if current_employee?(request.employee) || current_employee.admin? %>
-	  <td><%= link_to 'Edit', edit_request_path(request) %></td>  
-	  <td><%= link_to 'Destroy', request, confirm: 'Are you sure?', method: :delete %></td>
-        <% end %>
-  </tr>
+  
+  <% if request.not_selected(request) %>
+    <% if request.status(request) != 'Completed' %>
+
+      <p><em><%= request.title %></em>, <%= request.start_date.strftime("%b %d %Y") %> - <%= request.end_date.strftime("%b %d %Y") %>(Open, <%= request.status(request) %>)</p>
+      <p>Posted by <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.location %> Office (Group: <%= request.group %>)</p>
+      <p>Description: <%= request.task %></p>
+
+      <% if request.find_responses(request).find_by_employee_id(current_employee) %>
+          <div class='btn btn-med disabled'>Applied</div>
+      <% else %>
+         <%= button_to "Apply", new_request_response_path(request), :class => 'btn btn-med', :method => "get" %>
+      <% end %>  
+      <hr>
+      </br>
+
+    <% end %>
   <% end %>
 <% end %>
-<% end %>
-</table>
 
-<%= will_paginate @requests %>
-
-<br />
-
-<!-- I think it might be best to force new requests creation through link on My Request page, rather than having it here too. -->
-<%#= link_to 'New Request', new_request_path %> 
-
+  

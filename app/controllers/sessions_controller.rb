@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    employee = Employee.find_by_name(params[:session][:name])
+    employee = Employee.find_by_email(params[:session][:email].downcase)
     if employee && employee.authenticate(params[:session][:password])
       sign_in employee
       redirect_to root_url

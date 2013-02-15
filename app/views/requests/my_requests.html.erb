@@ -1,58 +1,28 @@
-<% provide(:title, 'My Requests') %>
-<h1>My requests</h1>
+<% provide(:title, "Requests I've Posted") %>
 
-<table>
-  <tr>
-    <th>Status</th>
-    <th>Request</th>
-    <th>Project</th>
-    <th>Skills needed</th>
-    <th>Location</th>
-    <th>Start Date</th>
-    <th>End Date</th>
-    <th>Group</th>
-    <th>Lead</th>
-    <th>Contact</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-   
-<% @requests.each do |request| %>
-  <tr>
-  <% if Selection.find_by_request_id(request) %>
-    <td>Project filled by <%= Employee.find(request.employee_id).name%>.</td>
-  <% elsif request.start_date < @current_date && request.end_date > @current_date %>
-    <td>Project already started.</td> 
-  <% elsif request.end_date < @current_date %>
-    <td>Project already ended.</td>  
-  <% else %>
-    <td></td>   
-  <% end %>  
-    <td><%= request.id %></td>	  
-	<td><%= request.task %></td>
-    <td><%= request.skills_needed %></td>
-    <td><%= request.location %></td>
-    <td><%= request.start_date %></td>
-    <td><%= request.end_date %></td>
-    <td><%= request.group %></td>
-    <td><%= request.lead %></td>
-    <td><%= request.contact %></td>
-    <td><%= link_to 'Show', request %></td>
-    <td><%= link_to 'Edit', edit_request_path(request) %></td>
-    <td><%= link_to 'Destroy', request, confirm: 'Are you sure?', method: :delete %></td>
-<!-- Reference for count method below: http://stackoverflow.com/questions/1965641 and Hartl 10.2.1 -->
-    <td><span style="font-weight:bold">
-        <%= link_to 'Responses', request_responses_path(request,@response) %>(<%= request.responses.count %>)
-        </span></td>
-  </tr>
-<% end %>
-</table>
-
-<%= will_paginate @requests %>
-
-<br />
+<h1>Requests I've Posted</h1>
 
 <%= link_to 'New Request', new_request_path %>
 
+<% @my_requests.each do |my_request| %>
+
+  <% if my_request.status(my_request) != 'Completed' %>
+
+    </br><p><%= my_request.title %>:<%= my_request.start_date.strftime("%b %d %Y") %> - <%= my_request.end_date.strftime("%b %d %Y") %>(<%= my_request.status(my_request) %>)</p>
+    <p>Description: <%= my_request.task %></p>
+  <% end %>
+<% end %>  
+
+<hr>
+</br>
+
+<% @my_requests.each do |my_request| %>
+  <% if my_request.status(my_request) == 'Completed' %> 
+
+    </br><p><%= my_request.title %>:<%= my_request.start_date.strftime("%b %d %Y") %> - <%= my_request.end_date.strftime("%b %d %Y") %>(<%= my_request.status(my_request) %>)</p>
+    <p>Description: <%= my_request.task %></p>
+  <% end %> 
+<% end %>   
+  
+<!-- Link not requested by client 
+<%#= link_to 'New Request', new_request_path %> -->
