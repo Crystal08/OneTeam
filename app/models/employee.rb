@@ -1,5 +1,8 @@
 class Employee < ActiveRecord::Base
-  attr_accessible :first_name, :last_name, :about_me, :image, :email, :years_with_company, :manager, :position, :department, :group, :location, :current_skills, :skills_interested_in, :password, :password_confirmation
+  attr_accessible :first_name, :last_name, :about_me, 
+  :image, :email, :years_with_company, :manager, :position,
+  :department, :group, :location, :current_skills, 
+  :skills_interested_in, :password, :password_confirmation
   has_secure_password
 
   has_many :requests
@@ -7,6 +10,10 @@ class Employee < ActiveRecord::Base
   has_many :selections
 
   before_save :create_remember_token
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 
  private
 

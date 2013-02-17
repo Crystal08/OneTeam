@@ -1,26 +1,48 @@
-<% provide(:title, "Requests I've Posted") %>
 
+<% provide(:title, "Requests I've Posted") %>
 <h1>Requests I've Posted</h1>
 
+
 <%= link_to 'New Request', new_request_path %>
+</br>
 
-<% @my_requests.each do |my_request| %>
+<% @requests.each do |request| %>
 
-  <% if my_request.status(my_request) != 'Completed' %>
+  <% if !request.done? %>
 
-    </br><p><%= my_request.title %>:<%= my_request.start_date.strftime("%b %d %Y") %> - <%= my_request.end_date.strftime("%b %d %Y") %>(<%= my_request.status(my_request) %>)</p>
-    <p>Description: <%= my_request.task %></p>
+    </br><p><%= request.title %>:<%= request.start_date_str %>
+     - <%= request.end_date_str %>(<%= request.status %>)</p>
+    <p>Description: <%= request.task %></p>
+    <p>Active <%= link_to 'Cancel', request,
+     method: :delete, data: {confirm: "Are you sure?"} %></p>
+    <p>Applicants:</p>
+
+    <% request.responses.each do |response| %>
+
+      <p><%= link_to response.employee.full_name, employee_path(response.employee) %> |
+        <% if response.selected? %> Selected </p>
+        <% else %><%= link_to 'Select', new_response_selection_path(response) %></p>
+        <% end %>
+    <% end %> 
   <% end %>
 <% end %>  
 
-<hr>
 </br>
+<hr>
 
-<% @my_requests.each do |my_request| %>
-  <% if my_request.status(my_request) == 'Completed' %> 
+<% @requests.each do |request| %>
+  <% if request.done? %> 
 
-    </br><p><%= my_request.title %>:<%= my_request.start_date.strftime("%b %d %Y") %> - <%= my_request.end_date.strftime("%b %d %Y") %>(<%= my_request.status(my_request) %>)</p>
-    <p>Description: <%= my_request.task %></p>
+    </br><p><%= request.title %>:<%= request.start_date_str %> - <%= request.end_date_str %>(<%= request.status %>)</p>
+    <p>Description: <%= request.task %></p>
+    <p>Applicants:</p>
+
+    <% request.responses.each do |response| %>
+
+      <p><%= link_to response.employee.full_name, employee_path(response.employee) %>
+        <% if response.selected? %> Selected </p>
+        <% end %>
+    <% end %> 
   <% end %> 
 <% end %>   
   

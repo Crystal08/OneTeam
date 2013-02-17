@@ -1,5 +1,6 @@
 class Request < ActiveRecord::Base
-  attr_accessible :title, :employee_id, :task, :skills_needed, :location, :start_date, :end_date, :group, :lead, :contact
+  attr_accessible :title, :employee_id, :task, :skills_needed,
+   :location, :start_date, :end_date, :group, :lead, :contact
  
   belongs_to :employee
   
@@ -17,23 +18,36 @@ class Request < ActiveRecord::Base
       end   
   end  
 
-  def not_selected(request)
-    !Selection.find_by_request_id(request)
+  def selected?
+    if Selection.find_by_request_id(id) 
+    end 
   end
 
-  def status(request)
-    @current_date = DateTime.now.to_date
-    if @current_date < request.start_date  
+  def status 
+    if DateTime.now.to_date < start_date  
       'Not Started'
-    elsif @current_date >= request.start_date && @current_date <= request.end_date
+    elsif DateTime.now.to_date >= 
+      start_date && DateTime.now.to_date <= end_date
       'In Progress' 
     else
       'Completed'
     end 
-  end  
+  end 
+
+  def done? 
+    DateTime.now.to_date > end_date
+  end    
 
   def find_responses(request)
     @responses = Response.where(:request_id => request.id)
-  end     
+  end  
+
+  def start_date_str
+    start_date.strftime("%b %d %Y")
+  end
+
+  def end_date_str
+    end_date.strftime("%b %d %Y")
+  end  
 
 end

@@ -4,18 +4,23 @@
 
 <% @requests.each do |request| %>
   
-  <% if request.not_selected(request) %>
-    <% if request.status(request) != 'Completed' %>
+  <% if !request.selected? %>
+    <% if !request.done? %>
 
-      <p><em><%= request.title %></em>, <%= request.start_date.strftime("%b %d %Y") %> - <%= request.end_date.strftime("%b %d %Y") %>(Open, <%= request.status(request) %>)</p>
-      <p>Posted by <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.location %> Office (Group: <%= request.group %>)</p>
+      <p><em><%= request.title %></em>, <%= request.start_date_str %>
+       - <%= request.end_date_str %>(Open, <%= request.status %>)</p>
+      <p>Posted by 
+        <%= request.employee.first_name %> <%= request.employee.last_name %>
+         in <%= request.location %> Office (Group: <%= request.group %>)</p>
       <p>Description: <%= request.task %></p>
 
       <% if request.find_responses(request).find_by_employee_id(current_employee) %>
           <div class='btn btn-med disabled'>Applied</div>
       <% else %>
-         <%= button_to "Apply", new_request_response_path(request), :class => 'btn btn-med', :method => "get" %>
+          <%= button_to "Apply", new_request_response_path(request), 
+          :class => 'btn btn-med', :method => "get" %>
       <% end %>  
+      
       <hr>
       </br>
 

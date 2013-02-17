@@ -6,4 +6,9 @@ class Response < ActiveRecord::Base
   
   has_many :selections
   accepts_nested_attributes_for :selections
+
+  def selected?
+  	Selection.find_by_response_id(id)
+  end
+  	
 end

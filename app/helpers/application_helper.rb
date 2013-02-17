@@ -5,7 +5,8 @@ module ApplicationHelper
   end
 
   def current_employee
-    @current_employee ||= Employee.find_by_remember_token(cookies[:remember_token])
+    @current_employee ||= 
+    Employee.find_by_remember_token(cookies[:remember_token])
   end
 
   def current_employee?(employee)
@@ -16,7 +17,7 @@ module ApplicationHelper
   class_name = current_page?(link_path) ? 'active' : ''
 
   content_tag(:li, :class => class_name) do
-    link_to link_text, link_path
+  link_to link_text, link_path
   end
 end
 
