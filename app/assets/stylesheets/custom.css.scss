@@ -2,6 +2,8 @@
 
 $grayMediumLight: #eaeaea;
 
+* { z-index: 1 }
+
 html {
   overflow-y: scroll;
 }
@@ -22,6 +24,13 @@ body.backdrop {
   padding-left: 10px;
 /* image credit: subtlepatterns.com */
   background-image: url(../assets/pw_maze_white_@2X.png);
+  #logo {
+  line-height: 1;
+  img {
+    height: 70px;
+    z-index: 0;
+    }
+  }  
 }
 
 header {
@@ -30,39 +39,17 @@ margin-top:-55px;
 margin-bottom: 0px;
 padding-bottom: 0px;
 float: left;
+   hgroup {
+    margin-top:-85px;
+    margin-left: 90px;
+  }
 }
 
-hgroup {
-margin-top:-95px;
-margin-left: 90px;
-}
+
 
 hgroup h1 {
 color: #663366;
 text-shadow: 0.1em 0.1em 0.05em grey
-}
-
-#logo {
-  font-size: 1.7em;
-  color: white;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  padding-top: 0px;
-  font-weight: bold;
-  line-height: 1;
-  &:hover {
-    color: white;
-    text-decoration: none;
-  }
-}
-
-#gravatar {
-  padding-top: 10px;
-}
-
-#profile {
-  padding-left: 10px;
-  margin-left: 100px;
 }
 
 #nav_top_right {
@@ -88,6 +75,7 @@ section {
   -moz-border-radiues: 10px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  display: block;
 }
 
 .nav-tabs li a {
@@ -97,6 +85,11 @@ section {
 .nav-tabs li a:hover {
   font-weight: bold;
   background-color: gray;
+}
+
+.active {
+  background-color: #990099;
+  font-weight: bold;
 }
 
 .center {
@@ -138,12 +131,6 @@ section {
   font-weight:bold;
   font-style: normal;
 }
-
-.active {
-  background-color: #990099;
-  font-weight: bold;
-}
-
 
 h1,h2,h3,h4,h5,h6 {
   line-height: 1;

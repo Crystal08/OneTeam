@@ -1,19 +1,17 @@
-<div class="span6 offset3">
-  <% provide(:title, 'New request') %>
+<% provide(:title, 'New request') %>
 <h1>New request</h1>
-</div>
 
 <%= form_for(@request) do |f| %>
 	  
   <%= render 'form', :f => f %> </br>
     
-  <div class="row">
-    <div class="span6 offset3">
-      <%= f.submit "Create request", class: "btn btn-large btn-primary" %>
-    </div>
-  </div>
+  <span id="request-controls">
+    <%= button_to "Create request", request_path(request), class:  "btn btn-med", :method => "post" %><%= button_to "Cancel", requests_path, class: "btn btn-med" %></span>
+
   
 <% end %>
 
-<%= link_to 'Back', requests_path %>
+
+
+
 

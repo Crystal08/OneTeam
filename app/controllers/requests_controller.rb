@@ -32,10 +32,11 @@ class RequestsController < ApplicationController
 
   def create
     @request = current_employee.requests.build(params[:request]) 
+    @current_date = DateTime.now.to_date 
 
     if @request.save
       flash[:success] = "Request was successfully created."
-      redirect_to root_url
+      render 'show'
     else
       render 'new'     
     end

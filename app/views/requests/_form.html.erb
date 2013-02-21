@@ -9,37 +9,46 @@
     </ul>
   </div>
 <% end %>
+   
+    <span id="request-title">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </span>
 
-<div class="row">
-  <div class="span6 offset3">
-  
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-
-    <%= f.label :task %>
-    <%= f.text_field :task %>
-  
-    <%= f.label :skills_needed %>
-    <%= f.text_field :skills_needed %>
- 
-    <%= f.label :location %>
-    <%= f.text_field :location %>
+    <span id="request-description">
+      <%= f.label :description %>
+      <%= f.text_area :task %>
+    </span>
   
     <%= f.label :start_date %>
-    <%= f.date_select :start_date %>
+    <div class='input-append date datepicker' data-date= '<%= @current_date %>' >
+      <%= f.text_field :start_date %>
+      <span class="add-on"><i class="icon-th"></i></span>
+    </div>
 
     <%= f.label :end_date %>
-    <%= f.date_select :end_date %>
+    <div class='input-append date datepicker' data-date= '<%= @current_date %>' >
+      <%= f.text_field :end_date %>
+      <span class="add-on"><i class="icon-th"></i></span>
+    </div>  
 
     <%= f.label :group %>
+    <select>
+      <option>Development</option>
+      <option>IT</option>
+      <option>Infrastructure</option>
+    </select>
+      
+    <%= f.label :group %>
     <%= f.text_field :group %>
+
+    <%= f.label :location %>
+    <%= f.text_field :location %>
+
+
  
-    <%= f.label :lead %>
-    <%= f.text_field :lead %>
- 
-    <%= f.label :contact %>
-    <%= f.text_field :contact %>
+    
+   
   
-  </div>
-</div> 
+
 

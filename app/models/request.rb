@@ -1,6 +1,6 @@
 class Request < ActiveRecord::Base
   attr_accessible :title, :employee_id, :task, :skills_needed,
-   :location, :start_date, :end_date, :group, :lead, :contact
+   :location, :start_date, :end_date, :group
  
   belongs_to :employee
   
@@ -9,38 +9,39 @@ class Request < ActiveRecord::Base
   
   accepts_nested_attributes_for :responses
   
+  validates_presence_of :title, :start_date, :end_date
   validates :task, :length => { :maximum => 1500 }
   validate :start_date_first
 
   def start_date_first
       if start_date > end_date
         errors.add(:start_date, 'must occur before end date')
-      end   
-  end  
-
-  def selected?
-    if Selection.find_by_request_id(id) 
-    end 
+      end
   end
 
-  def status 
-    if DateTime.now.to_date < start_date  
+  def selected?
+    if Selection.find_by_request_id(id)
+    end
+  end
+
+  def status
+    if DateTime.now.to_date < start_date
       'Not Started'
-    elsif DateTime.now.to_date >= 
+    elsif DateTime.now.to_date >=
       start_date && DateTime.now.to_date <= end_date
-      'In Progress' 
+      'In Progress'
     else
       'Completed'
-    end 
-  end 
+    end
+  end
 
-  def done? 
+  def done?
     DateTime.now.to_date > end_date
-  end    
+  end
 
   def find_responses(request)
     @responses = Response.where(:request_id => request.id)
-  end  
+  end
 
   def start_date_str
     start_date.strftime("%b %d %Y")
@@ -48,6 +49,6 @@ class Request < ActiveRecord::Base
 
   def end_date_str
     end_date.strftime("%b %d %Y")
-  end  
+  end
 
 end
