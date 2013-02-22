@@ -15,7 +15,15 @@ class Employee < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
- private
+  def skills
+    current_skill.split(", ") || []
+  end  
+
+  def has_skill?(skill_name)
+    self.skills.include?("skill_name")
+  end  
+
+  private
 
     def create_remember_token
       self.remember_token = SecureRandom.urlsafe_base64

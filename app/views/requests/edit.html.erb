@@ -3,8 +3,11 @@
 <h1>Editing request</h1>
 </div>
 
+<%= hidden_field_tag "request[skills_needed][]", "" %>
+
 <%= form_for(@request) do |f| %>
-	  
+<%= hidden_field_tag "request[skills_needed][]", "" %>
+	  	  
   <%= render 'form', :f => f %> </br>
     
   <div class="row">

@@ -51,4 +51,20 @@ class Request < ActiveRecord::Base
     end_date.strftime("%b %d %Y")
   end
 
+  def skills
+    if !skills_needed.nil?
+      skills_needed.split(", ") || []
+    end
+  end  
+
+  def has_skill?(name)
+    if !self.skills.nil?
+      self.skills.include?(name)
+    end  
+  end 
+
+  def skills_needed= (skills)
+    write_attribute(:skills_needed, skills.delete_if {|x| x == ""}.join(", "))
+  end
+   
 end

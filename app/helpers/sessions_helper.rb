@@ -36,4 +36,5 @@ module SessionsHelper
   def current_employee?(employee)
     employee == current_employee
   end
+
 end

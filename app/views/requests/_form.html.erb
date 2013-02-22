@@ -10,40 +10,61 @@
   </div>
 <% end %>
    
-    <span id="request-title">
+    <div id="request-title">
       <%= f.label :title %>
       <%= f.text_field :title %>
-    </span>
-
-    <span id="request-description">
-      <%= f.label :description %>
-      <%= f.text_area :task %>
-    </span>
-  
-    <%= f.label :start_date %>
-    <div class='input-append date datepicker' data-date= '<%= @current_date %>' >
-      <%= f.text_field :start_date %>
-      <span class="add-on"><i class="icon-th"></i></span>
     </div>
 
-    <%= f.label :end_date %>
-    <div class='input-append date datepicker' data-date= '<%= @current_date %>' >
-      <%= f.text_field :end_date %>
-      <span class="add-on"><i class="icon-th"></i></span>
+    <div id="request-description">
+      <%= f.label :description %>
+      <%= f.text_area :task %>
+    </div>
+  
+    <!-- See readme for bootstrap-datepicker (as component) at eternicode/bootstrap-datepicker on github; javascript in domain.js, called in application.js -->
+    
+    <div id="request_dates">
+
+      <div id="request_start_date">
+        <%= f.label :start_date %>
+        <div id='start_date_field' class='input-append date datepicker' data-date= '<%= @current_date %>' >
+          <%= f.text_field :start_date %>
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+      </div>  
+
+      <div id="request_end_date">
+        <%= f.label :end_date %>
+        <div id='end_date_field' class='input-append date datepicker' data-date= '<%= @current_date %>' >
+          <%= f.text_field :end_date %>
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+      </div> 
+    </div>     
+
+    <div id="request_dropdowns">
+    
+      <div id="group_dropdown">
+        <%= f.label :group %>
+        <%= f.select :group, options_for_select(["Development", "Interface Design", "QA", "Infrastructure"]) %>
+      </div>
+   
+      <div id="location_dropdown">
+        <%= f.label :office %>
+        <%= f.select :location, options_for_select(["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]) %>
+      </div>  
+    </div>
+
+    <div id="request_skills_checkboxes">
+      <%=f.label :skills_needed, 'Relevant Skills' %>
+      <div id="column_checkboxes">
+        <% @skills.each do |skill| %>
+          <div class="vertical_checkboxes">
+          <%= check_box_tag "request[skills_needed][]", skill.name, @request.has_skill?(skill.name) %>
+          <%= skill.name %> 
+          </div>  
+        <% end %>
+      </div>
     </div>  
-
-    <%= f.label :group %>
-    <select>
-      <option>Development</option>
-      <option>IT</option>
-      <option>Infrastructure</option>
-    </select>
-      
-    <%= f.label :group %>
-    <%= f.text_field :group %>
-
-    <%= f.label :location %>
-    <%= f.text_field :location %>
 
 
  

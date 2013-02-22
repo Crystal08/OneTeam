@@ -25,15 +25,16 @@ class RequestsController < ApplicationController
 
   def new
     @request = Request.new
+    @skills = Skill.all
   end
 
   def edit
+    @skills = Skill.all
   end
 
   def create
     @request = current_employee.requests.build(params[:request]) 
-    @current_date = DateTime.now.to_date 
-
+    @current_date = DateTime.now.to_date
     if @request.save
       flash[:success] = "Request was successfully created."
       render 'show'

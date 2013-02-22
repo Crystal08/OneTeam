@@ -1,6 +1,9 @@
-<div class="span6 offset3">
-  <h1>Edit account</h1>
-</div>
+<p id="notice"><%= notice %></p>
+
+<!-- not sure what this line is doing, check Hartl? -->
+<% provide(:title, @employee) %>
+
+<h1>Edit Profile</h1>
 
 <% if @employee.errors.any? %>
   <div id="error_explanation">

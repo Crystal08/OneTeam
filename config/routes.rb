@@ -1,5 +1,8 @@
 OneTeam::Application.routes.draw do
 
+  resources :skills
+
+
   root :to => 'requests#index'
   
 #The :as => part below names the route, so that employee_requests_path returns /employees/:employee_id/requests; See _header.html.erb with link_to for "My Requests" 
