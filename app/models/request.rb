@@ -66,5 +66,5 @@ class Request < ActiveRecord::Base
   def skills_needed= (skills)
     write_attribute(:skills_needed, skills.delete_if {|x| x == ""}.join(", "))
   end
-   
+
 end

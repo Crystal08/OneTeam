@@ -30,6 +30,7 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
   end
 
   def create

@@ -29,6 +29,7 @@ class RequestsController < ApplicationController
   end
 
   def edit
+    @request = Request.find(params[:id])
     @skills = Skill.all
   end
 

@@ -11,7 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130221203134) do
+ActiveRecord::Schema.define(:version => 20130227125106) do
+
+  create_table "departments", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "employees", :force => true do |t|
     t.decimal  "years_with_company"
@@ -37,6 +43,12 @@ ActiveRecord::Schema.define(:version => 20130221203134) do
   add_index "employees", ["remember_token"], :name => "index_employees_on_remember_token"
 
   create_table "groups", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "name"
+  end
+
+  create_table "locations", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -62,16 +74,6 @@ ActiveRecord::Schema.define(:version => 20130221203134) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "status"
-  end
-
-  create_table "selected_employees", :force => true do |t|
-    t.string   "name"
-    t.integer  "employee_id"
-    t.integer  "request_id"
-    t.integer  "response_id"
-    t.string   "notes"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
   end
 
   create_table "selections", :force => true do |t|

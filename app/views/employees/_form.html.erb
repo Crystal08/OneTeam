@@ -10,42 +10,85 @@
   </div>
 <% end %>
 
-<div class="row">
-  <div class="span6 offset3">
-   
+    <div id="employee_name">
       <%= f.label :first_name %>
       <%= f.text_field :first_name %>
 
       <%= f.label :last_name %>
       <%= f.text_field :last_name %>
-  
-      <%= f.label :years_with_company %>
-      <%= f.text_field :years_with_company %>
-  
-      <%= f.label :manager %>
-      <%= f.text_field :manager %>
-  
-      <%= f.label :position %>
-      <%= f.text_field :position %>
+    </div>  
 
+    <div id="employee_contact">
+      
+      <div id="employee_contact_email"> 
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>  
+      
+      <div id="employee_location_dropdown">
+        <%= f.label :location, 'Office' %>
+        <%= f.select :location, options_for_select(@locations) %>
+      </div>  
+      
+      <div id="employee_department_dropdown">
+        <%= f.label :department %>
+        <%= f.select :department, options_for_select(["IT"]) %>
+      </div>
 
-      <%= f.label :department %>
-      <%= f.text_field :department %>
-  
-      <%= f.label :group %>
-      <%= f.text_field :group %>
-  
-      <%= f.label :location %>
-      <%= f.text_field :location %>
-  
-      <%= f.label :current_skills %>
-      <%= f.text_field :current_skills %>
-  
-      <%= f.label :skills_interested_in %>
-      <%= f.text_field :skills_interested_in %>
-  
-  </div>
-</div>
+      <div id="employee_group_dropdown">
+        <%= f.label :group %>
+        <%= f.select :group, options_for_select(["Development", "Interface Design", "QA", "Infrastructure"]) %>
+      </div>  
+    </div> 
+
+    <div id="employee_company_info"> 
+
+      <div id="employee_position_dropdown">
+        <%= f.label :position, 'Job Title' %>
+        <%= f.select :position, options_for_select(["Engineer", "Analyst", "Project Lead", "UI Specialist", "QA Specialist"]) %>
+      </div>  
+
+      <div id="employee_immediate_manager">
+        <%= f.label :manager, 'Immediate Supervisor' %>
+        <%= f.text_field :manager %>
+      </div>  
+
+      <div id="employee_years">
+        <%= f.label :years_with_company %>
+        <%= f.number_field :years_with_company, :in => 0..10, :step => 1 %>
+      </div>
+    </div>
+
+    <div id="employee_self_description">
+      <%= f.label :about_me, 'Write a short description about yourself' %>
+      <%= f.text_area :about_me %>
+    </div>
+
+    <div id="employee_checkboxes_current_skills">
+      <%=f.label :current_skills, 'Current Skills' %>
+      <div id="employee_column_checkboxes">
+        <% all_skills.each do |skill| %>
+          <div class="vertical_checkboxes">
+          <%= check_box_tag "employee[current_skills][]", skill.name, @employee.has_skill?(skill.name) %>
+          <%= skill.name %> 
+          </div>  
+        <% end %>
+      </div>
+    </div>  
+
+    <div id="employee_checkboxes_desired_skills">
+      <%=f.label :skills_interested_in, 'Desired Skills' %>
+      <div id="employee_column2_checkboxes">
+        <% all_skills.each do |skill| %>
+          <div class="vertical_checkboxes">
+          <%= check_box_tag "employee[skills_interested_in][]", skill.name, @employee.wants_skill?(skill.name) %>
+          <%= skill.name %> 
+          </div>  
+        <% end %>
+      </div>
+    </div> 
+
+ 
 
 
 

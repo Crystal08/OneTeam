@@ -46,7 +46,7 @@
 #end_date_field{
   display: inline;
   position: relative;
-  left: 8px;
+  left: 10px;
   }
 
 #request_dropdowns{
@@ -61,11 +61,11 @@
   }
 }  
 
-#group_dropdown{
+#request_group_dropdown{
   display: inline-block;
 }
   
-#location_dropdown{
+#request_location_dropdown{
   display: inline-block;
   position: relative;
   left: 40px;
@@ -85,7 +85,7 @@
   }
 } 
 
-#column_checkboxes{
+#request_column_checkboxes{
   display: block;
   margin-left: 80px;
   margin-top: -40px;

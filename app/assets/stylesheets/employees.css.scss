@@ -2,11 +2,148 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#gravatar {
+.textarea{
+	padding-right: 1px;
+}
+
+#gravatar{
   padding-top: 10px;
 }
 
-#profile {
+#profile{
   padding-left: 10px;
   margin-left: 100px;
 }
+
+#employee_name{
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  label{
+    display: inline-block;
+    padding-right: 5px;
+  }
+  input{
+    display: inline-block;
+    width: 130px;
+    margin-right: 5px;
+  }
+}
+
+#employee_contact{
+  display: block;
+  padding-bottom: 10px;
+  label{ 
+    display: inline-block;
+    padding-right: 5px;
+    }
+  input{
+    display: inline-block;
+    width: 130px;
+    margin-right: 5px;
+  } 
+  select{
+    width: 145px;
+    margin-right: 10px;
+  }
+} 
+
+#employee_contact_email{
+	display: inline-block;
+	label{
+	  padding-right:40px;
+	} 
+} 
+
+#employee_location_dropdown{
+	display: inline-block;
+	label{
+	  padding-right:40px;
+	}
+}
+
+#employee_department_dropdown{
+	display: inline-block;
+}
+
+#employee_group_dropdown{
+	display: inline-block;
+}  
+
+#employee_company_info{
+  display: block;
+  padding-bottom: 10px;
+  label{
+    display: inline-block;
+    padding-right: 5px;
+  }
+  input{
+    display: inline-block;
+    width: 130px;
+    margin-right: 5px;
+  }
+  select{
+    width: 145px;
+    margin-right: 10px;
+  }
+} 
+
+#employee_position_dropdown{
+  display: inline-block;
+  label{
+    padding-right: 22px;
+  }
+} 
+
+#employee_immediate_manager{
+  display: inline-block;
+  position: relative;
+  left: -5px;
+  label{
+    padding-right: 25px;
+  }
+}
+  
+#employee_years{
+  display: inline-block;
+  position: relative;
+  left: -6px;
+  input{
+    width: 50px;
+    position: relative;
+    left: 20px;
+  }
+} 
+
+#employee_self_description{
+  display: block;
+  textarea {
+      width: 400px;
+      height: 100px;
+    } 
+  padding-bottom: 10px;
+}
+
+#employee_checkboxes_current_skills{
+  display: inline-block;
+}
+
+#employee_checkboxes_desired_skills{
+  display: inline-block;
+  position: relative;
+  left: 100px;
+}
+
+#profile_controls {
+  display: inline-block;
+  div {
+    padding-top: 15px;
+    margin-left: 75px;
+    display: inline-block
+  }
+  
+  input {
+    width:150px;
+  }
+}
+

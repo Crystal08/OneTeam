@@ -20,6 +20,11 @@ module ApplicationHelper
     link_to link_text, link_path
     end
   end
+
+  def all_skills
+    Skill.all
+  end  
+  
 end  
 
  

@@ -1,5 +1,17 @@
 OneTeam::Application.routes.draw do
 
+  resources :groups
+
+
+  resources :departments
+
+
+  resources :locations
+
+
+  resources :offices
+
+
   resources :skills
 
 
