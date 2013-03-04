@@ -8,7 +8,7 @@
     
   <div id="request-controls">
     <%= button_to "Create request", request_path(request), class:  "btn btn-med", :method => "post" %>
-    <%= button_to "Cancel", requests_path, class: "btn btn-med" %></div>
+    <%= button_to "Cancel", employee_requests_path(current_employee), class: "btn btn-med", :method => "post" %></div>
 
 <% end %>
 

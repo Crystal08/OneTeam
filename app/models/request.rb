@@ -14,9 +14,11 @@ class Request < ActiveRecord::Base
   validate :start_date_first
 
   def start_date_first
+    if !start_date.nil?
       if start_date > end_date
         errors.add(:start_date, 'must occur before end date')
       end
+    end  
   end
 
   def selected?
