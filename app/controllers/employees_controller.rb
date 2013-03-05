@@ -26,6 +26,7 @@ class EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
+    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
   end
 
   def edit
@@ -35,6 +36,7 @@ class EmployeesController < ApplicationController
 
   def create
     @employee = Employee.new(params[:employee])
+    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
 
     if @employee.save
       sign_in @employee
@@ -47,6 +49,7 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
+    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
  
       if @employee.update_attributes(params[:employee])
       flash[:success] = "Account was successfully updated."

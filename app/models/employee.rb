@@ -11,6 +11,8 @@ class Employee < ActiveRecord::Base
   has_many :skills
   has_many :departments
 
+  validates_presence_of :first_name, :last_name, :email
+
   before_save :create_remember_token
 
   def full_name

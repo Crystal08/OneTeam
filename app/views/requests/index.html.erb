@@ -14,6 +14,9 @@
          in <%= request.location %> Office (Group: <%= request.group %>)</p>
       <p>Description: <%= request.task %></p>
 
+<!--  <p>Your current skills match: <%#= method to return number of current skills for this employee that match required skills for this request (request, current_employee) %> out of <%#= method to return number of skills required for this project %> required skills for this request</p>  -->
+<!--      <p>Your desired skills match: <%#= method to return number of current skills for this employee that match required skills for this request (request, current_employee) %> out of <%#= method to return number of skills required for this project %> required skills for this project </p>  -->
+
       <% if request.find_responses(request).find_by_employee_id(current_employee) %>
           <div class='btn btn-med disabled'>Applied</div>
       <% else %>
