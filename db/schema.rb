@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227125106) do
+ActiveRecord::Schema.define(:version => 20130306032628) do
 
   create_table "departments", :force => true do |t|
     t.string   "name"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20130227125106) do
     t.string   "position"
     t.string   "department"
     t.string   "group"
-    t.string   "location"
     t.string   "current_skills"
     t.string   "skills_interested_in"
     t.datetime "created_at",           :null => false
@@ -38,6 +37,11 @@ ActiveRecord::Schema.define(:version => 20130227125106) do
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "location"
+    t.integer  "location_id"
+    t.integer  "group_id"
+    t.integer  "department_id"
+    t.integer  "position_id"
   end
 
   add_index "employees", ["remember_token"], :name => "index_employees_on_remember_token"
@@ -54,6 +58,12 @@ ActiveRecord::Schema.define(:version => 20130227125106) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "positions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "requests", :force => true do |t|
     t.integer  "employee_id"
     t.string   "task"
@@ -65,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20130227125106) do
     t.date     "start_date"
     t.date     "end_date"
     t.string   "title"
+    t.integer  "location_id"
+    t.integer  "group_id"
   end
 
   create_table "responses", :force => true do |t|

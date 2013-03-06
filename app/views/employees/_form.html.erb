@@ -27,17 +27,17 @@
       
       <div id="employee_location_dropdown">
         <%= f.label :location, 'Office' %>
-        <%= f.select :location, options_for_select(@locations) %>
+        <%= collection_select(:employee, :location_id, @locations, :id, :name, :prompt => true) %>
       </div>  
       
       <div id="employee_department_dropdown">
         <%= f.label :department %>
-        <%= f.select :department, options_for_select(["IT"]) %>
+        <%= collection_select(:employee, :department_id, @departments, :id, :name, :prompt => true) %>
       </div>
 
       <div id="employee_group_dropdown">
         <%= f.label :group %>
-        <%= f.select :group, options_for_select(["Development", "Interface Design", "QA", "Infrastructure"]) %>
+        <%= collection_select(:employee, :group_id, @groups, :id, :name, :prompt => true) %>
       </div>  
     </div> 
 
@@ -45,7 +45,7 @@
 
       <div id="employee_position_dropdown">
         <%= f.label :position, 'Job Title' %>
-        <%= f.select :position, options_for_select(["Engineer", "Analyst", "Project Lead", "UI Specialist", "QA Specialist"]) %>
+        <%= collection_select(:employee, :position_id, @positions, :id, :name, :prompt => true) %>
       </div>  
 
       <div id="employee_immediate_manager">

@@ -1,7 +1,7 @@
 class Employee < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :about_me, 
-  :image, :email, :years_with_company, :manager, :position,
-  :department, :group, :location, :current_skills, 
+  :image, :email, :years_with_company, :manager, :position, :position_id,
+  :department, :department_id, :group, :group_id, :location, :location_id, :current_skills, 
   :skills_interested_in, :password, :password_confirmation
   has_secure_password
 
@@ -10,8 +10,13 @@ class Employee < ActiveRecord::Base
   has_many :selections
   has_many :skills
   has_many :departments
+  belongs_to :location
+  belongs_to :group
+  belongs_to :department
+  belongs_to :position
 
-  validates_presence_of :first_name, :last_name, :email
+
+  validates_presence_of :first_name, :last_name, :email, :location, :department, :group, :position
 
   before_save :create_remember_token
 

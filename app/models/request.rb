@@ -1,15 +1,16 @@
 class Request < ActiveRecord::Base
   attr_accessible :title, :employee_id, :task, :skills_needed,
-   :location, :start_date, :end_date, :group
+   :location, :location_id, :start_date, :end_date, :group, :group_id
  
   belongs_to :employee
+  belongs_to :location
   
   has_many :responses
   has_many :selections
   
   accepts_nested_attributes_for :responses
   
-  validates_presence_of :title, :start_date, :end_date
+  validates_presence_of :title, :location, :start_date, :end_date
   validates :task, :length => { :maximum => 1500 }
   validate :start_date_first
 

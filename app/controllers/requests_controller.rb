@@ -26,15 +26,21 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @skills = Skill.all
+    @locations = Location.all
+    @groups = Group.all
   end
 
   def edit
     @request = Request.find(params[:id])
     @skills = Skill.all
+    @locations = Location.all
+    @groups = Group.all
   end
 
   def create
     @request = current_employee.requests.build(params[:request]) 
+    @locations = Location.all
+    @groups = Group.all
     @current_date = DateTime.now.to_date
     if @request.save
       flash[:success] = "Request was successfully created."
@@ -45,6 +51,9 @@ class RequestsController < ApplicationController
   end
 
   def update
+    @request = Request.find(params[:id])
+    @locations = Location.all
+    @groups = Group.all
     
     if @request.update_attributes(params[:request])
       flash[:success] = "Request was successfully updated."
@@ -56,7 +65,7 @@ class RequestsController < ApplicationController
 
   def destroy
     @request.destroy
-    redirect_to root_url
+    redirect_to employee_requests_path(current_employee)
   end
 
   private

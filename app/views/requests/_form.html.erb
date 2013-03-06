@@ -45,12 +45,12 @@
     
       <div id="request_group_dropdown">
         <%= f.label :group %>
-        <%= f.select :group, options_for_select(["Development", "Interface Design", "QA", "Infrastructure"]) %>
+        <%= collection_select(:request, :group_id, @groups, :id, :name, :prompt => true) %>
       </div>
    
       <div id="request_location_dropdown">
-        <%= f.label :office %>
-        <%= f.select :location, options_for_select(["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]) %>
+        <%= f.label :location, 'Office' %>
+        <%= collection_select(:request, :location_id, @locations, :id, :name, :prompt => true) %>
       </div>  
     </div>
 

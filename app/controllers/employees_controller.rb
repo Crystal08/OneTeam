@@ -26,17 +26,26 @@ class EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
-    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
+    @locations = Location.all
+    @departments = Department.all
+    @groups = Group.all
+    @positions = Position.all
   end
 
   def edit
     @employee = Employee.find(params[:id])
-    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
+    @locations = Location.all
+    @departments = Department.all
+    @groups = Group.all
+    @positions = Position.all
   end
 
   def create
     @employee = Employee.new(params[:employee])
-    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
+    @locations = Location.all
+    @departments = Department.all
+    @groups = Group.all
+    @positions = Position.all
 
     if @employee.save
       sign_in @employee
@@ -49,16 +58,17 @@ class EmployeesController < ApplicationController
 
   def update
     @employee = Employee.find(params[:id])
-    @locations = ["Bentonville", "Boston", "Chicago", "Houston", "London", "McKinney", "Mumbai", "San Francisco"]
+    @locations = Location.all
+    @departments = Department.all
+    @groups = Group.all
+    @positions = Position.all
  
       if @employee.update_attributes(params[:employee])
-      flash[:success] = "Account was successfully updated."
-      sign_in @employee
-      redirect_to @employee
-        
+        flash[:success] = "Account was successfully updated."
+        sign_in @employee
+        redirect_to @employee
       else
-      render 'edit'
-     
+        render 'edit'
       end
   end
 
