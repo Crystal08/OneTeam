@@ -1,5 +1,17 @@
 OneTeam::Application.routes.draw do
 
+  resources :request_skills
+
+
+  resources :create_request_skills
+
+
+  resources :desired_skills
+
+
+  resources :current_skills
+
+
   resources :positions
 
 

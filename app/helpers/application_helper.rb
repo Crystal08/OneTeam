@@ -24,7 +24,7 @@ module ApplicationHelper
   def all_skills
     Skill.all
   end  
-  
+
 end  
 
  

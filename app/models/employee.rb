@@ -24,21 +24,25 @@ class Employee < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  def skills
+  def skill_names
     if !current_skills.nil?
-      current_skills.split(", ") || []
+      current_skills.split(", ") 
+    else
+      []  
     end
   end  
 
   def has_skill?(name)
-    if !self.skills.nil?
-      self.skills.include?(name)
+    if !self.skill_names.nil?
+      self.skill_names.include?(name)
     end  
   end 
 
   def skills_interested
     if !skills_interested_in.nil?
-      skills_interested_in.split(", ") || []
+      skills_interested_in.split(", ")
+    else
+      []  
     end
   end    
 

@@ -4,13 +4,14 @@ class Request < ActiveRecord::Base
  
   belongs_to :employee
   belongs_to :location
+  belongs_to :group
   
   has_many :responses
   has_many :selections
   
   accepts_nested_attributes_for :responses
   
-  validates_presence_of :title, :location, :start_date, :end_date
+  validates_presence_of :title, :location, :start_date, :end_date, :group
   validates :task, :length => { :maximum => 1500 }
   validate :start_date_first
 
@@ -54,20 +55,31 @@ class Request < ActiveRecord::Base
     end_date.strftime("%b %d %Y")
   end
 
-  def skills
+  def skill_names
     if !skills_needed.nil?
-      skills_needed.split(", ") || []
+      skills_needed.split(", ") 
+    else
+      []  
     end
   end  
 
   def has_skill?(name)
-    if !self.skills.nil?
-      self.skills.include?(name)
+    if !self.skill_names.nil?
+      self.skill_names.include?(name)
     end  
   end 
 
-  def skills_needed= (skills)
-    write_attribute(:skills_needed, skills.delete_if {|x| x == ""}.join(", "))
+  def current_skills_count(employee)
+    request_skills = RequestSkill.where(:request_id => id)
+    request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
+    employee_skills = CurrentSkill.where(:employee_id => employee.id)
+    employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
+    
+    (request_skill_ids & employee_skill_ids).length
   end
 
+  def skills_count 
+    RequestSkill.where(:request_id => id).length
+  end  
 end
+

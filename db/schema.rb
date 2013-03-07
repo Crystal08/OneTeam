@@ -11,12 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130306032628) do
+ActiveRecord::Schema.define(:version => 20130307000854) do
+
+  create_table "current_skills", :force => true do |t|
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "skill_id"
+    t.integer  "employee_id"
+    t.integer  "skill_level"
+  end
 
   create_table "departments", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "desired_skills", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "employee_id"
+    t.integer  "interest_level"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "employees", :force => true do |t|
@@ -60,6 +76,13 @@ ActiveRecord::Schema.define(:version => 20130306032628) do
 
   create_table "positions", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "request_skills", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "request_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

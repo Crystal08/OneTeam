@@ -11,8 +11,9 @@
        - <%= request.end_date_str %>(Open, <%= request.status %>)</p>
       <p>Posted by 
         <%= request.employee.first_name %> <%= request.employee.last_name %>
-         in <%= request.location.name %> Office (Group: <%= request.group %>)</p>
+         in <%= request.location.name %> Office (Group: <%= request.group.name %>)</p>
       <p>Description: <%= request.task %></p>
+      <p>Your current skills match for this project: <%= request.current_skills_count(current_employee) %> out of <%=request.skills_count %> skills</p>
 
 <!--  <p>Your current skills match: <%#= method to return number of current skills for this employee that match required skills for this request (request, current_employee) %> out of <%#= method to return number of skills required for this project %> required skills for this request</p>  -->
 <!--      <p>Your desired skills match: <%#= method to return number of current skills for this employee that match required skills for this request (request, current_employee) %> out of <%#= method to return number of skills required for this project %> required skills for this project </p>  -->
