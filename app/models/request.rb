@@ -78,6 +78,15 @@ class Request < ActiveRecord::Base
     (request_skill_ids & employee_skill_ids).length
   end
 
+  def desired_skills_count(employee)
+    request_skills = RequestSkill.where(:request_id => id)
+    request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
+    employee_skills = DesiredSkill.where(:employee_id => employee.id)
+    employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
+    
+    (request_skill_ids & employee_skill_ids).length
+  end  
+
   def skills_count 
     RequestSkill.where(:request_id => id).length
   end  
