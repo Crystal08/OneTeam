@@ -10,19 +10,22 @@
 
   <% if !request.done? %>
 
-    </br><p><%= request.title %>:<%= request.start_date_str %>
+    </br><p><em><%= request.title %></em>:<%= request.start_date_str %>
      - <%= request.end_date_str %>(<%= request.status %>)</p>
     <p>Description: <%= request.task %></p>
     <p>Active <%= link_to 'Cancel', request,
      method: :delete, data: {confirm: "Are you sure?"} %></p>
-    <p>Applicants:</p>
+    <p><em>Applicants:</em></p>
 
     <% request.responses.each do |response| %>
 
-      <p><%= link_to response.employee.full_name, employee_path(response.employee) %> |
+      <p class = "text_indent_20"><%= link_to response.employee.full_name, employee_path(response.employee) %> |
+
         <% if response.selected? %> Selected </p>
         <% else %><%= link_to 'Select', new_response_selection_path(response) %></p>
         <% end %>
+        <p class = "text_indent_40"><em>Current skills</em> match: <%= request.current_skills_count(response.employee) %> out of <%=request.skills.count %></p>
+        <p class = "text_indent_40"><em>Interested skills</em> match: <%= request.desired_skills_count(response.employee) %> out of <%=request.skills.count %></p>
     <% end %> 
   <% end %>
 <% end %>  

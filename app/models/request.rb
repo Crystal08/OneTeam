@@ -8,7 +8,10 @@ class Request < ActiveRecord::Base
   
   has_many :responses
   has_many :selections
-  
+  # See http://stackoverflow.com/questions/4394803/rails-model-belongs-to-many
+  has_many :request_skills
+  has_many :skills, :through => :request_skills
+
   accepts_nested_attributes_for :responses
   
   validates_presence_of :title, :location, :start_date, :end_date, :group
@@ -70,25 +73,27 @@ class Request < ActiveRecord::Base
   end 
 
   def current_skills_count(employee)
-    request_skills = RequestSkill.where(:request_id => id)
-    request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
-    employee_skills = CurrentSkill.where(:employee_id => employee.id)
-    employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
+    #request_skills = RequestSkill.where(:request_id => id)
+    #request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
+    #employee_skills = CurrentSkill.where(:employee_id => employee.id)
+    #employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
     
-    (request_skill_ids & employee_skill_ids).length
+    (self.skills & employee.current_skills).count
+   
   end
 
   def desired_skills_count(employee)
-    request_skills = RequestSkill.where(:request_id => id)
-    request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
-    employee_skills = DesiredSkill.where(:employee_id => employee.id)
-    employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
+    #request_skills = RequestSkill.where(:request_id => id)
+    #request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
+   # employee_skills = DesiredSkill.where(:employee_id => employee.id)
+   # employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
     
-    (request_skill_ids & employee_skill_ids).length
+    (self.skills & employee.desired_skills).count
   end  
 
-  def skills_count 
-    RequestSkill.where(:request_id => id).length
-  end  
+  #below method is redundant once request and skill relationships are define, just call request.skills.count in the view
+  #def skills_count 
+  #  RequestSkill.where(:request_id => id).length
+  #end  
 end
 

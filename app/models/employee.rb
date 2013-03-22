@@ -8,7 +8,14 @@ class Employee < ActiveRecord::Base
   has_many :requests
   has_many :responses, :dependent => :destroy
   has_many :selections
-  has_many :skills
+  #http://kconrails.com/2010/01/29/has_and_belongs_to_many-associations-in-ruby-on-rails/
+  
+  has_many :employee_current_skills
+  has_many :current_skills, :through => :employee_current_skills, :source => :skill #option here says what type of object 'current skills' is (the name I've defined for this group of methods), here a skill object
+  
+  has_many :employee_desired_skills
+  has_many :desired_skills, :through => :employee_desired_skills, :source => :skill 
+  
   has_many :departments
   belongs_to :location
   belongs_to :group
