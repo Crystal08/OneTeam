@@ -134,16 +134,18 @@
   left: 100px;
 }
 
-#profile_controls {
-  display: inline-block;
+.profile_controls {
   div {
     padding-top: 15px;
-    margin-left: 75px;
-    display: inline-block
   }
-  
-  input {
+  input{
     width:150px;
+    display: block;
+  }
+  input.btn.btn-med{
+    width:200px;
+    height:40px;
+    margin-top: 20px;
   }
 }
 

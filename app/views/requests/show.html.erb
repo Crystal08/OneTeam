@@ -11,9 +11,12 @@
   <%= @request.task %>
 </p>
 
+<!-- The below section is clunky. This logic should be somewhere else- the controller? Also, how to put a comma after items in a list, EXCEPT for the last one? -->
 <p>
   <b>Skills needed:</b>
-  <%= @request.skills_needed %>
+  <% @request.skills.each do |rs| %>
+    <%= rs.name %>
+  <% end %>
 </p>
 
 <p>

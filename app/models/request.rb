@@ -1,5 +1,5 @@
 class Request < ActiveRecord::Base
-  attr_accessible :title, :employee_id, :task, :skills_needed,
+  attr_accessible :title, :employee_id, :task, :request_skill_ids,
    :location, :location_id, :start_date, :end_date, :group, :group_id
  
   belongs_to :employee
@@ -58,19 +58,31 @@ class Request < ActiveRecord::Base
     end_date.strftime("%b %d %Y")
   end
 
-  def skill_names
-    if !skills_needed.nil?
-      skills_needed.split(", ") 
-    else
-      []  
-    end
-  end  
+  #def skill_names
+  #  if !skills_needed.nil?
+  #    skills_needed.split(", ") 
+  #  else
+  #    []  
+  #  end
+  #end  
 
-  def has_skill?(name)
-    if !self.skill_names.nil?
-      self.skill_names.include?(name)
+  def has_skill?(skill)
+    if !self.skills.nil?
+      self.skills.include?(skill)
     end  
   end 
+
+  def request_skill_ids
+    self.skills.map {|s| s.skill_id}
+  end
+  
+  def request_skill_ids= (ids)
+    self.request_skills = make_request_skill_array(ids)
+  end  
+
+  def make_request_skill_array(ids)
+    ids.map {|id| RequestSkill.create(:skill_id => id)}
+  end    
 
   def current_skills_count(employee)
     #request_skills = RequestSkill.where(:request_id => id)

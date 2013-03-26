@@ -6,13 +6,13 @@
 <h1>Edit Profile</h1>
 
 <%= form_for(@employee) do |f| %>
-<%= hidden_field_tag "employee[current_skills][]", "" %>
-<%= hidden_field_tag "employee[skills_interested_in][]", "" %>
+<%= hidden_field_tag "employee[current_skill_ids][]", "" %>
+<%= hidden_field_tag "employee[desired_skill_ids][]", "" %>
 	  
   <%= render 'form', :f => f %> 
   <p></p>
        
-  <div id="profile_controls">
+  <div class="profile_controls">
     <%= f.submit "Update profile", class: "btn btn-med" %>
     <%= button_to "Cancel", employee_path, class: "btn btn-med" %>
   </div>

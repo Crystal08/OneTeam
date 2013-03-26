@@ -55,11 +55,11 @@
     </div>
 
     <div id="request_skills_checkboxes">
-      <%=f.label :skills_needed, 'Relevant Skills' %>
+      <p>Relevant Skills<p>
       <div id="request_column_checkboxes">
         <% all_skills.each do |skill| %>
           <div class="vertical_checkboxes">
-          <%= check_box_tag "request[skills_needed][]", skill.name, @request.has_skill?(skill.name) %>
+          <%= check_box_tag "request[request_skill_ids][]", skill.id, @request.skills.compact.include?(skill) %>
           <%= skill.name %> 
           </div>  
         <% end %>

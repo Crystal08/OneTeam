@@ -2,19 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-#new_request.new_request{
+#request-title{
   margin-top: 20px;  
-  #request-title{
-    display: block;
-    label{
-      display: inline;
-      margin-right: 20px;
-    } 
-    input[type="text"] {
-      width:30%;
-    }
+  display: block;
+  label{
+    display: inline;
+    margin-right: 20px;
   } 
-  #request-description{
+  input[type="text"] {
+    width:30%;
+  }
+}
+#request-description{
     display: block;
     textarea {
       width: 50%;
@@ -22,7 +21,6 @@
     } 
     padding-bottom: 15px;
   }
-}
 
 #request_dates{
   display: block;
@@ -89,6 +87,8 @@
   display: block;
   margin-left: 80px;
   margin-top: -40px;
+  position: relative;
+  top: 35px;
 }
 
 .vertical_checkboxes{
@@ -115,6 +115,12 @@
   input {
     width:150px;
   }
+}
+
+#request_edit_controls {
+  position: relative;
+  top: 15px;
+  left: 20px;
 }
   
 

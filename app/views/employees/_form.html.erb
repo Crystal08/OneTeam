@@ -65,11 +65,11 @@
     </div>
 
     <div id="employee_checkboxes_current_skills">
-      <%=f.label :current_skills, 'Current Skills' %>
+      <p>Current Skills</p>
       <div id="employee_column_checkboxes">
         <% all_skills.each do |skill| %>
           <div class="vertical_checkboxes">
-          <%= check_box_tag "employee[current_skills][]", skill.name, @employee.has_skill?(skill.name) %>
+          <%= check_box_tag "employee[current_skill_ids][]", skill.id, @employee.current_skills.compact.include?(skill) %>
           <%= skill.name %> 
           </div>  
         <% end %>
@@ -77,11 +77,11 @@
     </div>  
 
     <div id="employee_checkboxes_desired_skills">
-      <%=f.label :skills_interested_in, 'Desired Skills' %>
+      <p>Desired Skills</p>
       <div id="employee_column2_checkboxes">
         <% all_skills.each do |skill| %>
           <div class="vertical_checkboxes">
-          <%= check_box_tag "employee[skills_interested_in][]", skill.name, @employee.wants_skill?(skill.name) %>
+          <%= check_box_tag "employee[desired_skill_ids][]", skill.id, @employee.desired_skills.compact.include?(skill) %>
           <%= skill.name %> 
           </div>  
         <% end %>

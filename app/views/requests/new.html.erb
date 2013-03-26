@@ -2,7 +2,7 @@
 <h1>New request</h1>
 
 <%= form_for(@request) do |f| %>
-<%= hidden_field_tag "request[skills_needed][]", "" %>
+<%= hidden_field_tag "request[request_skill_ids][]", "" %>
 	  
   <%= render 'form', :f => f %> </br>
     

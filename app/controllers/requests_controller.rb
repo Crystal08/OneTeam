@@ -71,10 +71,10 @@ class RequestsController < ApplicationController
   private
   
   def non_user
-     if current_employee.nil?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
+    if current_employee.nil?
+      store_location
+      redirect_to signin_url, notice: "Please sign in."
+    end
   end
 
   def correct_employee
