@@ -1,6 +1,4 @@
 <p id="notice"><%= notice %></p>
-
-<!-- not sure what this line is doing, check Hartl? -->
 <% provide(:title, @employee) %>
 
 <h1>My Profile</h1>
@@ -62,15 +60,19 @@
 <!-- The below two sections are clunky. This logic should be somewhere else- the controller? Also, how to put a comma after items in a list, EXCEPT for the last one? -->
 <p>
   <b>Current Skills:</b>
-  <% @employee.current_skills.each do |cs| %>
-    <%= cs.name %>
+  <% @employee.employee_current_skills.each do |cs| %>
+    <% if cs.skill_level != 0 %>
+      <%= cs.skill_name %>(<%= cs.skill_level %>)
+    <% end %>  
   <% end %>  
 </p>
 
 <p>
   <b>Desired Skills:</b>
-  <% @employee.desired_skills.each do |ds| %>
-    <%= ds.name %>
+  <% @employee.employee_desired_skills.each do |ds| %>
+    <% if ds.interest_level != 0 %>
+      <%= ds.skill_name %>(<%= ds.interest_level %>)
+    <% end %>  
   <% end %>  
 </p>
 </br>
@@ -88,7 +90,7 @@
 <% @my_projects.each do |my_project| %>
   <% if !my_project.done? %>
 
-    <p><%= my_project.title %>:<%= my_project.start_date_str %>
+    <p><%= my_project.title %>: <%= my_project.start_date_str %>
      - <%= my_project.end_date_str %>(<%= my_project.status %>)</p>
     <p>Description: <%= my_project.task %></p>
   <% end %>
@@ -108,6 +110,3 @@
 
 </div>
 
-
-<!-- Below not requested by client -->
-<%#= link_to 'Back', employees_path %>

@@ -1,4 +1,3 @@
-
 <% provide(:title, "Requests I've Posted") %>
 <h1>Requests I've Posted</h1>
 
@@ -19,13 +18,16 @@
 
     <% request.responses.each do |response| %>
 
-      <p class = "text_indent_20"><%= link_to response.employee.full_name, employee_path(response.employee) %> |
+      <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> |
 
         <% if response.selected? %> Selected </p>
         <% else %><%= link_to 'Select', new_response_selection_path(response) %></p>
         <% end %>
-        <p class = "text_indent_40"><em>Current skills</em> match: <%= request.current_skills_count(response.employee) %> out of <%=request.skills.count %></p>
-        <p class = "text_indent_40"><em>Interested skills</em> match: <%= request.desired_skills_count(response.employee) %> out of <%=request.skills.count %></p>
+
+        <p class = "text_indent_large"><em>Current skills</em> score: <%=request.current_skills_score(response.employee) %> (<%= request.current_skills_count(response.employee) %> out of <%=request.skills.count %> skills)</p>
+
+        <p class = "text_indent_large"><em>Interested skills</em> score: <%=request.desired_skills_score(response.employee) %> (<%=request.desired_skills_count(response.employee) %> out of <%=request.skills.count %> skills)</p>
+
     <% end %> 
   <% end %>
 <% end %>  
@@ -37,6 +39,7 @@
   <% if request.done? %> 
 
     </br><p><%= request.title %>:<%= request.start_date_str %> - <%= request.end_date_str %>(<%= request.status %>)</p>
+    
     <p>Description: <%= request.task %></p>
     <p>Applicants:</p>
 

@@ -2,7 +2,7 @@ class Employee < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :about_me, 
   :image, :email, :years_with_company, :manager, :position, :position_id,
   :department, :department_id, :group, :group_id, :location, :location_id, 
-  :current_skill_ids, :desired_skill_ids, :password, :password_confirmation
+  :current_skills, :current_skill_ids, :desired_skills, :desired_skill_ids, :password, :password_confirmation
   has_secure_password
 
   has_many :requests
@@ -22,6 +22,8 @@ class Employee < ActiveRecord::Base
   belongs_to :department
   belongs_to :position
 
+  accepts_nested_attributes_for :employee_current_skills
+  accepts_nested_attributes_for :employee_desired_skills
 
   validates_presence_of :first_name, :last_name, :email, :location, :department, :group, :position
 
@@ -31,66 +33,45 @@ class Employee < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  #def skill_names
-  #  if !current_skills.nil? 
-  #    current_skills.split(", ") 
-  #  else
-  #    []  
-  #  end
-  #end  
-
-  #Below unnecessary- simply used provided include? method with checkbox_tag in _form view
-  #def has_skill?(skill)
-  #  if !self.current_skills.nil?
-  #    self.current_skills.include?(skill)
-  #  end  
-  #end 
-
-  #def current_skills= (skills)
-  #  write_attribute(:current_skills, skills.delete_if {|x| x == ""}.join(", "))
-  #end
+  #.nil? did NOT work below because [] returns true!!
+  def has_skill_level?(skill_id, level_number)
+    self.employee_current_skills.each do |cs|
+      return true if cs.skill_id == skill_id && cs.skill_level == level_number
+    end
+    level_number == 0  
+  end 
 
   def current_skill_ids
     self.current_skills.map {|cs| cs.skill_id}
   end
 
-  def current_skill_ids= (ids)
-    self.employee_current_skills = make_current_skill_array(ids)
+  def current_skills= (ids_with_levels)
+    self.employee_current_skills = make_current_skill_array(ids_with_levels)
   end
-  
-  def make_current_skill_array(ids) 
-    ids.map {|id| EmployeeCurrentSkill.create(:skill_id => id)}
-  end                                             
 
-  #def skills_interested
-  #  if :desired_skills.nil?
-  #   :desired_skills.split(", ")
-  #  else
-  #    []  
-  #  end
-  #end    
-
-  def wants_skill?(skill)
-    if !self.desired_skills.nil?
-      self.desired_skills.include?(skill)
-    end  
+  def make_current_skill_array(ids_with_levels)
+    ids_with_levels.map {|skill_id, level_number| EmployeeCurrentSkill.create(:skill_id => skill_id, :skill_level => level_number)}
   end 
 
-  #def:desired_skills= (skills)
-  #  write_attribute(:desired_skills, skills.delete_if {|x| x == ""}.join(", "))
-  #end
+  #.nil? did NOT work below because [] returns true!!
+  def has_interest_level?(skill_id, interest_number)
+    self.employee_desired_skills.each do |ds|
+      return true if ds.skill_id == skill_id && ds.interest_level == interest_number
+    end
+    interest_number == 0  
+  end 
 
   def desired_skill_ids
     self.desired_skills.map {|ds| ds.skill_id}
   end
   
-  def desired_skill_ids= (ids)
-    self.employee_desired_skills = make_desired_skill_array(ids)
+  def desired_skills= (ids_with_levels)
+    self.employee_desired_skills = make_desired_skill_array(ids_with_levels)
   end
   
-  def make_desired_skill_array(ids)
-    ids.map {|id| EmployeeDesiredSkill.create(:skill_id => id)}
-  end  
+  def make_desired_skill_array(ids_with_levels)
+    ids_with_levels.map {|skill_id, interest_number| EmployeeDesiredSkill.create(:skill_id => skill_id, :interest_level => interest_number)}
+  end
 
   private
 

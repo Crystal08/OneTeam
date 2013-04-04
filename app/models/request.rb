@@ -19,16 +19,11 @@ class Request < ActiveRecord::Base
   validate :start_date_first
 
   def start_date_first
-    if !start_date.nil?
-      if start_date > end_date
-        errors.add(:start_date, 'must occur before end date')
-      end
-    end  
-  end
+    errors.add(:start_date, 'must occur before end date') if !start_date.nil? && start_date > end_date
+  end    
 
   def selected?
-    if Selection.find_by_request_id(id)
-    end
+    !Selection.find_by_response_id(id).nil?
   end
 
   def status
@@ -58,22 +53,8 @@ class Request < ActiveRecord::Base
     end_date.strftime("%b %d %Y")
   end
 
-  #def skill_names
-  #  if !skills_needed.nil?
-  #    skills_needed.split(", ") 
-  #  else
-  #    []  
-  #  end
-  #end  
-
-  def has_skill?(skill)
-    if !self.skills.nil?
-      self.skills.include?(skill)
-    end  
-  end 
-
   def request_skill_ids
-    self.skills.map {|s| s.skill_id}
+    self.skills.map {|s| s.id}
   end
   
   def request_skill_ids= (ids)
@@ -85,27 +66,49 @@ class Request < ActiveRecord::Base
   end    
 
   def current_skills_count(employee)
-    #request_skills = RequestSkill.where(:request_id => id)
-    #request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
-    #employee_skills = CurrentSkill.where(:employee_id => employee.id)
-    #employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
-    
-    (self.skills & employee.current_skills).count
-   
+    current_skills = []
+    employee.employee_current_skills.each do |cs|
+      if cs.skill_level != 0
+        current_skills << Skill.find(cs.skill_id)
+      end
+    end  
+    (self.skills & current_skills).count
+  end
+
+  def current_skills_score(employee)
+    skill_level_array = []
+    request_skill_ids.each do |rs_id|
+      employee.employee_current_skills.each do |cs|
+        if cs.skill_level != 0 && cs.skill_id == rs_id
+          skill_level_array << cs.skill_level
+        end  
+      end
+    end  
+    skill_level_array.sum
   end
 
   def desired_skills_count(employee)
-    #request_skills = RequestSkill.where(:request_id => id)
-    #request_skill_ids = request_skills.map { |request_skill| request_skill.skill_id}
-   # employee_skills = DesiredSkill.where(:employee_id => employee.id)
-   # employee_skill_ids = employee_skills.map { |employee_skill| employee_skill.skill_id}    
-    
-    (self.skills & employee.desired_skills).count
-  end  
+    desired_skills = []
+    employee.employee_desired_skills.each do |ds|
+      if ds.interest_level != 0
+        desired_skills << Skill.find(ds.skill_id)
+      end
+    end
+    (self.skills & desired_skills).count
+  end          
 
-  #below method is redundant once request and skill relationships are define, just call request.skills.count in the view
-  #def skills_count 
-  #  RequestSkill.where(:request_id => id).length
-  #end  
+  def desired_skills_score(employee)
+    skill_interest_array = []
+    request_skill_ids.each do |rs_id|
+      employee.employee_desired_skills.each do |ecs|
+        if ecs.interest_level != 0 && ecs.skill_id == rs_id
+          skill_interest_array << ecs.interest_level
+        end  
+      end
+    end  
+    skill_interest_array.sum
+  end
+
 end
+
 

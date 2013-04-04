@@ -124,14 +124,20 @@
   padding-bottom: 10px;
 }
 
-#employee_checkboxes_current_skills{
+#employee_current_skills{
   display: inline-block;
+  li{
+    list-style: none;
+  }  
 }
 
-#employee_checkboxes_desired_skills{
+#employee_desired_skills{
   display: inline-block;
   position: relative;
-  left: 100px;
+  left: 50px;
+  li{
+   list-style: none;
+  }
 }
 
 .profile_controls {

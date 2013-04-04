@@ -64,29 +64,55 @@
       <%= f.text_area :about_me %>
     </div>
 
-    <div id="employee_checkboxes_current_skills">
+    <div id="employee_current_skills">
       <p>Current Skills</p>
-      <div id="employee_column_checkboxes">
+        <ul>
+          <li><%= "0 = No Experience" %></li>
+          <li><%= "1 = Beginner" %></li>
+          <li><%= "2 = Beginner-Proficient" %></li>
+          <li><%= "3 = Proficient" %></li>
+          <li><%= "4 = Expert" %></li>
+        </ul>
+      <table>     
         <% all_skills.each do |skill| %>
-          <div class="vertical_checkboxes">
-          <%= check_box_tag "employee[current_skill_ids][]", skill.id, @employee.current_skills.compact.include?(skill) %>
-          <%= skill.name %> 
-          </div>  
+          <tr>  
+            <td><%= skill.name %></td>  
+            <td><% (0..4).each do |level_number| %>
+            <%= level_number %>
+            <%= radio_button_tag "employee[current_skills][#{skill.id}]", "#{level_number}", @employee.has_skill_level?(skill.id, level_number) %>
+            <% end %></td>
+          </tr>
         <% end %>
-      </div>
+      </table>
     </div>  
 
-    <div id="employee_checkboxes_desired_skills">
-      <p>Desired Skills</p>
-      <div id="employee_column2_checkboxes">
+    <div id="employee_desired_skills">
+      <p>Desired Skills</p>  
+        <ul>
+          <li><%= "0 = Not Interested" %></li>
+          <li><%= "1 = Slightly Interested" %></li>
+          <li><%= "2 = Somewhat Interested" %></li>
+          <li><%= "3 = Interested" %></li>
+          <li><%= "4 = Very Interested" %></li>
+        </ul>
+      <table>    
         <% all_skills.each do |skill| %>
-          <div class="vertical_checkboxes">
-          <%= check_box_tag "employee[desired_skill_ids][]", skill.id, @employee.desired_skills.compact.include?(skill) %>
-          <%= skill.name %> 
-          </div>  
+          <tr> 
+            <td><%= skill.name %></td>
+            <td><% (0..4).each do |interest_number| %>
+            <%= interest_number %>
+            <%= radio_button_tag "employee[desired_skills][#{skill.id}","#{interest_number}", @employee.has_interest_level?(skill.id, interest_number) %>
+            <% end %></td>
+          </tr>
         <% end %>
-      </div>
-    </div> 
+      </table>
+    </div>  
+          
+    <!--        <td><%#= check_box_tag "employee[desired_skill_ids][]", skill.id, @employee.desired_skills.compact.include?(skill) %></td>
+          </tr>
+        <%# end %>
+      </table>
+    </div> -->
 
  
 
