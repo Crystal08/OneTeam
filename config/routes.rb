@@ -1,5 +1,8 @@
 OneTeam::Application.routes.draw do
 
+  resources :employee_skill_evaluations
+
+
   resources :request_skills
 
 

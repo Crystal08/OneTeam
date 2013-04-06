@@ -3,6 +3,9 @@ class Response < ActiveRecord::Base
   
   belongs_to :employee
   belongs_to :request
+
+  has_many :employee_skill_evaluations
+  has_many :skills, :through => :employee_skill_evaluations
   
   has_many :selections
   accepts_nested_attributes_for :selections
