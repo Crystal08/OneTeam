@@ -41,13 +41,16 @@
     </br><p><%= request.title %>:<%= request.start_date_str %> - <%= request.end_date_str %>(<%= request.status %>)</p>
     
     <p>Description: <%= request.task %></p>
-    <p>Applicants:</p>
+    <p><em>Participants:</em></p>
 
     <% request.responses.each do |response| %>
-
-      <p><%= link_to response.employee.full_name, employee_path(response.employee) %>
-        <% if response.selected? %> Selected </p>
-        <% end %>
+      <% if response.selected? %>
+        <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> |
+          <%= link_to " Evaluate this developer", new_response_evaluation_path(response) %></p>
+        
+<!-- Because there are no evaluation records yet, I have no logic to test for evaluation records, as for selections, but I will later. -->  
+        
+      <% end %>     
     <% end %> 
   <% end %> 
 <% end %>   

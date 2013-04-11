@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130406171508) do
+ActiveRecord::Schema.define(:version => 20130410140952) do
 
   create_table "departments", :force => true do |t|
     t.string   "name"
@@ -36,12 +36,12 @@ ActiveRecord::Schema.define(:version => 20130406171508) do
   end
 
   create_table "employee_skill_evaluations", :force => true do |t|
-    t.integer  "response_id"
     t.integer  "skill_id"
     t.integer  "assigned_skill_level"
     t.integer  "skill_experience_points"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+    t.integer  "evaluation_id"
   end
 
   create_table "employees", :force => true do |t|
@@ -68,6 +68,12 @@ ActiveRecord::Schema.define(:version => 20130406171508) do
   end
 
   add_index "employees", ["remember_token"], :name => "index_employees_on_remember_token"
+
+  create_table "evaluations", :force => true do |t|
+    t.integer  "response_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "groups", :force => true do |t|
     t.datetime "created_at", :null => false

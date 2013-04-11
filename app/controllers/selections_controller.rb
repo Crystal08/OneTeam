@@ -6,6 +6,7 @@ class SelectionsController < ApplicationController
   end
 
   def show
+    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
   end
 
@@ -21,6 +22,7 @@ class SelectionsController < ApplicationController
   end
 
   def edit 
+    @response = Response.find_by_id(params[:response_id])
     @selection = Selection.find(params[:id])
   end
 

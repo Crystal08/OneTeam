@@ -33,7 +33,6 @@ class Employee < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  #.nil? did NOT work below because [] returns true!!
   def has_skill_level?(skill_id, level_number)
     self.employee_current_skills.each do |cs|
       return true if cs.skill_id == skill_id && cs.skill_level == level_number

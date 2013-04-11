@@ -41,6 +41,10 @@ class Request < ActiveRecord::Base
     DateTime.now.to_date > end_date
   end
 
+  def days_long
+    self.end_date.to_date - self.start_date.to_date
+  end
+
   def find_responses(request)
     @responses = Response.where(:request_id => request.id)
   end
