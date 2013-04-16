@@ -57,7 +57,7 @@
   <%= @employee.years_with_company %>
 </p>
 </br>
-<!-- The below two sections are clunky. This logic should be somewhere else- the controller? Also, how to put a comma after items in a list, EXCEPT for the last one? -->
+
 <p>
   <b>Current Skills:</b>
   <% @employee.employee_current_skills.each do |cs| %>
@@ -84,8 +84,25 @@
 </br>
 
 <p>
-  <b>Projects I've worked on:</b></br>
+  <b>My Projects and Skill Points:</b></br>
 <p>
+
+<table class="text_indent_small">
+<tr>
+  <td>Skill</td>
+  <td>Total Experience Points</td>
+  <td>Average Skill Levels</td
+</tr>
+
+<% all_skills.each do |skill| %>
+  <tr>
+      <td><%= skill.name %></td>
+      <td class="center"><%= @employee.skill_experience_total(skill.id) %></td>
+      <td class="center"><%= @employee.average_skill_level(skill.id) %></td>
+  </tr>  
+<% end %>               
+</table></br>
+
 
 <% @my_projects.each do |my_project| %>
   <% if !my_project.done? %>
@@ -104,9 +121,28 @@
     <p><%= my_project.title %>:<%= my_project.start_date_str %>
      - <%= my_project.end_date_str %>(<%= my_project.status %>)</p>
     <p>Description: <%= my_project.task %></p>
-    </br>
-  <% end %> 
-<% end %>   
+
+    <% if my_project.evaluated?(@employee) %>
+      <table class="text_indent_small">
+        <tr>
+          <td>Skill</td>
+          <td>Project Experience Points</td>
+          <td>Project Skill Levels</td>
+        </tr>
+
+        <% all_skills.each do |skill| %>
+          <tr>
+            <td><%= skill.name %></td>
+            <td class="center"><%= @employee.skill_experience(my_project, skill.id) %></td>
+            <td class="center"><%= @employee.skill_level(my_project, skill.id) %></td>
+          </tr>
+        <% end %>   
+      </table></br>
+    <% else %>
+      <p> Project not yet evaluated </P></br>
+    <% end %>
+  <% end %>       
+<% end %>         
 
 </div>
 

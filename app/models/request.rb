@@ -26,6 +26,16 @@ class Request < ActiveRecord::Base
     !Selection.find_by_response_id(id).nil?
   end
 
+  def evaluated?(employee)
+    self.responses.each do |response|
+      if response.employee_id == employee.id && !response.evaluation.nil?
+        return true
+      else
+        return false
+      end 
+    end
+  end 
+
   def status
     if DateTime.now.to_date < start_date
       'Not Started'
@@ -42,7 +52,7 @@ class Request < ActiveRecord::Base
   end
 
   def days_long
-    self.end_date.to_date - self.start_date.to_date
+    (self.end_date.to_date - self.start_date.to_date).to_i
   end
 
   def find_responses(request)

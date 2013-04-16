@@ -14,8 +14,8 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.find(params[:id])
     @selections = Selection.where('employee_id' => params[:id])
-    @requests = @selections.map{|selection| selection.request_id}
-    @my_projects = @requests.map{|request| Request.find(request)}
+    @request_ids = @selections.map{|selection| selection.request_id}
+    @my_projects = @request_ids.map{|request_id| Request.find(request_id)}
     
     respond_to do |format|
       format.html # show.html.erb

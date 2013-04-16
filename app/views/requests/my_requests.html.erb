@@ -44,12 +44,33 @@
     <p><em>Participants:</em></p>
 
     <% request.responses.each do |response| %>
-      <% if response.selected? %>
-        <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> |
-          <%= link_to " Evaluate this developer", new_response_evaluation_path(response) %></p>
-        
-<!-- Because there are no evaluation records yet, I have no logic to test for evaluation records, as for selections, but I will later. -->  
-        
+      <% if response.selected? && response.evaluated? %>
+        <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> 
+        <% if response.evaluated? %> | Evaluation Details:
+          <table class = "text_indent_large">
+            <tr> 
+              <td> Skill </td>
+              <td> Proficiency Level </td>
+              <td> Experience Points </td>
+            </tr>  
+            <% all_skills.each do |skill| %>
+              <tr>
+                <td><%= skill.name %></td>
+                <td><% response.evaluation.employee_skill_evaluations.each do |skill_eval| %>
+                    <% if skill_eval.skill_id == skill.id %>
+                      <%= skill_eval.assigned_skill_level %></td>
+                      <td><%= skill_eval.skill_experience_points %></td>
+                    <% end %>
+                  <% end %> 
+              </tr>       
+            <% end %>
+          </table></p>
+           <p class = "text_indent_small"><%= link_to "Edit this evaluation?", edit_response_evaluation_path(response,response.evaluation) %> 
+        <% end %>  
+      <% end %> 
+      <% if response.selected? && !response.evaluated? %> 
+        <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> |  
+        <%= link_to "Evaluate this developer", new_response_evaluation_path(response) %></p>       
       <% end %>     
     <% end %> 
   <% end %> 

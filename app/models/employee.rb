@@ -40,6 +40,58 @@ class Employee < ActiveRecord::Base
     level_number == 0  
   end 
 
+  def skill_experience_total(skill_id)
+    all_points = []
+    EmployeeSkillEvaluation.all.each do |sk_eval|
+      if sk_eval.evaluation.response.employee_id == self.id && sk_eval.skill_id == skill_id
+        all_points << sk_eval.skill_experience_points
+      end
+    end
+    all_points.sum
+  end  
+
+  def average_skill_level(skill_id) 
+    all_levels = []
+    EmployeeSkillEvaluation.all.each do |sk_eval|
+      if sk_eval.evaluation.response.employee_id == self.id && sk_eval.skill_id == skill_id   
+        all_levels << sk_eval.assigned_skill_level
+      end
+    end
+    if !all_levels.empty?
+      (all_levels.inject{ |sum, level| sum + level}.to_f / all_levels.size).to_i
+    else
+      "n/a"
+    end
+  end
+
+  def skill_experience(request, skill_id)
+    request.responses.each do |response|
+      if response.employee_id == self.id && !response.evaluation.nil?
+        response.evaluation.employee_skill_evaluations.each do |sk_eval|
+          if sk_eval.skill_id == skill_id
+            return sk_eval.skill_experience_points
+          end
+        end
+      else 
+        0
+      end
+    end
+  end          
+ 
+  def skill_level(request, skill_id)
+    request.responses.each do |response|
+      if response.employee_id == self.id && !response.evaluation.nil?
+        response.evaluation.employee_skill_evaluations.each do |sk_eval|
+          if sk_eval.skill_id == skill_id
+            return sk_eval.assigned_skill_level
+          end
+        end
+      else 
+        return 0
+      end
+    end
+  end
+
   def current_skill_ids
     self.current_skills.map {|cs| cs.skill_id}
   end
@@ -52,7 +104,6 @@ class Employee < ActiveRecord::Base
     ids_with_levels.map {|skill_id, level_number| EmployeeCurrentSkill.create(:skill_id => skill_id, :skill_level => level_number)}
   end 
 
-  #.nil? did NOT work below because [] returns true!!
   def has_interest_level?(skill_id, interest_number)
     self.employee_desired_skills.each do |ds|
       return true if ds.skill_id == skill_id && ds.interest_level == interest_number
