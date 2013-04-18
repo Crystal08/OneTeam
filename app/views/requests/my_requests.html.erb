@@ -9,24 +9,38 @@
 
   <% if !request.done? %>
 
-    </br><p><em><%= request.title %></em>:<%= request.start_date_str %>
-     - <%= request.end_date_str %>(<%= request.status %>)</p>
+    </br><p><em><%= request.title %></em>:
+    <%= request.start_date_str %>
+     - <%= request.end_date_str %>
+     (<%= request.status %>)</p>
     <p>Description: <%= request.task %></p>
     <p>Active <%= link_to 'Cancel', request,
-     method: :delete, data: {confirm: "Are you sure?"} %></p>
+     method: :delete, data: 
+     {confirm: "Are you sure?"} %></p>
     <p><em>Applicants:</em></p>
 
     <% request.responses.each do |response| %>
 
-      <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> |
+      <p class = "text_indent_small">
+        <%= link_to response.employee.full_name,
+         employee_path(response.employee) %> |
 
         <% if response.selected? %> Selected </p>
-        <% else %><%= link_to 'Select', new_response_selection_path(response) %></p>
+        <% else %><%= link_to 'Select', 
+        new_response_selection_path(response) %></p>
         <% end %>
 
-        <p class = "text_indent_large"><em>Current skills</em> score: <%=request.current_skills_score(response.employee) %> (<%= request.current_skills_count(response.employee) %> out of <%=request.skills.count %> skills)</p>
+        <p class = "text_indent_large">
+          <em>Current skills</em> score: 
+          <%=request.current_skills_score(response.employee) %>
+           (<%= request.current_skills_count(response.employee) %>
+            out of <%=request.skills.count %> skills)</p>
 
-        <p class = "text_indent_large"><em>Interested skills</em> score: <%=request.desired_skills_score(response.employee) %> (<%=request.desired_skills_count(response.employee) %> out of <%=request.skills.count %> skills)</p>
+        <p class = "text_indent_large">
+          <em>Interested skills</em> 
+          score: <%=request.desired_skills_score(response.employee) %>
+           (<%=request.desired_skills_count(response.employee) %> 
+           out of <%=request.skills.count %> skills)</p>
 
     <% end %> 
   <% end %>
@@ -38,14 +52,18 @@
 <% @requests.each do |request| %>
   <% if request.done? %> 
 
-    </br><p><%= request.title %>:<%= request.start_date_str %> - <%= request.end_date_str %>(<%= request.status %>)</p>
+    </br><p><%= request.title %>:
+    <%= request.start_date_str %> - <%= request.end_date_str %>
+    (<%= request.status %>)</p>
     
     <p>Description: <%= request.task %></p>
     <p><em>Participants:</em></p>
 
     <% request.responses.each do |response| %>
       <% if response.selected? && response.evaluated? %>
-        <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> 
+        <p class = "text_indent_small">
+          <%= link_to response.employee.full_name, 
+          employee_path(response.employee) %> 
         <% if response.evaluated? %> | Evaluation Details:
           <table class = "text_indent_large">
             <tr> 
@@ -56,7 +74,9 @@
             <% all_skills.each do |skill| %>
               <tr>
                 <td><%= skill.name %></td>
-                <td><% response.evaluation.employee_skill_evaluations.each do |skill_eval| %>
+                <td>
+                  <% response.evaluation.employee_skill_evaluations.each do 
+                    |skill_eval| %>
                     <% if skill_eval.skill_id == skill.id %>
                       <%= skill_eval.assigned_skill_level %></td>
                       <td><%= skill_eval.skill_experience_points %></td>
@@ -65,12 +85,17 @@
               </tr>       
             <% end %>
           </table></p>
-           <p class = "text_indent_small"><%= link_to "Edit this evaluation?", edit_response_evaluation_path(response,response.evaluation) %> 
+           <p class = "text_indent_small">
+            <%= link_to "Edit this evaluation?", 
+            edit_response_evaluation_path(response,response.evaluation) %> 
         <% end %>  
       <% end %> 
       <% if response.selected? && !response.evaluated? %> 
-        <p class = "text_indent_small"><%= link_to response.employee.full_name, employee_path(response.employee) %> |  
-        <%= link_to "Evaluate this developer", new_response_evaluation_path(response) %></p>       
+        <p class = "text_indent_small">
+          <%= link_to response.employee.full_name, 
+          employee_path(response.employee) %> |  
+        <%= link_to "Evaluate this developer", 
+        new_response_evaluation_path(response) %></p>       
       <% end %>     
     <% end %> 
   <% end %> 

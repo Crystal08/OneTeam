@@ -5,7 +5,7 @@ class Response < ActiveRecord::Base
   belongs_to :request
 
   has_one :evaluation
-  accepts_nested_attributes_for :evaluation
+  #accepts_nested_attributes_for :evaluation
   
   has_many :selections
   accepts_nested_attributes_for :selections
