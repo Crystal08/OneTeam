@@ -1,0 +1,23 @@
+<p>
+  <b>Response:</b>
+  <%= @employee_skill_evaluation.response_id %>
+</p>
+
+<p>
+  <b>Skill:</b>
+  <%= @employee_skill_evaluation.skill_id %>
+</p>
+
+<p>
+  <b>Assigned skill level:</b>
+  <%= @employee_skill_evaluation.assigned_skill_level %>
+</p>
+
+<p>
+  <b>Skill experience points:</b>
+  <%= @employee_skill_evaluation.skill_experience_points %>
+</p>
+
+
+<%= link_to 'Edit', edit_response_employee_skill_evaluation_path(@response, @employee_skill_evaluation) %> |
+<%= link_to '  Back', employee_requests_path(current_employee) %>

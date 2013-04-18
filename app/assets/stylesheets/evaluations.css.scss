@@ -1,0 +1,37 @@
+// Place all the styles related to the Evaluations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#employee_skills_evaluation {
+  li{
+    list-style: none;
+  }  
+  select {
+    margin-top: 10px;
+    margin-left: 110px;
+    padding-left: 10px;
+    width: 70px;
+
+	}
+}
+
+#skills_proficiency_description {
+  display: inline-block;
+  padding-bottom: 0px;
+  position: relative;
+  top: -7px;
+  left: 90px;
+}
+
+#skills_experience_description {
+  display: inline-block;
+  position: relative;
+  left: 150px;
+}
+
+ #experience_description_text {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    left: 75x;
+  }

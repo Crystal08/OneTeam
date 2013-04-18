@@ -1,0 +1,25 @@
+<h1>Listing create_request_skills</h1>
+
+<table>
+  <tr>
+    <th>Skill</th>
+    <th>Request</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @create_request_skills.each do |create_request_skill| %>
+  <tr>
+    <td><%= create_request_skill.skill_id %></td>
+    <td><%= create_request_skill.request_id %></td>
+    <td><%= link_to 'Show', create_request_skill %></td>
+    <td><%= link_to 'Edit', edit_create_request_skill_path(create_request_skill) %></td>
+    <td><%= link_to 'Destroy', create_request_skill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Create request skill', new_create_request_skill_path %>

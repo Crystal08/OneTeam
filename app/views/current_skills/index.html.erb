@@ -1,0 +1,21 @@
+<h1>Listing current_skills</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @current_skills.each do |current_skill| %>
+  <tr>
+    <td><%= link_to 'Show', current_skill %></td>
+    <td><%= link_to 'Edit', edit_current_skill_path(current_skill) %></td>
+    <td><%= link_to 'Destroy', current_skill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Current skill', new_current_skill_path %>

@@ -1,0 +1,62 @@
+ <% if @evaluation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@evaluation.errors.count,
+       "error") %> prohibited this evaluation 
+       from being saved:</h2>
+
+      <ul>
+      <% @evaluation.errors.full_messages.each do
+       |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <div id="employee_skills_evaluation">
+    <div id="skills_proficiency_description">
+    <p><em>Skills Proficiency Rating</em></p>
+      <ul>
+        <li><%= "0 = No Experience (or n/a)" %>
+        </li>
+        <li><%= "1 = Beginner" %></li>
+        <li><%= "2 = Beginner-Proficient" %></li>
+        <li><%= "3 = Proficient" %></li>
+        <li><%= "4 = Expert" %></li>
+      </ul>
+    </div> 
+    
+    <div id="skills_experience_description">
+      <p><em>Skills Experience Points</em></p>
+      <div id="experience_description_text">
+        <p>Each point represents one days' worth 
+          of work in a particular skill, e.g. an 
+          8 day project where 25% of the work was
+           SQL-related represents 2 experience 
+           points in SQL.</p>
+      </div>  
+    </div>
+      
+    <table>     
+      <% all_skills.each do |skill| %>
+        <tr>  
+          <td><em><%= skill.name %></em></td>  
+          <td><% (0..4).each do |level_number| %>
+            <%= level_number %>
+             <%= radio_button_tag "evaluation[evaluated_skills][][#{skill.id}][skill_level]", "#{level_number}", @evaluation.has_skill_level?(skill.id, level_number) %> 
+          <% end %></td>        
+          <td>
+            <%= select_tag "evaluation[evaluated_skills][][#{skill.id}][skill_experience]", options_for_select((0..@request.days_long), @skill_evaluations.find_by_skill_id(skill.id).skill_experience_points) %> </td> 
+        </tr>
+      <% end %>
+    </table>
+  </div>   
+  
+  
+
+ 
+ 
+ 
+ 
+
+

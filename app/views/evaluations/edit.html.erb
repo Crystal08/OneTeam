@@ -1,0 +1,16 @@
+<h1>Evaluate developer</h1>
+</br>
+
+<p>Evaluate <em><%=@employee.full_name %></em> for <em><%= @request.title %></em> Project</p>
+<p>Project Length: <%=@request.days_long%> days</p>
+
+<%= form_for([@response,@evaluation]) do |f| %>
+
+  <%= render 'form', :f => f %> </br>
+
+  <%= f.submit "Submit", class: "btn btn-med" %>
+
+<% end %>  
+
+<%= link_to 'Show', ([@response, @evaluation]) %> |
+<%= link_to '  Back', employee_requests_path(current_employee) %>
