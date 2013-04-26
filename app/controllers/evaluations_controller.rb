@@ -25,7 +25,7 @@ class EvaluationsController < ApplicationController
   end
 
   def edit
-  #  @response = Response.find_by_id(params[:response_id])
+  # @response = Response.find_by_id(params[:response_id])
     @evaluation = Evaluation.find(params[:id])
     @response = @evaluation.response
     @employee = @response.employee

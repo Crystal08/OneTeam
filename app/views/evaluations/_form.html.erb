@@ -1,19 +1,20 @@
- <% if @evaluation.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@evaluation.errors.count,
+<% if @evaluation.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@evaluation.errors.count,
        "error") %> prohibited this evaluation 
        from being saved:</h2>
 
-      <ul>
-      <% @evaluation.errors.full_messages.each do
+    <ul>
+    <% @evaluation.errors.full_messages.each do
        |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
  
   <div id="employee_skills_evaluation">
+    
     <div id="skills_proficiency_description">
     <p><em>Skills Proficiency Rating</em></p>
       <ul>
@@ -25,7 +26,7 @@
         <li><%= "4 = Expert" %></li>
       </ul>
     </div> 
-    
+
     <div id="skills_experience_description">
       <p><em>Skills Experience Points</em></p>
       <div id="experience_description_text">
@@ -35,27 +36,28 @@
            SQL-related represents 2 experience 
            points in SQL.</p>
       </div>  
-    </div>
-      
+    </div>  
+       
     <table>     
       <% all_skills.each do |skill| %>
         <tr>  
           <td><em><%= skill.name %></em></td>  
           <td><% (0..4).each do |level_number| %>
             <%= level_number %>
-             <%= radio_button_tag "evaluation[evaluated_skills][][#{skill.id}][skill_level]", "#{level_number}", @evaluation.has_skill_level?(skill.id, level_number) %> 
-          <% end %></td>        
+            <%= radio_button_tag "evaluation[evaluated_skills][][#{skill.id}][skill_level]", "#{level_number}", @evaluation.has_skill_level?(skill.id,level_number) %> 
+          <% end %></td> 
           <td>
-            <%= select_tag "evaluation[evaluated_skills][][#{skill.id}][skill_experience]", options_for_select((0..@request.days_long), @skill_evaluations.find_by_skill_id(skill.id).skill_experience_points) %> </td> 
+            <%= select_tag "evaluation[evaluated_skills][][#{skill.id}][skill_experience]", options_for_select((0..@request.days_long), @evaluation.previous_experience_points(skill.id))
+              %> </td>    
         </tr>
       <% end %>
-    </table>
+    </table>  
   </div>   
   
   
 
  
- 
+ <!--@skill_evaluations.find_by_skill_id(skill.id).skill_experience_points) -->
  
  
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130410140952) do
+ActiveRecord::Schema.define(:version => 20130424192844) do
 
   create_table "departments", :force => true do |t|
     t.string   "name"
@@ -47,9 +47,6 @@ ActiveRecord::Schema.define(:version => 20130410140952) do
   create_table "employees", :force => true do |t|
     t.decimal  "years_with_company"
     t.string   "manager"
-    t.string   "position"
-    t.string   "department"
-    t.string   "group"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.string   "password_digest"
@@ -60,7 +57,6 @@ ActiveRecord::Schema.define(:version => 20130410140952) do
     t.string   "email"
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "location"
     t.integer  "location_id"
     t.integer  "group_id"
     t.integer  "department_id"
@@ -103,8 +99,6 @@ ActiveRecord::Schema.define(:version => 20130410140952) do
   create_table "requests", :force => true do |t|
     t.integer  "employee_id"
     t.string   "task"
-    t.string   "location"
-    t.string   "group"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.date     "start_date"

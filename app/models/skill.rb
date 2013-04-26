@@ -10,7 +10,7 @@ class Skill < ActiveRecord::Base
   #has_many :employee_desired_skills
   has_many :employees, :through => :employee_desired_skills
 
-  #has_many :employee_skill_evaluations
+  has_many :employee_skill_evaluations
   #has_many :evaluations, :through => :employee_skill_evaluations
 
 end

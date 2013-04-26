@@ -17,6 +17,14 @@ class Evaluation < ActiveRecord::Base
     level_number == 0
   end 
 
+  def previous_experience_points(skill_id)
+    self.employee_skill_evaluations.each do |es|
+      if es.skill_id == skill_id
+        return es.skill_experience_points
+      end
+    end
+  end      
+
   def evaluated_skill_ids
     self.evaluated_skills.map {|es| es.id}
   end

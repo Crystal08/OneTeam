@@ -1,8 +1,10 @@
 class Employee < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :about_me, 
-  :image, :email, :years_with_company, :manager, :position, :position_id,
-  :department, :department_id, :group, :group_id, :location, :location_id, 
-  :current_skills, :current_skill_ids, :desired_skills, :desired_skill_ids, :password, :password_confirmation
+  :image, :email, :years_with_company, :manager, :position_id,
+  :department_id, :group_id, :location_id, 
+  :current_skills, :current_skill_ids, :desired_skills, :desired_skill_ids, 
+  :password, :password_confirmation
+  
   has_secure_password
 
   has_many :requests
@@ -16,7 +18,6 @@ class Employee < ActiveRecord::Base
   has_many :employee_desired_skills
   has_many :desired_skills, :through => :employee_desired_skills, :source => :skill 
   
-  has_many :departments
   belongs_to :location
   belongs_to :group
   belongs_to :department
@@ -25,7 +26,8 @@ class Employee < ActiveRecord::Base
   accepts_nested_attributes_for :employee_current_skills
   accepts_nested_attributes_for :employee_desired_skills
 
-  validates_presence_of :first_name, :last_name, :email, :location, :department, :group, :position
+  validates_presence_of :first_name, :last_name, :email, :group_id, 
+    :position_id, :location_id, :department_id
 
   before_save :create_remember_token
 

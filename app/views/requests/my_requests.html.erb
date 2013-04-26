@@ -74,12 +74,12 @@
             <% all_skills.each do |skill| %>
               <tr>
                 <td><%= skill.name %></td>
-                <td>
+                <td class="center">
                   <% response.evaluation.employee_skill_evaluations.each do 
                     |skill_eval| %>
                     <% if skill_eval.skill_id == skill.id %>
                       <%= skill_eval.assigned_skill_level %></td>
-                      <td><%= skill_eval.skill_experience_points %></td>
+                      <td class="center"><%= skill_eval.skill_experience_points %></td>
                     <% end %>
                   <% end %> 
               </tr>       

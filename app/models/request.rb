@@ -1,6 +1,6 @@
 class Request < ActiveRecord::Base
   attr_accessible :title, :employee_id, :task, :request_skill_ids,
-   :location, :location_id, :start_date, :end_date, :group, :group_id
+   :location_id, :start_date, :end_date, :group_id
  
   belongs_to :employee
   belongs_to :location
@@ -14,7 +14,8 @@ class Request < ActiveRecord::Base
 
   accepts_nested_attributes_for :responses
   
-  validates_presence_of :title, :location, :start_date, :end_date, :group
+  validates_presence_of :title #commented out start and end date validation 
+  #while playing with fake data population :start_date, :end_date
   validates :task, :length => { :maximum => 1500 }
   validate :start_date_first
 

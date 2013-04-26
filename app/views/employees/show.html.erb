@@ -1,9 +1,11 @@
 <p id="notice"><%= notice %></p>
 <% provide(:title, @employee) %>
 
-<h1>My Profile</h1>
+<h1><%= @employee.full_name %>'s Profile</h1>
 
-<%= link_to 'Edit Profile', edit_employee_path(@employee) %></br>
+<% if current_employee == @employee %>
+<%= link_to 'Edit My Profile', edit_employee_path(@employee) %></br>
+<% end %>
 
 <div id="gravatar">
 <h1 class = "pull-left">
@@ -61,18 +63,14 @@
 <p>
   <b>Current Skills:</b>
   <% @employee.employee_current_skills.each do |cs| %>
-    <% if cs.skill_level != 0 %>
-      <%= cs.skill_name %>(<%= cs.skill_level %>)
-    <% end %>  
+    <%= cs.skill_name %>(<%= cs.skill_level%>)  
   <% end %>  
 </p>
 
 <p>
   <b>Desired Skills:</b>
   <% @employee.employee_desired_skills.each do |ds| %>
-    <% if ds.interest_level != 0 %>
-      <%= ds.skill_name %>(<%= ds.interest_level %>)
-    <% end %>  
+    <%= ds.skill_name %>(<%= ds.interest_level%>)
   <% end %>  
 </p>
 </br>
@@ -91,14 +89,18 @@
 <tr>
   <td>Skill</td>
   <td>Total Experience Points</td>
-  <td>Average Skill Levels</td
+  <% if current_employee == @employee %>
+    <td>Average Skill Levels</td>
+  <% end %>  
 </tr>
 
 <% all_skills.each do |skill| %>
   <tr>
       <td><%= skill.name %></td>
       <td class="center"><%= @employee.skill_experience_total(skill.id) %></td>
-      <td class="center"><%= @employee.average_skill_level(skill.id) %></td>
+      <% if current_employee == @employee %>
+        <td class="center"><%= @employee.average_skill_level(skill.id) %></td>
+      <% end %>  
   </tr>  
 <% end %>               
 </table></br>
@@ -121,25 +123,30 @@
     <p><%= my_project.title %>:<%= my_project.start_date_str %>
      - <%= my_project.end_date_str %>(<%= my_project.status %>)</p>
     <p>Description: <%= my_project.task %></p>
-
+    
     <% if my_project.evaluated?(@employee) %>
+    <p>Project Evaluation: </p>
       <table class="text_indent_small">
         <tr>
           <td>Skill</td>
-          <td>Project Experience Points</td>
-          <td>Project Skill Levels</td>
+          <td>Experience Points</td>
+          <% if current_employee == @employee %>
+            <td>Skill Levels</td>
+          <% end %>  
         </tr>
 
         <% all_skills.each do |skill| %>
           <tr>
             <td><%= skill.name %></td>
             <td class="center"><%= @employee.skill_experience(my_project, skill.id) %></td>
-            <td class="center"><%= @employee.skill_level(my_project, skill.id) %></td>
+            <% if current_employee == @employee %>
+              <td class="center"><%= @employee.skill_level(my_project, skill.id) %></td>
+            <% end %>  
           </tr>
         <% end %>   
       </table></br>
     <% else %>
-      <p> Project not yet evaluated </P></br>
+      <p> Project not yet evaluated </p></br>
     <% end %>
   <% end %>       
 <% end %>         
