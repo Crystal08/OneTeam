@@ -1,7 +1,6 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
-  require 'active_support/core_ext/enumerable.rb'
    
     #helper method used later:
 
@@ -17,7 +16,16 @@ namespace :db do
                                     group_id: rand(5-1) + 1)
       new_request
     end
-  
+
+    #It would be cool to have another method here-
+    #sum, min, max, number of numbers
+    #method to generate random addends 
+    #def random_addends (sum, num_addends, min, max)
+    #  addend_'n'= rand(min..(sum-#total of addends already)-num of addends left * min)
+    #  update array to return
+    #  shuffle results to take care of favoring first addends
+    #end  
+    
     #main code to create employees, requests, responses, and selections
     #as per specs 
 
@@ -31,10 +39,7 @@ namespace :db do
 
     locations_with_employees = {1=>45, 2=>5, 
       3=>32, 4=>14, 5=>20, 6=>12}
-    location_employee_ids = {1=>[1,45], 2=>[46,50], 
-     3=>[51,82], 4=>[83,96], 5=>[97,116], 
-     6=>[117,128]} 
-
+   
     all_requests_ids = []
     one_request_ids = []
     ten_request_ids = []
@@ -125,12 +130,9 @@ namespace :db do
     #that a few (3) come from each office, except Houston (specs),
     #so 5 offices x 3 employees each = 15 remaining employees
 
-    #Remember from the beginning:
-    #locations_with_employees = {1=>45, 2=>5,
-    #  3=>32, 4=>14, 5=>20, 6=>12}
-    #location_employee_ids = {1=>[1,45], 2=>[46,50],
-    #  3=>[51,82], 4=>[83,96], 5=>[97,116],
-    #  6=>[117,128]} 
+    location_employee_ids = {1=>[1,45], 2=>[46,50], 
+      3=>[51,82], 4=>[83,96], 5=>[97,116], 
+      6=>[117,128]} 
 
     available_location_employee_ids = location_employee_ids.except(3)
     remaining_request_location_ids = []
@@ -152,7 +154,7 @@ namespace :db do
         remaining_request_location_ids << loc_id
         remaining_request_employee_ids << employee_id
       end  
-    end  
+    end 
 
     #now choose how many requests to create for these 
     #15 employees in range 2 to 10 requests for each (specs)
@@ -162,26 +164,37 @@ namespace :db do
     #making 120 total requests (specs) with previously created 30
 
     requests_per_employee = []
-    #This outer loop freezes up
     5.times do 
-      #this inner loop works
-      location_requests = []
-      until location_requests.sum == 18    
+      location_requests = [] 
+      until location_requests.sum == 18 
+        location_requests = []  
         num_req_1 = rand(2..10)
         num_req_2 = rand(2..10)
         num_req_3 = rand(2..10)
         location_requests = 
           location_requests.push(num_req_1, num_req_2, num_req_3) 
       end
-        requests_per_employee =
-          requests_per_employee.push(num_req_1, num_req_2, num_req_3)
-      #inner loop works all the way to here, but with outer 5.times loop
-      #populate freezes    
-    end   
-    #debugger
+      requests_per_employee = 
+        requests_per_employee.push(num_req_1,num_req_2, num_req_3)
+    end
+    
+    #combine employee,location, and number of requests info 
+    #e.g. [[1,41,9], [1=>30,3],
+    #[1,5,6], [2,48,5], [2,47,7]]
+    remaining_request_info = 
+      remaining_request_location_ids.zip(remaining_request_employee_ids, 
+        requests_per_employee)
+
+    # and (finally, ta da!) create the remaining requests:    
+    remaining_request_info.each do |location_id, employee_id, number_requests|
+      number_requests.times do
+        create_request(location_id, employee_id)
+      end
+    end      
+  
     #fill the app's other resources
     Department.create!(name: "IT")
-    
+ 
     groups = ["Development","Interface Design",
      "QA", "Infrastructure"]
     groups.each do |group_name|
@@ -205,5 +218,7 @@ namespace :db do
     skills.each do |skill_name|
       Skill.create!(name: skill_name)
     end 
+
+    
   end
 end
