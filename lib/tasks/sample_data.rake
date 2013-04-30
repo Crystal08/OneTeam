@@ -1,8 +1,9 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+  require 'active_support/core_ext/enumerable.rb'
    
-    #helper methods (can I put these somewhere else?):
+    #helper method used later:
 
     def create_request(location_id, employee_id) 
       #code to create and return one request for this employee/location
@@ -17,8 +18,7 @@ namespace :db do
       new_request
     end
   
-    #end of helper methods and beginning of main code to 
-    #create employees, requests, responses, and selections
+    #main code to create employees, requests, responses, and selections
     #as per specs 
 
     # 1..6 are Chicago, Mumbai, Houston, San Francisco,
@@ -41,7 +41,8 @@ namespace :db do
 
     locations_with_employees.each do |location_id, number_employees|
       number_employees.times do |n|
-        #create employees:
+        #create employees (all 128, 
+        #divided up as in locations_with_employees):
         Employee.create!(first_name: Faker::Name.first_name,
                          last_name: Faker::Name.last_name,
                          email: "employee-#{n+1}@aits.com",
@@ -65,7 +66,8 @@ namespace :db do
         #met, then the requests created in the rest of this loop total just 30 anyway
         if location_id != 3 && all_requests_count < 120
           
-          #create three requests such that three employees have just one request each
+          #create three requests such that three unique employees 
+          #have just one request each
           if location_id == 2 && one_request_count < 1
             new_request = create_request(location_id, employee_id)
             one_request_ids << new_request.id
@@ -82,7 +84,8 @@ namespace :db do
             all_requests_ids << new_request.id
           end
 
-          #create more than 10 requests each for two employees
+          #create more than 10 requests each for 
+          #two more unique employees
           if location_id == 1 && ten_request_count < 12
             12.times do 
               new_request = create_request(location_id, employee_id)
@@ -111,25 +114,16 @@ namespace :db do
       Request.find(id).employee_id}  
 
     #to make sure I don't re-use the two employees with over ten requests
-    #each, so I get the additional 15 unique employees needed 
+    #each, so I get the additional selected employees are unique
     ten_request_employee_ids = ten_request_ids.map{|id|
       Request.find(id).employee_id}
+    all_used_employee_ids = one_request_employee_ids + 
+      ten_request_employee_ids
 
-    #select the remaining 15 employees for the required 20 total
-    #then create between 1 and 11 requests for each employee
-    #for a total of 90 more requests,
-    #(b/c with the original 30 requests (above) 
-    #that makes 120 total requests as required)
-
-    #Next: check this code in the console:
-    remaining_request_employee_ids = []
-    while remaining_request_employee_ids.count < 15 
-      remaining_request_employee_id = rand(1..128)
-      while one_request_employee_ids.include?(remaining_request_employee_id)
-        || ten_request_employee_ids.include?(remaining_request_employee_id)
-      remaining_request_employee_ids << rand(2..10)
-      end
-    end  
+    #pseudo-randomly select the remaining 15 employees 
+    #for the required 20 total, such 
+    #that a few (3) come from each office, except Houston (specs),
+    #so 5 offices x 3 employees each = 15 remaining employees
 
     #Remember from the beginning:
     #locations_with_employees = {1=>45, 2=>5,
@@ -138,24 +132,53 @@ namespace :db do
     #  3=>[51,82], 4=>[83,96], 5=>[97,116],
     #  6=>[117,128]} 
 
-    #I simply divided the remaining requests among the available offices
-    location_requests = {1=>18, 
-      2=>18, 4=>18, 
-      5=>18, 6=>18} 
-
-    #create the generated number of requests for each location
-    location_requests.each do |location_id, number_requests|
-      number_requests.times do 
-        employee_id_min = location_employee_ids[location_id][0]
-        employee_id_max = location_employee_ids[location_id][1]
-        employee_id = rand(employee_id_min .. employee_id_max)
-        while one_request_employee_ids.include?(employee_id)
-         employee_id = rand(employee_id_min .. employee_id_max)
+    available_location_employee_ids = location_employee_ids.except(3)
+    remaining_request_location_ids = []
+    remaining_request_employee_ids = []
+ 
+    available_location_employee_ids.each do |loc_id, bounds|
+      location_employees = []
+      3.times do 
+        employee_id = rand(bounds[0]..bounds[1])
+        while all_used_employee_ids.include?(employee_id)
+          employee_id = rand(bounds[0]..bounds[1])
+          if location_employees.count > 1
+            while location_employees.include?(employee_id)
+              employee_id = rand(bounds[0]..bounds[1])
+            end
+          end    
         end
-        new_request = create_request(location_id, employee_id)
-      end
-    end        
+        location_employees << employee_id
+        remaining_request_location_ids << loc_id
+        remaining_request_employee_ids << employee_id
+      end  
+    end  
 
+    #now choose how many requests to create for these 
+    #15 employees in range 2 to 10 requests for each (specs)
+    #I'm choosing to do 18 requests per office (18x5=90), 
+    #(so that's per each set of 3 employees, divvied up randomly)
+    #for a total of 90 more requests
+    #making 120 total requests (specs) with previously created 30
+
+    requests_per_employee = []
+    #This outer loop freezes up
+    5.times do 
+      #this inner loop works
+      location_requests = []
+      until location_requests.sum == 18    
+        num_req_1 = rand(2..10)
+        num_req_2 = rand(2..10)
+        num_req_3 = rand(2..10)
+        location_requests = 
+          location_requests.push(num_req_1, num_req_2, num_req_3) 
+      end
+        requests_per_employee =
+          requests_per_employee.push(num_req_1, num_req_2, num_req_3)
+      #inner loop works all the way to here, but with outer 5.times loop
+      #populate freezes    
+    end   
+    #debugger
     #fill the app's other resources
     Department.create!(name: "IT")
     
