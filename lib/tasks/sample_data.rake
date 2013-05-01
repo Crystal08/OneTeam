@@ -2,19 +2,29 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
    
-    #helper method used later:
+    #helper methods used later:
 
     def create_request(location_id, employee_id) 
       #code to create and return one request for this employee/location
       #this assumes employees only post requests for their own location
+      start_date = rand(6.months).ago
+      end_date = start_date + 6.months
       new_request = Request.create!(employee_id: employee_id,
                                     task: Faker::Lorem.sentence(word_count = 10),
-                                    #start_date: start_date,
-                                    #end_date: end_date,
+                                    start_date: start_date,
+                                    end_date: end_date,
                                     title: Faker::Lorem.sentence(word_count = 4),
                                     location_id: location_id,
                                     group_id: rand(5-1) + 1)
       new_request
+    end
+
+    def create_response(request_id, employee_id)
+      #code to create and return one response to this request
+      #for this employee
+      new_response = Response.create!(request_id: request_id,
+                                      employee_id: employee_id,
+                                      comments: Faker::Lorem.words(num = 5))
     end
 
     #It would be cool to have another method here-
@@ -178,20 +188,79 @@ namespace :db do
         requests_per_employee.push(num_req_1,num_req_2, num_req_3)
     end
     
-    #combine employee,location, and number of requests info 
-    #e.g. [[1,41,9], [1=>30,3],
+    #combine location, employee, and number of requests info 
+    #e.g. [[1,41,9], [1,30,3],
     #[1,5,6], [2,48,5], [2,47,7]]
     remaining_request_info = 
       remaining_request_location_ids.zip(remaining_request_employee_ids, 
         requests_per_employee)
 
     # and (finally, ta da!) create the remaining requests:    
+    request_ids = []
+    request_locations = []
+    request_employees = []
     remaining_request_info.each do |location_id, employee_id, number_requests|
       number_requests.times do
         create_request(location_id, employee_id)
+        request_ids << Request.last.id 
+        request_locations << location_id
+        request_employees << employee_id
       end
-    end      
-  
+    end 
+
+    # on to creating responses to the requests, according
+    # to specs
+    # no responses to requests from Mumbai (location 2)
+
+    request_info = request_locations.zip(request_ids, request_employees)
+    available_requests = request_info.delete_if {|loc, id, emp| loc == 2}
+    available_request_ids = available_requests.map {|loc, id, emp| id}
+
+    # select 9 requests to respond to "locally" (specs)
+    local_request_ids = []
+    while local_request_ids.count < 9
+      local_request = available_request_ids.sample
+      while local_request_ids.include?(local_request)
+        local_request = available_request_ids.sample
+      end
+      local_request_ids << local_request  
+    end  
+
+    #Remember: location_employee_ids = {1=>[1,45], 2=>[46,50], 
+    # 3=>[51,82], 4=>[83,96], 5=>[97,116], 
+    # 6=>[117,128]} 
+    #create the responses to the selected 9 requests, such
+    #that the responding employee is not the posting employee
+    local_request_ids.each do |id|
+      request = Request.find(id)
+      location_id = request.location_id
+      poster_id = request.employee_id
+      bounds =  location_employee_ids[location_id] 
+      employee_id = rand(bounds[0]..bounds[1])
+      while employee_id == poster_id
+        employee_id = rand(bounds[0]..bounds[1])
+      end
+      create_response(id, employee_id)
+    end  
+
+    #create 2 personal responses: employee responded to own request
+    personal_request_ids = []
+    2.times do
+      personal_request = available_request_ids.sample
+      while personal_request_ids.include?(personal_request)
+        personal_request = available_request_ids.sample
+      end
+      personal_request_ids << personal_request
+    end
+
+    personal_request_ids.each do |id|
+      request = Request.find(id)
+      employee_id = request.employee_id
+      create_response(id, employee_id)
+    end  
+
+    #Will come back to creating remaining 59 responses
+      
     #fill the app's other resources
     Department.create!(name: "IT")
  
@@ -217,8 +286,6 @@ namespace :db do
       "Ruby on Rails", "SQL Server", "Linux"]
     skills.each do |skill_name|
       Skill.create!(name: skill_name)
-    end 
-
-    
+    end     
   end
 end
