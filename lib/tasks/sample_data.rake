@@ -8,23 +8,30 @@ namespace :db do
       #code to create and return one request for this employee/location
       #this assumes employees only post requests for their own location
       start_date = rand(6.months).ago
-      end_date = start_date + 6.months
+      end_date = start_date + rand(6.months)
+      req_created_at = start_date - rand(3.months)
+
       new_request = Request.create!(employee_id: employee_id,
                                     task: Faker::Lorem.sentence(word_count = 10),
                                     start_date: start_date,
                                     end_date: end_date,
                                     title: Faker::Lorem.sentence(word_count = 4),
                                     location_id: location_id,
-                                    group_id: rand(5-1) + 1)
+                                    group_id: rand(5-1) + 1,
+                                    created_at: req_created_at)
       new_request
     end
 
     def create_response(request_id, employee_id)
       #code to create and return one response to this request
       #for this employee
+      delays = [1.days, 2.days, 4.days, 8.days]
+      res_created_at = Request.find(request_id).created_at + delays.sample
+
       new_response = Response.create!(request_id: request_id,
                                       employee_id: employee_id,
-                                      comments: Faker::Lorem.words(num = 5))
+                                      comments: Faker::Lorem.words(num = 5),
+                                      created_at: res_created_at)
     end
 
     #It would be cool to have another method here-
@@ -229,8 +236,9 @@ namespace :db do
     #Remember: location_employee_ids = {1=>[1,45], 2=>[46,50], 
     # 3=>[51,82], 4=>[83,96], 5=>[97,116], 
     # 6=>[117,128]} 
-    #create the responses to the selected 9 requests, such
+    #create the 9 responses to the selected requests, such
     #that the responding employee is not the posting employee
+    used_employee_ids = []
     local_request_ids.each do |id|
       request = Request.find(id)
       location_id = request.location_id
@@ -241,6 +249,7 @@ namespace :db do
         employee_id = rand(bounds[0]..bounds[1])
       end
       create_response(id, employee_id)
+      used_employee_ids << employee_id
     end  
 
     #create 2 personal responses: employee responded to own request
@@ -257,10 +266,35 @@ namespace :db do
       request = Request.find(id)
       employee_id = request.employee_id
       create_response(id, employee_id)
+      used_employee_ids << employee_id
     end  
 
-    #Will come back to creating remaining 59 responses
-      
+    #All requests from London get at least 3 responses(specs)
+    loc_6_requests = request_info.delete_if {|loc, id, emp| loc != 6}
+    loc_6_request_ids = loc_6_requests.map {|loc, id, emp| id} 
+    loc_6_employee_ids = loc_6_requests.map {|loc, id, emp| emp} 
+    all_employee_ids = *(1..128)
+    available_employee_ids = all_employee_ids - loc_6_employee_ids - used_employee_ids
+
+    responses_counter = 0
+    loc_6_request_ids.each do |id|
+      3.times do
+        employee_id = available_employee_ids.sample
+        create_response(id, employee_id)
+        responses_counter += 1
+      end  
+    end
+
+    responses_so_far = 11 + responses_counter
+    remaining_responses = 70 - responses_so_far
+
+    #create the remaining responses for 70 total
+    remaining_responses.times do
+      request_id = available_request_ids.sample
+      employee_id = available_employee_ids.sample
+      create_response(request_id, employee_id)
+    end  
+   
     #fill the app's other resources
     Department.create!(name: "IT")
  

@@ -1,6 +1,6 @@
 class Request < ActiveRecord::Base
   attr_accessible :title, :employee_id, :task, :request_skill_ids,
-   :location_id, :start_date, :end_date, :group_id
+   :location_id, :start_date, :end_date, :group_id, :created_at
  
   belongs_to :employee
   belongs_to :location
