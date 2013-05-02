@@ -25,15 +25,24 @@ namespace :db do
     def create_response(request_id, employee_id)
       #code to create and return one response to this request
       #for this employee
-      delays = [1.days, 2.days, 4.days, 8.days]
-      res_created_at = Request.find(request_id).created_at + delays.sample
+      res_delays = [1.days, 2.days, 4.days, 8.days]
+      res_created_at = Request.find(request_id).created_at + res_delays.sample
 
       new_response = Response.create!(request_id: request_id,
                                       employee_id: employee_id,
-                                      comments: Faker::Lorem.words(num = 5),
+                                      comments: Faker::Lorem.words(num = 8),
                                       created_at: res_created_at)
+      new_response   
     end
 
+    def create_selection(response_id)
+      #code to create and return one selection from this response
+      sel_delays = [0.days, 1.days, 3.days, 5.days]
+      sel_created_at = Response.find(response_id).created_at + sel_delays.sample
+      new_selection = Selection.create!(response_id: response_id,
+                                        notes: Faker::Lorem.words(num = 4),
+                                        created_at: sel_created_at)
+    end
     #It would be cool to have another method here-
     #sum, min, max, number of numbers
     #method to generate random addends 
@@ -239,6 +248,8 @@ namespace :db do
     #create the 9 responses to the selected requests, such
     #that the responding employee is not the posting employee
     used_employee_ids = []
+    local_response_ids = []
+    all_response_ids = []
     local_request_ids.each do |id|
       request = Request.find(id)
       location_id = request.location_id
@@ -250,6 +261,8 @@ namespace :db do
       end
       create_response(id, employee_id)
       used_employee_ids << employee_id
+      local_response_ids << Response.last.id
+      all_response_ids << Response.last.id
     end  
 
     #create 2 personal responses: employee responded to own request
@@ -262,11 +275,14 @@ namespace :db do
       personal_request_ids << personal_request
     end
 
+    personal_response_ids = []
     personal_request_ids.each do |id|
       request = Request.find(id)
       employee_id = request.employee_id
       create_response(id, employee_id)
       used_employee_ids << employee_id
+      personal_response_ids << Response.last.id
+      all_response_ids << Response.last.id
     end  
 
     #All requests from London get at least 3 responses(specs)
@@ -281,6 +297,7 @@ namespace :db do
       3.times do
         employee_id = available_employee_ids.sample
         create_response(id, employee_id)
+        all_response_ids << Response.last.id
         responses_counter += 1
       end  
     end
@@ -293,7 +310,44 @@ namespace :db do
       request_id = available_request_ids.sample
       employee_id = available_employee_ids.sample
       create_response(request_id, employee_id)
+      all_response_ids << Response.last.id
     end  
+
+    #create selections
+    
+    #7 of the 9 'local' responses were selected (specs)
+    selected_local_responses = []
+    7.times do
+      selected_local = local_response_ids.sample
+      while selected_local_responses.include?(selected_local)
+        selected_local = local_response_ids.sample
+      end
+      selected_local_responses << selected_local
+    end    
+    
+    selected_local_responses.each do |id|
+      create_selection(id)
+    end 
+
+    #1 of the 2 'personal' responses was selected (specs)
+    selected_personal_response = personal_response_ids.sample
+    create_selection(selected_personal_response)
+
+    #42 additional unique responses selected for 50 total selections (specs)
+
+    available_response_ids = all_response_ids - local_response_ids - personal_response_ids
+    selected_additional_responses = []
+    42.times do
+      selected_additional = available_response_ids.sample
+      while selected_additional_responses.include?(selected_additional)
+        selected_additional = available_response_ids.sample
+      end
+      selected_additional_responses << selected_additional
+    end  
+
+    selected_additional_responses.each do |id|
+      create_selection(id)
+    end
    
     #fill the app's other resources
     Department.create!(name: "IT")

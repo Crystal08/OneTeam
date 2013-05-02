@@ -1,5 +1,5 @@
 class Selection < ActiveRecord::Base
-  attr_accessible :employee_id, :notes, :response_id
+  attr_accessible :notes, :response_id, :created_at
   #Took out :request_id b/c request can be accessed through response
 
   belongs_to :response
