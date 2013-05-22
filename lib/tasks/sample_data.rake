@@ -2,243 +2,238 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
 
-    def create_employee (n, location_id)
-      Employee.create(first_name: Faker::Name.first_name,
+    def create_employee (location_id)
+      new_employee = Employee.create(
+                       first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
-                       email: "employee-#{n+1}@aits.com",
+                       email: Faker::Internet.email,
                        about_me: Faker::Lorem.paragraph(sentence_count = 2),
-                       years_with_company: rand(10-1) + 1,
+                       years_with_company: rand(1..10),
                        manager: Faker::Name.name,
-                       position_id: rand(5-1) + 1,
-                       department_id: rand(1-1) + 1,
-                       group_id: rand(5-1) + 1,
+                       position_id: rand(1..5),
+                       department_id: 1,
+                       group_id: rand(1..5),
                        location_id: location_id,
                        password: "foobar",
                        password_confirmation: "foobar")
-      3.times do
-        EmployeeCurrentSkill.create(employee_id: Employee.last.id,
-                                  skill_id: rand(1..7),
-                                  skill_level: rand(1..5))
-        EmployeeDesiredSkill.create(employee_id: Employee.last.id,
-                                  skill_id: rand(1..7),
-                                  interest_level: rand(1..5))
-      end  
-    end
-      
-    def create_request(location_id, employee_id) 
+      (1..7).each do |n|
+        EmployeeCurrentSkill.create(employee_id: new_employee.id,
+                                    skill_id: n,
+                                    skill_level: rand(1..5))
+      end
+
+      (1..7).each do |n|  
+        EmployeeDesiredSkill.create(employee_id: new_employee.id,
+                                    skill_id: n,
+                                    interest_level: rand(1..5))
+      end   
+    end  
+
+    def create_request(employee_id)
       start_date = rand(6.months).ago
       end_date = start_date + rand(6.months)
-      req_created_at = start_date - rand(3.months)
+      req_created_at = start_date 
 
-      Request.create(employee_id: employee_id,
-                      task: Faker::Lorem.sentence(word_count = 10),
-                      start_date: start_date,
-                      end_date: end_date,
-                      title: Faker::Lorem.sentence(word_count = 4),
-                      location_id: location_id,
-                      group_id: rand(5-1) + 1,
-                      created_at: req_created_at)
-      3.times do
-        RequestSkill.create(request_id: Request.last.id,
+      new_request = Request.create(employee_id: employee_id,
+                     task: Faker::Lorem.sentence(word_count = 1),
+                     start_date: start_date,
+                     end_date: end_date,
+                     title: Faker::Lorem.sentence(word_count = 1),
+                     location_id: Employee.find(employee_id).location_id,
+                     group_id: rand(4),
+                     created_at: req_created_at)
+      rand(7).times do
+        RequestSkill.create(request_id: new_request.id,
                             skill_id: rand(1..7))
-      end                      
+      end 
     end
-
+    
     def create_response(request_id, employee_id)
       res_delays = [1.days, 2.days, 4.days, 8.days]
-      res_created_at = Request.find(request_id).created_at 
-        + res_delays.sample
+      res_created_at = 
+        Request.find(request_id).created_at + res_delays.sample
 
-      Response.create(request_id: request_id,
+      @new_response = Response.create(request_id: request_id,
                        employee_id: employee_id,
-                       comments: Faker::Lorem.words(num = 8),
+                       comments: Faker::Lorem.sentence(word_count = 1),
                        created_at: res_created_at)  
     end
 
+    def location_employee_ids (location_id)
+      Employee.find_all_by_location_id(location_id).map(&:id)
+    end 
+
+    def location_request_ids (location_id)
+      Request.find_all_by_location_id(location_id).map(&:id)
+    end  
+
+    def all_employee_ids
+      Employee.all.map(&:id)
+    end 
+
+    def all_request_ids
+      Request.all.map(&:id)
+    end   
+
+    def all_response_ids
+      Response.all.map(&:id)
+    end  
+
+    def ids_for_requests_with_responses
+      Response.all.map(&:request_id).uniq 
+    end 
+
+    def available_request_ids
+      available_request_ids = []
+      [1,4,5].each do |loc_id|
+        available_request_ids.concat(location_request_ids(loc_id))
+      end
+      available_request_ids
+    end  
+
+    def ids_for_requests_with_selections
+      selected_response_ids = Selection.all.map(&:response_id)
+      selected_response_ids.map{|res_id| 
+        Response.find(res_id).request_id}.uniq
+    end 
+
+    def unselected_request_ids
+      ids_for_requests_with_responses - 
+        ids_for_requests_with_selections
+    end       
+
     def create_selection(response_id)
       sel_delays = [0.days, 1.days, 3.days, 5.days]
-      sel_created_at = Response.find(response_id).created_at 
-        + sel_delays.sample
-      Selection.create(response_id: response_id,
-                        notes: Faker::Lorem.words(num = 4),
-                        created_at: sel_created_at)
+      sel_created_at = 
+        Response.find(response_id).created_at + sel_delays.sample
+      @new_selection = Selection.create(response_id: response_id,
+                       notes: Faker::Lorem.sentence(word_count = 1),
+                       created_at: sel_created_at)
     end
 
-    def unique_randoms(size_of_desired_set, sample_set)
-      new_set = []
-      size_of_desired_set.times do
-        element = sample_set.sample
-        while new_set.include?(element)
-          element = sample_set.sample
-        end
-      new_set << element
-      end
-      new_set
-    end 
-
-    location_names_and_ids = {"Chicago"=>1, "Mumbai"=>2,
-      "Houston"=>3, "San Francisco"=>4, "Boston"=>5, 
-      "London"=>6}
-    location_ids_with_num_employees = {1=>45, 2=>5, 3=>32, 
+    #Employees: 45 in Chicago, 5 in Mumbai, 32 in Houston,
+    #14 in San Francisco, 20 in Boston, 12 in London
+    
+    location_employee_totals = {1=>45, 2=>5, 3=>32, 
       4=>14, 5=>20, 6=>12}
-   
-    #Create employees
-    employee_ids_indexed_by_location_id = {}
 
-    location_ids_with_num_employees.each do |loc_id, num_employees|
-      emp_ids_array = []
-      num_employees.times do |n| 
-        create_employee(n, loc_id)
-        employee_id = Employee.last.id
-        emp_ids_array << employee_id
-      end
-      employee_ids_indexed_by_location_id[loc_id] = 
-          emp_ids_array
-      # e.g. employee_ids_indexed_by_location_id = { 1 => [1,2,3,4,..45],
-      # 2 => [1,2,3,4,5]..}     
+    location_employee_totals.each do |location_id, n|
+      n.times do 
+        create_employee(location_id)
+      end    
     end
-    
-    #Create requests
-    #locations with num of requests per each developer who posted
-    #20 developers posted, for total of 120 requests as per specs
-    #no requests from location 3 (Houston) as per specs
-    location_ids_with_num_requests = {1=>[1,2,10,6], 
-      2=>[12,3,9,6], 4=>[1,4,9,5], 5=>[15,5,5,8], 
-      6=>[1,7,4,7]} 
-    
-    request_ids_indexed_by_location_id = {}
 
-    location_ids_with_num_requests.each do |loc_id, num_requests|
-      req_ids_array = []
-      employee_ids = unique_randoms(num_requests.size, 
-        employee_ids_indexed_by_location_id[loc_id])
-      employee_ids_with_num_requests =
-        Hash[employee_ids.zip(num_requests)]
-      #e.g. employee_ids_with_num_requests = {21=>1, 27=>2, 32=>10, 44=>6}  
+    #Requests, 120: None from Houston, few each from remaining locations
+    
+    #2 employees posted more than 10 times
+    [13,14].each do |n|
+      employee_id = location_employee_ids(1)[n-13]
+      n.times do
+        create_request(employee_id)
+      end  
+    end   
+   
+    #3 employees posted once 
+    employee_id = location_employee_ids(2).first
+    create_request(employee_id)
 
-      employee_ids_with_num_requests.each do |emp_id, num_requests|  
-        num_requests.times do 
-          employee_id = emp_id
-          location_id = loc_id
-          create_request(location_id, employee_id)
-          request_id = Request.last.id
-          req_ids_array << request_id
-        end 
+    2.times do |n|
+      employee_id = location_employee_ids(6)[n]
+      create_request(employee_id)
+    end
+
+    #remainder of requests, distributed among remaining offices
+    [location_employee_ids(4), location_employee_ids(5)].each do |ids|
+      9.times do |n|
+        employee_id = ids[n]
+        5.times do
+          create_request(employee_id) 
+        end
       end
-      request_ids_indexed_by_location_id[loc_id] =
-          req_ids_array 
-        # e.g. request_ids_indexed_by_location_id = { 1 => [1,2,3,4,..19],
-        # 2 => [20,21..30]..} 
-    end 
-            
-    #Create responses
-    #all requests from 6 get 3 responses, 0 to requests from 2, as per specs
-    #at least 9 "local" responses, 2 "personal" responses, as per specs
-    #total responses, 70, as per specs
+    end
+
+    #Responses, 70: Need at least 50 unique requests represented,
+    #no responses to Mumbai requests 
+   
+    #9 local responses for 9 unique requests
+    available_location_ids = [1,4,5]
     local_response_ids = []
-    personal_response_ids = []
-    all_response_ids = []
-    responses_count = 0
-    [1,4,5,6,'extra'].each do |loc_id|  
-      if loc_id == 1
-        3.times do #3/9 local responses
-          request_id = request_ids_indexed_by_location_id[loc_id].sample
-          employee_id = employee_ids_indexed_by_location_id[loc_id].sample
-          create_response(request_id, employee_id)
-          local_response_ids << Response.last.id
-          all_response_ids << Response.last.id
-          responses_count += 1
-        end 
-        
-      elsif loc_id == 4
-        3.times do #6/9 local responses
-          request_id = request_ids_indexed_by_location_id[loc_id].sample
-          employee_id = employee_ids_indexed_by_location_id[loc_id].sample
-          create_response(request_id, employee_id)
-          local_response_ids << Response.last.id
-          all_response_ids << Response.last.id 
-          responses_count += 1  
-        end
-        1.times do #1/2 personal responses
-          request_id = request_ids_indexed_by_location_id[loc_id].sample
-          employee_id = Request.find(request_id).employee.id
-          create_response(request_id, employee_id)
-          personal_response_ids << Response.last.id
-          all_response_ids << Response.last.id
-          responses_count += 1
-        end  
-        
-      elsif loc_id == 5
-        3.times do #9/9 local responses
-          request_id = request_ids_indexed_by_location_id[loc_id].sample
-          employee_id = employee_ids_indexed_by_location_id[loc_id].sample
-          create_response(request_id, employee_id)
-          local_response_ids << Response.last.id
-          all_response_ids << Response.last.id
-          responses_count += 1
-        end   
-        
-      elsif loc_id == 6
-        request_ids_indexed_by_location_id[loc_id].each do |req_id|
-          request_id = req_id
-          3.times do #3 responses per each loc 6 request
-            employee_id = employee_ids_indexed_by_location_id.values.flatten.sample
-            create_response(request_id, employee_id)
-            all_response_ids << Response.last.id
-            responses_count += 1
-          end  
-        end
-        1.times do #2/2 personal responses
-          request_id = request_ids_indexed_by_location_id[loc_id].sample
-          employee_id = Request.find(request_id).employee.id
-          create_response(request_id, employee_id)
-          personal_response_ids << Response.last.id
-          all_response_ids << Response.last.id
-          responses_count += 1
-        end
+    9.times do |n|
+      location_id = available_location_ids.sample
+      request_id = 
+        location_request_ids(location_id).sample
+      while ids_for_requests_with_responses.include?(request_id)  
+        location_id = 
+          available_location_ids.sample
+        request_id = 
+          location_request_ids(location_id).sample
+      end    
+      employee_id = 
+        location_employee_ids(location_id).sample
+      create_response(request_id, employee_id)
+      local_response_ids.push(@new_response.id)
+    end  
 
-      else #extra responses to reach 70 total
-        remaining = 70 - responses_count
-        remaining.times do
-          employee_id = employee_ids_indexed_by_location_id.values.flatten.sample
-          request_id = request_ids_indexed_by_location_id.values.flatten.sample
-          create_response(request_id, employee_id)
-          all_response_ids << Response.last.id
-        end  
-      end
+    #2 personal responses for 2 unique requests
+    personal_response_ids = []
+    2.times do |n|
+      location_id = available_location_ids.sample
+      request_id = 
+        location_request_ids(location_id).sample
+      while ids_for_requests_with_responses.include?(request_id)
+        location_id = 
+          available_location_ids.sample
+        request_id = 
+          location_request_ids(location_id).sample
+      end    
+      employee_id = Request.find(request_id).employee_id
+      create_response(request_id, employee_id)
+      personal_response_ids.push(@new_response.id)
+    end  
+
+    #3 responses to each London request
+    location_request_ids(6).each do |req_id| 
+      3.times do 
+        request_id = req_id
+        employee_id = all_employee_ids.sample
+        create_response(request_id, employee_id)
+      end  
     end 
 
-    #Create selections
-    #Total selections, 50, as per specs 
-    locals = []
-    7.times do #7 of the 9 local responses selected, specs
-      response_id = local_response_ids.sample 
-      while locals.include?(response_id) #to choose a new response
-        response_id = local_response_ids.sample
-      end
+    #remaining responses 
+    remaining_responses = 70 - 
+      all_response_ids.count
+    remaining_responses.times do |n|
+      request_id = available_request_ids.sample
+      employee_id = all_employee_ids.sample 
+      while ids_for_requests_with_responses.include?(request_id)  
+        request_id = available_request_ids
+.sample
+        employee_id = all_employee_ids.sample
+      end   
+      create_response(request_id, employee_id)
+    end
 
+    #Selections, 50, each selection must be for a unique request
+
+    #7 of the 9 local responses are selected, so
+    #7 unique request selections
+    7.times do |n|
+      response_id = local_response_ids[n]
       create_selection(response_id)
-      locals << response_id 
     end  
 
-    personals = []
-    1.times do #1 of the 2 personal responses selected, specs
-      response_id = personal_response_ids.sample
-      create_selection(response_id)
-      personals << response_id
-    end  
+    #1 of the 2 personal responses is selected, so 
+    #1 unique request selection
+    response_id = personal_response_ids.first
+    create_selection(response_id)
 
-    used_response_ids = locals + personals
-    available_response_ids = all_response_ids - used_response_ids
-    generics = []
-    42.times do #remaining 42 selections for required total of 50
-      response_id = available_response_ids.sample
-      while generics.include?(response_id) #to choose a new response
-        response_id = available_response_ids.sample
-      end
-      
+    #remaining selections, 
+    #42 more unique request selections
+    42.times do      
+      request_id = unselected_request_ids.first
+      response_id = Request.find(request_id).responses.first.id
       create_selection(response_id)
-      generics << response_id
     end  
 
     #fill the app's other resources
@@ -266,6 +261,7 @@ namespace :db do
       "Ruby on Rails", "SQL Server", "Linux"]
     skills.each do |skill_name|
       Skill.create!(name: skill_name)
-    end     
+    end 
+
   end
-end
+end     
