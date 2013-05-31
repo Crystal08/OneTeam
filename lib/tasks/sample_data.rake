@@ -12,20 +12,20 @@ namespace :db do
                        manager: Faker::Name.name,
                        position_id: rand(1..5),
                        department_id: 1,
-                       group_id: rand(1..5),
+                       group_id: rand(1..4),
                        location_id: location_id,
                        password: "foobar",
                        password_confirmation: "foobar")
       (1..7).each do |n|
         EmployeeCurrentSkill.create(employee_id: new_employee.id,
                                     skill_id: n,
-                                    skill_level: rand(1..5))
+                                    skill_level: rand(0..4))
       end
 
       (1..7).each do |n|  
         EmployeeDesiredSkill.create(employee_id: new_employee.id,
                                     skill_id: n,
-                                    interest_level: rand(1..5))
+                                    interest_level: rand(0..4))
       end   
     end  
 
