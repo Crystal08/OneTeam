@@ -1,3 +1,4 @@
+<div class="textarea">
 <h1>Edit Selection</h1>
 
 Edit "<%= @selection.employee.first_name %> <%= @selection.employee.last_name %> to fill Request '<%= @selection.response.request.task %>' "
@@ -11,3 +12,4 @@ Edit "<%= @selection.employee.first_name %> <%= @selection.employee.last_name %>
 
 <%= link_to 'Show', selection_path(@selection) %> |
 <%= link_to 'Back', employee_requests_path(current_employee) %>
+</div>

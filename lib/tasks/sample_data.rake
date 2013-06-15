@@ -7,7 +7,7 @@ namespace :db do
                        first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.email,
-                       about_me: Faker::Lorem.paragraph(sentence_count = 2),
+                       about_me: Faker::Lorem.paragraph(sentence_count = 1),
                        years_with_company: rand(1..10),
                        manager: Faker::Name.name,
                        position_id: rand(1..5),
@@ -35,10 +35,10 @@ namespace :db do
       req_created_at = start_date 
 
       new_request = Request.create(employee_id: employee_id,
-                     task: Faker::Lorem.sentence(word_count = 1),
+                     task: Faker::Lorem.words(num=4).join(' ').capitalize,
                      start_date: start_date,
                      end_date: end_date,
-                     title: Faker::Lorem.sentence(word_count = 1),
+                     title: Faker::Lorem.words(num=2).join(' ').capitalize,
                      location_id: Employee.find(employee_id).location_id,
                      group_id: rand(4),
                      created_at: req_created_at)
@@ -55,7 +55,7 @@ namespace :db do
 
       @new_response = Response.create(request_id: request_id,
                        employee_id: employee_id,
-                       comments: Faker::Lorem.sentence(word_count = 1),
+                       comments: Faker::Lorem.words(num=2).join(' ').capitalize,
                        created_at: res_created_at)  
     end
 
@@ -70,6 +70,10 @@ namespace :db do
     def all_employee_ids
       Employee.all.map(&:id)
     end 
+
+    def non_local_employees(location_id)
+      all_employee_ids - location_employee_ids(6)
+    end  
 
     def all_request_ids
       Request.all.map(&:id)
@@ -89,6 +93,10 @@ namespace :db do
         available_request_ids.concat(location_request_ids(loc_id))
       end
       available_request_ids
+    end 
+
+    def request_location_id(request_id) 
+      Request.find(request_id).location_id
     end  
 
     def ids_for_requests_with_selections
@@ -107,7 +115,7 @@ namespace :db do
       sel_created_at = 
         Response.find(response_id).created_at + sel_delays.sample
       @new_selection = Selection.create(response_id: response_id,
-                       notes: Faker::Lorem.sentence(word_count = 1),
+                       notes: Faker::Lorem.words(num=2).join(' ').capitalize,
                        created_at: sel_created_at)
     end
 
@@ -191,11 +199,11 @@ namespace :db do
       personal_response_ids.push(@new_response.id)
     end  
 
-    #3 responses to each London request
+    #3 responses to each London request, non-local
     location_request_ids(6).each do |req_id| 
       3.times do 
         request_id = req_id
-        employee_id = all_employee_ids.sample
+        employee_id = non_local_employees(6).sample
         create_response(request_id, employee_id)
       end  
     end 
@@ -205,11 +213,13 @@ namespace :db do
       all_response_ids.count
     remaining_responses.times do |n|
       request_id = available_request_ids.sample
-      employee_id = all_employee_ids.sample 
+      loc_id = request_location_id(request_id)
+      employee_id = non_local_employees(loc_id).sample 
       while ids_for_requests_with_responses.include?(request_id)  
         request_id = available_request_ids
 .sample
-        employee_id = all_employee_ids.sample
+        loc_id = request_location_id(request_id)
+        employee_id = non_local_employees(loc_id).sample 
       end   
       create_response(request_id, employee_id)
     end

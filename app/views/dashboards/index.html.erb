@@ -1,0 +1,17 @@
+<nav>
+  <ul class="nav nav-tabs" >
+    <% if signed_in? %>
+      <%= nav_link 'Requests Overview', dashboard_requests_overview_path %>
+<!--Above link to tables from Task 2 -->           
+      <%= nav_link 'Skills Overview', dashboard_skills_overview_path %>
+<!-- Above link to tables from Task 3 -->           
+      <%= nav_link "Guest Developers Overview", dashboard_guest_developers_overview_path %>
+<!-- Above link to tables from Task 4 -->                     
+    <% end %>
+  </ul>
+</nav> 
+<div class = "textarea">
+<!-- content -->
+</div>
+   
+

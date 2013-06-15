@@ -24,8 +24,8 @@
 <!-- Employees link not requested by client            
             <%#= nav_link 'Employees', employees_path %> -->
             <%= nav_link 'My Profile', employee_path(current_employee) %>
-            <%= nav_link "Requests I've Posted", employee_requests_path(current_employee) %>
-            
+            <%= nav_link "Requests I've Posted", employee_requests_path(current_employee) %> 
+            <%= nav_link "OneTeam Dashboard", dashboard_requests_overview_path %>           
           <% end %>
         </ul>
     </nav>
@@ -34,9 +34,7 @@
       <div class="alert alert-<%= key %>"><%= value %></div>
     <% end %>
 
-    <div class="textarea">
-        <%= yield %>
-    </div>  
+      <%= yield %>  
 
     <%= render 'layouts/footer' %>
 

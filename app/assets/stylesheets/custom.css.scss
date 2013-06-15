@@ -69,6 +69,10 @@ section {
   overflow: auto;
 }
 
+.nav {
+  margin-bottom: 0px;
+}
+
 .nav-tabs {
   background-color: #990099;
   -webkit-border-radius: 10px;
@@ -99,6 +103,10 @@ section {
   }
 }
 
+.align-right {
+  text-align: right;
+}
+
 .container {
   background-color: $white;
   padding-top: 0px;
@@ -118,8 +126,8 @@ section {
 .textarea {
   resize: vertical;
   border-left: black;
+  padding-right: 1px;
   padding-left: 20px;
-  padding-right: 20px;
 }
 
 .textarea p {

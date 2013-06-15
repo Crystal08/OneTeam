@@ -16,6 +16,10 @@ OneTeam::Application.routes.draw do
   match '/signup', to: 'employees#new'
   match '/signin', to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+ 
+  match '/dashboards/requests_overview' => 'dashboards#requests_overview', :as => :dashboard_requests_overview
+  match '/dashboards/skills_overview' => 'dashboards#skills_overview', :as => :dashboard_skills_overview
+  match '/dashboards/guest_developers_overview' => 'dashboards#guest_developers_overview', :as => :dashboard_guest_developers_overview
 
   resources :requests do
     resources :responses
@@ -34,5 +38,6 @@ OneTeam::Application.routes.draw do
   resources :employees
   #resources :selections 
   resources :sessions, only: [:new, :create, :destroy]
-
+#I think don't need the below, just the custom routes above  
+  #resources :dashboards
 end
