@@ -40,7 +40,7 @@ namespace :db do
                      end_date: end_date,
                      title: Faker::Lorem.words(num=2).join(' ').capitalize,
                      location_id: Employee.find(employee_id).location_id,
-                     group_id: rand(4),
+                     group_id: rand(1..4),
                      created_at: req_created_at)
       rand(7).times do
         RequestSkill.create(request_id: new_request.id,

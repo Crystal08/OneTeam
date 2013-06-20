@@ -14,8 +14,10 @@
     
   <%= render 'layouts/header' %> 
 
+  <% if signed_in? %>
   <div id="nav_top_right"><%= link_to "Sign out", signout_path, method: "delete" %> </div>
-  
+  <% end %>
+
   <div id="tabbed_area" class="container">
     <nav>
         <ul class="nav nav-tabs" class="pull-left">

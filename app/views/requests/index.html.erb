@@ -5,8 +5,8 @@
 
 <% @requests.each do |request| %>
   
-  <% if !request.selected? %>
-    <% if !request.done? %>
+  <%# if !request.selected? %>
+    <%# if !request.done? %>
 
       <p><em><%= request.title %></em>, <%= request.start_date_str %>
        - <%= request.end_date_str %>(Open, <%= request.status %>)</p>
@@ -31,8 +31,8 @@
       <hr>
       </br>
 
-    <% end %>
-  <% end %>
+    <%# end %>
+  <%# end %>
 <% end %>
 </div>
 

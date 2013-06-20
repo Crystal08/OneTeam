@@ -61,6 +61,9 @@
 
 #request_group_dropdown{
   display: inline-block;
+  select{
+    width: 200px;
+  }
 }
   
 #request_location_dropdown{
@@ -68,6 +71,7 @@
   position: relative;
   left: 40px;
   select{
+      width: 200px;
       position: relative;
       left: 10px;
   }

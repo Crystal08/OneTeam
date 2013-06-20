@@ -1,5 +1,4 @@
-class Dashboard < ActiveRecord::Base
-  # attr_accessible :title, :body
+class Dashboard 
   
   def select_all(query)
   	ActiveRecord::Base.connection.select_all(query)

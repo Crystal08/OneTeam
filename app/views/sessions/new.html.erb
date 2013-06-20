@@ -1,39 +1,31 @@
 <% provide(:title, "Sign in") %>
+<div class = "textarea">
 <% if signed_in? %>
-	
-<div class="span6 offset3">
-  <h1>Sign out</h1></br>
-</div> 
 
-<div class="row">
-  <div class="span6 offset3">
-	  <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-large btn-primary" %>
-	  <p></br> Not done yet? <%= link_to "Keep going!", requests_path %></p>
-  </div>
-</div>
+  <h1>Sign out</h1></br>
+
+  <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-med" %>
+  <p></br> Not done yet? <%= link_to "Keep going!", requests_path %></p>
 
 <% else %>
 
-<div class="span6 offset3">
   <h1>Sign in</h1>
-</div>  
-
-<div class="row">
-  <div class="span6 offset3">
-	  <%= form_for(:session, url: sessions_path) do |f| %>
+  
+  <%= form_for(:session, url: sessions_path) do |f| %>
 	    
-		  <%= f.label :email %>
-		  <%= f.text_field :email %>
+    <%= f.label :email %>
+	<%= f.text_field :email %>
 
-		  <%= f.label :password %>
-		  <%= f.password_field :password %> </br>	 
+	<%= f.label :password %>
+	<%= f.password_field :password %> </br>	 
 
-		  <%= f.submit "Sign in", class: "btn btn-large btn-primary" %>
+	<%= f.submit "Sign in", class: "btn btn-med" %>
 
-	  <% end %>
+<% end %>
 
-	  <p>New to OneTeam? <%= link_to "Sign up now!", signup_path %></p>
-  </div>
+<p>New to OneTeam? <%= link_to "Sign up now!", signup_path %></p>
+  
 </div>
 <% end %>
+
 
