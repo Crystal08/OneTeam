@@ -17,9 +17,9 @@
 
       <p>Description: <%= request.task %></p>
     
-      <p>Your <em>current skills</em> score for this project: <%= request.current_skills_score(current_employee) %> (<%= request.current_skills_count(current_employee) %> out of <%=request.skills.count %> skills)</p>
+      <p>Your <em>current skills</em> score for this project: <%= request.current_skills_score(current_employee) %> (<%= request.current_skills_count(current_employee) %> out of <%= pluralize(request.skills.count, 'skill') %>)</p>
       
-      <p>Your <em>interested skills</em> score for this project: <%= request.desired_skills_score(current_employee) %> (<%= request.desired_skills_count(current_employee) %> out of <%=request.skills.count %> skills)</p>
+      <p>Your <em>interested skills</em> score for this project: <%= request.desired_skills_score(current_employee) %> (<%= request.desired_skills_count(current_employee) %> out of <%= pluralize(request.skills.count, 'skill') %>)</p>
 
       <% if request.find_responses(request).find_by_employee_id(current_employee) %>
           <div class='btn btn-med disabled'>Applied</div>
