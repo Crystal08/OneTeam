@@ -14,10 +14,6 @@
     
   <%= render 'layouts/header' %> 
 
-  <% if signed_in? %>
-  <div id="nav_top_right"><%= link_to "Sign out", signout_path, method: "delete" %> </div>
-  <% end %>
-
   <div id="tabbed_area" class="container">
     <nav>
         <ul class="nav nav-tabs" class="pull-left">
@@ -27,9 +23,12 @@
             <%#= nav_link 'Employees', employees_path %> -->
             <%= nav_link 'My Profile', employee_path(current_employee) %>
             <%= nav_link "Requests I've Posted", employee_requests_path(current_employee) %> 
-            <%= nav_link "OneTeam Dashboard", dashboard_requests_overview_path %>           
+            <%= nav_link "OneTeam Dashboard", dashboard_requests_overview_path %> 
+            <div class="pull-right", id="signout">
+            <%= link_to "Sign out",signout_path, method: "delete" %> 
+            </div>        
           <% end %>
-        </ul>
+        </ul>    
     </nav>
 
     <% flash.each do |key, value| %>
