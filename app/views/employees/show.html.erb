@@ -8,13 +8,11 @@
 <%= link_to 'Edit My Profile', edit_employee_path(@employee) %></br>
 <% end %>
 
-<div id="gravatar">
 <h1 class = "pull-left">
   <%= gravatar_for @employee %>
-</h1></div>
+</h1>
 </br>
 
-<div id="profile">
 <p>
   <b>First Name:</b>
   <%= @employee.first_name %>
@@ -153,5 +151,5 @@
 <% end %>         
 
 </div>
-</div>
+
 
