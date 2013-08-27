@@ -3,10 +3,11 @@ namespace :db do
   task populate: :environment do
 
     def create_employee (location_id)
+      m = 0
       new_employee = Employee.create(
                        first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
-                       email: Faker::Internet.email,
+                       email: "user_#{m}@aits.com",
                        about_me: Faker::Lorem.paragraph(sentence_count = 1),
                        years_with_company: rand(1..10),
                        manager: Faker::Name.name,
@@ -26,7 +27,8 @@ namespace :db do
         EmployeeDesiredSkill.create(employee_id: new_employee.id,
                                     skill_id: n,
                                     interest_level: rand(0..4))
-      end   
+      end 
+      m = m + 1  
     end  
 
     def create_request(employee_id)
