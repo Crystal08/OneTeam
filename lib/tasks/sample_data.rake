@@ -2,12 +2,11 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
 
-    def create_employee (location_id)
-      m = 0
+    def create_employee (location_id, m)
       new_employee = Employee.create(
                        first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
-                       email: "user_#{m}@aits.com",
+                       email: "user#{m}@aits.com",
                        about_me: Faker::Lorem.paragraph(sentence_count = 1),
                        years_with_company: rand(1..10),
                        manager: Faker::Name.name,
@@ -128,8 +127,10 @@ namespace :db do
       4=>14, 5=>20, 6=>12}
 
     location_employee_totals.each do |location_id, n|
+      m = 0
       n.times do 
-        create_employee(location_id)
+        m += 1
+        create_employee(location_id, m)
       end    
     end
 
