@@ -7,7 +7,6 @@
 	  
   <%= render 'form', :f => f %> </br>
 
-  <hr>
   <div id="request-controls" class="extra_vertical">
     <%= button_to "Create request", request_path(request), class:  "btn btn-med", :method => "post" %>
     <%= button_to "Cancel", employee_requests_path(current_employee), class: "btn btn-med", :method => "post" %></div>
