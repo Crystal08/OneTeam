@@ -11,15 +11,17 @@
     <%= render 'form', :f => f %> </br>
     
   <hr>
-  <div class="profile_controls">
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  
-    <%= f.label :password_confirmation, "Confirmation" %>
-    <%= f.password_field :password_confirmation %>
- 
-    <%= f.submit "Create my OneTeam account", class: "btn btn-med" %>
-  </div>
+  <div class= "extra_vertical">
+    <div class="profile_controls">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+   
+      <%= f.submit "Create my OneTeam account", class: "btn btn-med" %>
+    </div>
+  </div>  
   
   
 <% end %>

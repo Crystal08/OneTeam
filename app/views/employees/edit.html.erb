@@ -13,11 +13,13 @@
   <%= render 'form', :f => f %> 
   <p></p>
    
-  <hr>     
-  <div class="profile_controls">
-    <%= f.submit "Update profile", class: "btn btn-med" %>
-    <%= button_to "Cancel", employee_path, class: "btn btn-med" %>
-  </div>
+  <hr>
+  <div class="extra_vertical">     
+    <div class="profile_controls">
+      <%= f.submit "Update profile", class: "btn btn-med" %>
+      <%= button_to "Cancel", employee_path, class: "btn btn-med" %>
+    </div>
+  </div>  
 
 <% end %>
 
