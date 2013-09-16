@@ -8,7 +8,7 @@
   <p></br> Not done yet? <%= link_to "Keep going!", requests_path %></p>
 
 <% else %>
-
+  
   <h1>Sign in</h1>
   
   <%= form_for(:session, url: sessions_path) do |f| %>
@@ -18,9 +18,9 @@
 
 	<%= f.label :password %>
 	<%= f.password_field :password %> </br>	 
-
-	<%= f.submit "Sign in", class: "btn btn-med" %>
-
+  <div class="extra_vertical"> 
+	  <%= f.submit "Sign in", class: "btn btn-med" %>
+  </div>
 <% end %>
 
 <p>New to OneTeam? <%= link_to "Sign up now!", signup_path %></p>
