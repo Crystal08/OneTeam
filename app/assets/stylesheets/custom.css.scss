@@ -49,7 +49,7 @@ float: left;
 
 hgroup h1 {
 color: #663366;
-text-shadow: 0.1em 0.1em 0.05em grey
+text-shadow: 0.1em 0.1em 0.05em grey;
 }
 
 #signout > a{
@@ -104,6 +104,17 @@ section {
 
 .align-right {
   text-align: right;
+}
+
+.highlight_background {
+  background-color: rgba(139,134,130,.15);
+  border-radius: 10px;
+}
+
+.subtle_emphasis {
+  font-size: .9em;
+  color: #663366;
+  text-shadow: 0.1em 0.1em 0.1em grey;
 }
 
 .container {

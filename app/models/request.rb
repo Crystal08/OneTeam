@@ -14,10 +14,19 @@ class Request < ActiveRecord::Base
 
   accepts_nested_attributes_for :responses
   
-  validates_presence_of :title #commented out start and end date validation 
-  #while playing with fake data population :start_date, :end_date
+  validates_presence_of :title, :start_date, :end_date
   validates :task, :length => { :maximum => 1500 }
   validate :start_date_first
+
+  #method under construction, see use in requests index
+  def distance_within?(miles)
+    return true
+  end  
+
+  #used by above method  
+  def distance_between(coordinates1, coordinates2)
+    #both coordinate sets must be in array form: [lat,lon] 
+  end  
 
   def start_date_first
     errors.add(:start_date, 'must occur before end date') if !start_date.nil? && start_date > end_date

@@ -4,9 +4,12 @@
 </br>
 
 <% @requests.each do |request| %>
-  
-  <%# if !request.selected? %>
-    <%# if !request.done? %>
+  <% if request.distance_within?(50) %>
+    <p class = "subtle_emphasis">This request is near you!</p>
+    <div class = "highlight_background">
+  <% else %>
+    <div>    
+  <% end %>    
 
       <p><em><%= request.title %></em>, <%= request.start_date_str %>
        - <%= request.end_date_str %>(Open, <%= request.status %>)</p>
@@ -27,12 +30,11 @@
           <%= button_to "Apply", new_request_response_path(request), 
             class: 'btn btn-med', :method => "get" %>
       <% end %>  
-      
-      <hr>
-      </br>
+    </div>
+    
+  <hr>
+  </br>
 
-    <%# end %>
-  <%# end %>
 <% end %>
 </div>
 
