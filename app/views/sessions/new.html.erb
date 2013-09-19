@@ -4,13 +4,15 @@
 
   <h1>Sign out</h1></br>
 
-  <%= link_to "Sign out", signout_path, method: "delete", class: "btn btn-med" %>
-  <p></br> Not done yet? <%= link_to "Keep going!", requests_path %></p>
+  <%= link_to "Sign out", signout_path, method: "delete",
+   class: "btn btn-med" %>
+  <p></br> Not done yet? <%= link_to "Keep going!",
+   requests_path %></p>
 
 <% else %>
   
   <h1>Sign in</h1>
-  
+  <div id="testing_cookie"></div>
   <%= form_for(:session, url: sessions_path) do |f| %>
 	    
     <%= f.label :email %>
@@ -23,8 +25,36 @@
   </div>
 <% end %>
 
-<p>New to OneTeam? <%= link_to "Sign up now!", signup_path %></p>
-  
+<p>New to OneTeam? <%= link_to "Sign up now!",
+ signup_path %></p>
+ 
+<script>
+  if (navigator.geolocation) {
+    var options = {
+      enableHighAccuracy: false,
+      timeout: 5000,
+      maximumAge: 5000
+    };
+
+    function success(position) {
+      var elt = document.getElementById("testing_cookie")
+      document.cookie = "user_location=" + escape(
+       position.coords.latitude + "|" + position.coords.longitude);
+      elt.textContent = "Your current location is:" + unescape(document.cookie);
+    };
+    
+    function error() {
+      output.innerHTML = "Unable to retrieve your location";
+    };
+
+    navigator.geolocation.getCurrentPosition(success, error, options);
+  }
+  else {
+    output.innerHTML =
+     "<p>Geolocation is not supported by your browser</p>";
+  }
+</script>  
+
 </div>
 <% end %>
 
