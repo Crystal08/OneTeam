@@ -219,8 +219,7 @@ namespace :db do
       loc_id = request_location_id(request_id)
       employee_id = non_local_employees(loc_id).sample 
       while ids_for_requests_with_responses.include?(request_id)  
-        request_id = available_request_ids
-.sample
+        request_id = available_request_ids.sample
         loc_id = request_location_id(request_id)
         employee_id = non_local_employees(loc_id).sample 
       end   
@@ -249,32 +248,7 @@ namespace :db do
       create_selection(response_id)
     end  
 
-    #fill the app's other resources
-    Department.create!(name: "IT")
- 
-    groups = ["Development","Interface Design",
-     "QA", "Infrastructure"]
-    groups.each do |group_name|
-      Group.create!(name: group_name)
-    end
-
-    locations = ["Chicago", "Mumbai", "Houston",
-     "San Francisco", "Boston", "London"]
-    locations.each do |location_name|
-      Location.create!(name: location_name)
-    end
+    #app's other resources filled in seed.rb
     
-    positions = ["Engineer", "Analyst",
-     "Project Lead", "UI Specialist", "QA Specialist"]  
-    positions.each do |position_name|
-      Position.create!(name: position_name)
-    end
-
-    skills = ["PHP", "MySQL", "C#", "Apache", 
-      "Ruby on Rails", "SQL Server", "Linux"]
-    skills.each do |skill_name|
-      Skill.create!(name: skill_name)
-    end 
-
   end
 end     
