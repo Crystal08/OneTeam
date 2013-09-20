@@ -15,7 +15,7 @@
   <div id="testing_cookie"></div>
   <%= form_for(:session, url: sessions_path) do |f| %>
 	    
-    <%= f.label :email %>
+  <%= f.label :email %>
 	<%= f.text_field :email %>
 
 	<%= f.label :password %>
@@ -32,15 +32,13 @@
   if (navigator.geolocation) {
     var options = {
       enableHighAccuracy: false,
-      timeout: 5000,
+      timeout: 50,
       maximumAge: 5000
     };
 
     function success(position) {
-      var elt = document.getElementById("testing_cookie")
-      document.cookie = "user_location=" + escape(
-       position.coords.latitude + "|" + position.coords.longitude);
-      elt.textContent = "Your current location is:" + unescape(document.cookie);
+      document.cookie = "user_location=" +
+       escape(position.coords.latitude + "|" + position.coords.longitude);
     };
     
     function error() {

@@ -4,15 +4,15 @@
 </br>
 
 <% @requests.each do |request| %>
-  <% if request.distance_within?(50) %>
+  <% if request.distance_within?(@employee_location, @num_miles) %>
     <p class = "subtle_emphasis">This request is near you!</p>
     <div class = "highlight_background">
   <% else %>
     <div>    
   <% end %>    
-
-      <p><em><%= request.title %></em>, <%= request.start_date_str %>
-       - <%= request.end_date_str %>(Open, <%= request.status %>)</p>
+      <p><%= @user_location %></p>
+      <p><em><%= request.title %></em>, <%= request.start_date %>
+       - <%= request.end_date %>(Open, <%= request.status %>)</p>
 
       <p>Posted by 
         <%= request.employee.first_name %> <%= request.employee.last_name %>
@@ -33,9 +33,9 @@
     </div>
     
   <hr>
-  </br>
-
 <% end %>
+<%= will_paginate(@requests) %>
 </div>
+
 
   

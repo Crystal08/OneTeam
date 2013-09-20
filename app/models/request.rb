@@ -1,6 +1,7 @@
 class Request < ActiveRecord::Base
   attr_accessible :title, :employee_id, :task, :request_skill_ids,
-   :location_id, :start_date, :end_date, :group_id, :created_at, :status
+   :location_id, :start_date, :end_date, :group_id, :created_at, :status,
+   :user_location
  
   belongs_to :employee
   belongs_to :location
@@ -18,14 +19,16 @@ class Request < ActiveRecord::Base
   validates :task, :length => { :maximum => 1500 }
   validate :start_date_first
 
-  #method under construction, see use in requests index
-  def distance_within?(miles)
-    return true
+  def distance_within?(employee_location, miles)
+    user_coordinates = employee_location
+    request_coordinates = 
+     Array[self.location.latitude, self.location.longitude]
+    return true if distance_between(request_coordinates, user_coordinates) <= miles 
   end  
 
-  #used by above method  
   def distance_between(coordinates1, coordinates2)
-    #both coordinate sets must be in array form: [lat,lon] 
+    Geocoder::Calculations.distance_between(coordinates1,
+     coordinates2)
   end  
 
   def start_date_first
