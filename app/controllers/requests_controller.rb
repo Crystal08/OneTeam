@@ -16,7 +16,7 @@ class RequestsController < ApplicationController
       @requests = Request.paginate :page =>
        params[:page], :per_page => 10 
       @employee_location = cookies[:user_location].split("|") 
-      @num_miles = 1000;
+      @num_miles = 50;
      end
   end  
 

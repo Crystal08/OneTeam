@@ -36,9 +36,7 @@
     };
 
     function success(position) {
-      var data = "user_location=" + escape(position.coords.latitude + "|" + position.coords.longitude);
-      alert(data);
-      document.cookie = data;
+      document.cookie = "user_location=" + escape(position.coords.latitude + "|" + position.coords.longitude);
     };
     
     function error() {
