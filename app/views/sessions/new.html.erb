@@ -12,7 +12,6 @@
 <% else %>
   
   <h1>Sign in</h1>
-  <div id="testing_cookie"></div>
   <%= form_for(:session, url: sessions_path) do |f| %>
 	    
   <%= f.label :email %>
@@ -32,13 +31,14 @@
   if (navigator.geolocation) {
     var options = {
       enableHighAccuracy: false,
-      timeout: 50,
+      timeout: 500,
       maximumAge: 5000
     };
 
     function success(position) {
-      document.cookie = "user_location=" +
-       escape(position.coords.latitude + "|" + position.coords.longitude);
+      var data = "user_location=" + escape(position.coords.latitude + "|" + position.coords.longitude);
+      alert(data);
+      document.cookie = data;
     };
     
     function error() {
