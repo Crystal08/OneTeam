@@ -3,6 +3,16 @@
 <h1>All Requests</h1>
 </br>
 
+<script>
+  function toggle_visibility() {
+    $(".request_body").toggle();
+  };
+</script>  
+
+<form>
+  <input type="checkbox" onclick="toggle_visibility()"> Show/Hide Full Request
+</form>  
+
 <% @requests.each do |request| %>
   <% if request.distance_within?(@employee_location, @num_miles) %>
     <p class = "subtle_emphasis">This request is near you!</p>
@@ -13,7 +23,7 @@
       <p><%= @user_location %></p>
       <p><em><%= request.title %></em>, <%= request.start_date %>
        - <%= request.end_date %>(Open, <%= request.status %>)</p>
-
+      <div class = "request_body">
       <p>Posted by 
         <%= request.employee.first_name %> <%= request.employee.last_name %>
          in <%= request.location.name %> Office (Group: <%= request.group.name %>)</p>
@@ -29,8 +39,10 @@
       <% else %>
           <%= button_to "Apply", new_request_response_path(request), 
             class: 'btn btn-med', :method => "get" %>
-      <% end %>  
+      <% end %> 
+      </div> 
     </div>
+    
     
   <hr>
 <% end %>
