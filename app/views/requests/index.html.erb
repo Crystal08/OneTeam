@@ -3,27 +3,21 @@
 <h1>All Requests</h1>
 </br>
 
-<script>
-  function toggle_visibility() {
-    $(".request_body").toggle();
-  };
-</script>  
-
 <form>
-  <input type="checkbox" onclick="toggle_visibility()"> Show/Hide Full Request
+  <input class="visibility_checkbox" type="checkbox" onclick="toggle_visibility()"> Summarize Requests?
 </form>  
 
 <% @requests.each do |request| %>
   <% if request.distance_within?(@employee_location, @num_miles) %>
-    <p class = "subtle_emphasis">This request is near you!</p>
-    <div class = "highlight_background">
+    <p class="subtle_emphasis">This request is near you!</p>
+    <div class="highlight_background">
   <% else %>
     <div>    
   <% end %>    
       <p><%= @user_location %></p>
       <p><em><%= request.title %></em>, <%= request.start_date %>
        - <%= request.end_date %>(Open, <%= request.status %>)</p>
-      <div class = "request_body">
+      <div class="request_body">
       <p>Posted by 
         <%= request.employee.first_name %> <%= request.employee.last_name %>
          in <%= request.location.name %> Office (Group: <%= request.group.name %>)</p>
@@ -48,6 +42,27 @@
 <% end %>
 <%= will_paginate(@requests) %>
 </div>
+
+<script>
+  function toggle_visibility() {
+    var short_view = localStorage.getItem("short_view");
+    if (short_view == null || short_view == "undefined"|| short_view == "false") {
+      $(".request_body").toggle();
+      localStorage.setItem("short_view","true");
+    }
+    else {
+      $(".request_body").toggle();
+      localStorage.setItem("short_view","false");
+    } 
+  };
+</script> 
+
+<script>
+  var short_view = (localStorage.getItem("short_view")=="true") ? true : false;
+  $(".visibility_checkbox").prop('checked', short_view);
+  $(".request_body").toggle(!short_view);
+</script>  
+
 
 
   
