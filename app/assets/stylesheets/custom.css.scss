@@ -205,7 +205,7 @@ btn btn-med disabled> a:hover {
 
 /* Below is modification of http://css-tricks.com/examples/hrs/ */
 hr {
- position: relative\9; /* for IE only */
+ position: relative\9; /* for IE only, and next line */
  right: 35%\9;
  width: 30%;
  border: 0; 
