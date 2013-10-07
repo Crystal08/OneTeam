@@ -22,8 +22,8 @@ class Request < ActiveRecord::Base
   def distance_within?(employee_location, miles)
     user_coordinates = employee_location
     request_coordinates = 
-     Array[self.location.latitude, self.location.longitude]
-    return true if distance_between(request_coordinates, user_coordinates) <= miles 
+     [self.location.latitude, self.location.longitude]
+    distance_between(request_coordinates, user_coordinates) <= miles 
   end  
 
   def distance_between(coordinates1, coordinates2)

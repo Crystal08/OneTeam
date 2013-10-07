@@ -44,23 +44,14 @@
 </div>
 
 <script>
-  function toggle_visibility() {
-    var short_view = localStorage.getItem("short_view");
-    if (short_view == null || short_view == "undefined"|| short_view == "false") {
-      $(".request_body").toggle();
-      localStorage.setItem("short_view","true");
-    }
-    else {
-      $(".request_body").toggle();
-      localStorage.setItem("short_view","false");
-    } 
-  };
-</script> 
-
-<script>
-  var short_view = (localStorage.getItem("short_view")=="true") ? true : false;
+  var short_view = (localStorage.getItem("short_view")=="true");
   $(".visibility_checkbox").prop('checked', short_view);
   $(".request_body").toggle(!short_view);
+
+  function toggle_visibility() {
+    localStorage.setItem("short_view","" + !short_view);
+    $(".request_body").toggle(); 
+  };
 </script>  
 
 
