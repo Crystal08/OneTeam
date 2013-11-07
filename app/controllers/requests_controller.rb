@@ -12,12 +12,12 @@ class RequestsController < ApplicationController
       @requests = @my_requests.paginate :page =>
        params[:page], :per_page => 10 
       render 'my_requests' 
-     else 
+    else 
       @requests = Request.paginate :page =>
        params[:page], :per_page => 10 
-      @employee_location = cookies[:user_location].split("|") 
-      @num_miles = 50;
-     end
+      @employee_location = cookies[:user_location].split("|") if cookies[:user_location]
+      @num_miles = 50
+    end
   end  
 
   def show

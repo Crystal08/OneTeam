@@ -20,10 +20,12 @@ class Request < ActiveRecord::Base
   validate :start_date_first
 
   def distance_within?(employee_location, miles)
-    user_coordinates = employee_location
-    request_coordinates = 
-     [self.location.latitude, self.location.longitude]
-    distance_between(request_coordinates, user_coordinates) <= miles 
+    if employee_location
+      user_coordinates = employee_location
+      request_coordinates = 
+       [self.location.latitude, self.location.longitude]
+      distance_between(request_coordinates, user_coordinates) <= miles 
+    end  
   end  
 
   def distance_between(coordinates1, coordinates2)
