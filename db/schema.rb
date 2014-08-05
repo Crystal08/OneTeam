@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(:version => 20130919000849) do
   create_table "employees", :force => true do |t|
     t.decimal  "years_with_company"
     t.string   "manager"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.boolean  "admin"
+    t.boolean  "admin",              :default => false
     t.string   "about_me"
     t.string   "image"
     t.string   "email"
