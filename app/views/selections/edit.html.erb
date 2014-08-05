@@ -1,7 +1,7 @@
 <div class="textarea">
 <h1>Edit Selection</h1>
 
-Edit "<%= @selection.employee.first_name %> <%= @selection.employee.last_name %> to fill Request '<%= @selection.response.request.task %>' "
+Edit "<%= @selection.response.employee.first_name %> <%= @selection.response.employee.last_name %> to fill Request '<%= @selection.response.request.task %>' "
 
 <%= form_for(@selection) do |f| %>	  
 	
