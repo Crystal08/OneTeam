@@ -29,8 +29,8 @@ class SelectionsController < ApplicationController
   def create  
     @response = Response.find_by_id(params[:response_id])	  
     @selection = @response.selections.build(params[:selection])
-    @selection.employee = @response.employee
-    @selection.request = @response.request
+    #@selection.employee = @response.employee
+    #@selection.response.request = @response.request
    
     respond_to do |format|
       if @selection.save

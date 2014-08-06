@@ -59,7 +59,7 @@
       
         <% all_skills.each do |skill| %>
           <div class="vertical_checkboxes">
-          <%= check_box_tag "request[request_skill_ids][]", skill.id, @request.skills.compact.include?(skill) %>
+          <%= check_box_tag "request[request_skill_ids][]", skill.id, @request.skills.to_a.compact.include?(skill) %>
           <%= skill.name %> 
           </div>  
         <% end %>

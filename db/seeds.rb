@@ -14,21 +14,21 @@ puts "Creating Groups"
 
 ["Development","Interface Design",
      "QA", "Infrastructure"].each do |group|
-  Group.find_or_create_by_name(group)
+  Group.find_or_create_by(name: group)
 end
 
 puts "Creating Positions"
 
 ["Engineer", "Analyst",
      "Project Lead", "UI Specialist", "QA Specialist"].each do |position|
-  Position.find_or_create_by_name(position)
+  Position.find_or_create_by(name: position)
 end 
 
 puts "Creating Skills"
 
 ["PHP", "MySQL", "C#", "Apache", 
       "Ruby on Rails", "SQL Server", "Linux"].each do |skill|
-  Skill.find_or_create_by_name(skill)  
+  Skill.find_or_create_by(name: skill)  
 end         	
 
 puts "Creating Locations"
@@ -39,7 +39,7 @@ puts "Creating Locations"
  "San Francisco" => [37.7749295,-122.4194155],
  "Boston" => [42.3584308, -71.0597732], 
  "London" => [51.5112139, -0.1198244]}.each do |location, coordinates|
- 	Location.find_or_create_by_name(location, 
+ 	Location.find_or_create_by(name: location, 
  	  latitude: coordinates[0],
  	  longitude: coordinates[1])
 end 	

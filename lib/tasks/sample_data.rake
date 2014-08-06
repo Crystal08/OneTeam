@@ -61,11 +61,11 @@ namespace :db do
     end
 
     def location_employee_ids (location_id)
-      Employee.find_all_by_location_id(location_id).map(&:id)
+      Employee.where(location_id: location_id).map(&:id)
     end 
 
     def location_request_ids (location_id)
-      Request.find_all_by_location_id(location_id).map(&:id)
+      Request.where(location_id: location_id).map(&:id)
     end  
 
     def all_employee_ids

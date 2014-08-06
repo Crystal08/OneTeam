@@ -9,7 +9,6 @@ class Employee < ActiveRecord::Base
 
   has_many :requests
   has_many :responses, :dependent => :destroy
-  has_many :selections
   #http://kconrails.com/2010/01/29/has_and_belongs_to_many-associations-in-ruby-on-rails/
   
   has_many :employee_current_skills
@@ -45,9 +44,11 @@ class Employee < ActiveRecord::Base
   def skill_experience_total(skill_id)
     all_points = []
     EmployeeSkillEvaluation.all.each do |sk_eval|
-      if sk_eval.evaluation.response.employee_id == self.id && sk_eval.skill_id == skill_id
-        all_points << sk_eval.skill_experience_points
-      end
+      if sk_eval.evaluation_id  
+        if sk_eval.evaluation.response.employee_id == self.id && sk_eval.skill_id == skill_id
+          all_points << sk_eval.skill_experience_points
+        end
+      end  
     end
     all_points.sum
   end  
@@ -55,9 +56,11 @@ class Employee < ActiveRecord::Base
   def average_skill_level(skill_id) 
     all_levels = []
     EmployeeSkillEvaluation.all.each do |sk_eval|
-      if sk_eval.evaluation.response.employee_id == self.id && sk_eval.skill_id == skill_id   
-        all_levels << sk_eval.assigned_skill_level
-      end
+      if sk_eval.evaluation_id 
+        if sk_eval.evaluation.response.employee_id == self.id && sk_eval.skill_id == skill_id   
+          all_levels << sk_eval.assigned_skill_level
+        end
+      end  
     end
     if !all_levels.empty?
       (all_levels.inject{ |sum, level| sum + level}.to_f / all_levels.size).to_i
