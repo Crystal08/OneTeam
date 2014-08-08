@@ -46,10 +46,6 @@ GEM
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
     bcrypt (3.1.7-x86-mingw32)
-    bcrypt-ruby (3.1.5)
-      bcrypt (>= 3.1.3)
-    bcrypt-ruby (3.1.5-x86-mingw32)
-      bcrypt (>= 3.1.3)
     bootstrap-datepicker-rails (1.3.0.2)
       railties (>= 3.0)
     bootstrap-sass (2.2.2.0)
@@ -184,6 +180,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
+    spring (1.1.3)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -224,7 +221,7 @@ DEPENDENCIES
   actionview-encoded_mail_to (~> 1.0.4)
   activerecord-session_store (~> 0.0.1)
   activeresource (~> 4.0.0.beta1)
-  bcrypt-ruby (~> 3.1.0)
+  bcrypt (~> 3.1.0)
   bootstrap-datepicker-rails
   bootstrap-sass (= 2.2.2.0)
   bootstrap-will_paginate (= 0.0.6)
@@ -245,6 +242,7 @@ DEPENDENCIES
   rails4_upgrade
   rspec-rails (>= 2.13.2)
   sass-rails (~> 4.0)
+  spring
   sqlite3 (~> 1.3.5)
   uglifier (>= 1.3.0)
   will_paginate (~> 3.0.5)

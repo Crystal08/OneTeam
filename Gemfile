@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
-ruby '1.9.3'
+ruby '2.1.0'
 gem 'rails', '~> 4.0'
 gem 'rails4_upgrade'
 gem 'bootstrap-sass','2.2.2.0'
-gem 'bcrypt-ruby','~> 3.1.0'
+gem 'bcrypt','~> 3.1.0'
 gem 'faker','1.0.1'
 gem 'will_paginate', '~> 3.0.5'
 gem 'bootstrap-will_paginate','0.0.6'
@@ -29,6 +29,7 @@ group :development, :test do
 gem 'debugger'
 gem 'sqlite3','~> 1.3.5'
 gem 'rspec-rails','>= 2.13.2'
+gem 'spring'
 end
 
 gem 'sass-rails',   '~> 4.0'
