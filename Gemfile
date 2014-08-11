@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
-gem 'rails', '~> 4.1.0'
+ruby '2.1.2'
+gem 'rails', '4.1.4'
 gem 'rails4_upgrade'
 gem 'bootstrap-sass'
 gem 'bcrypt'
@@ -26,7 +26,7 @@ gem 'rails-perftest'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
-gem 'debugger'
+gem 'byebug'	
 gem 'sqlite3'
 gem 'rspec-rails'
 gem 'spring'
