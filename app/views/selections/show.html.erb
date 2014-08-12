@@ -1,0 +1,19 @@
+<div class="textarea">
+<p>
+  <b>Employee:</b>
+  <%= @selection.response.employee.first_name %> <%= @selection.response.employee.last_name %>
+</p>
+
+<p>
+  <b>Request:</b>
+  <%= @selection.response.request.task %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @selection.notes %>
+</p>
+
+<%= link_to 'Edit', edit_selection_path(@selection) %> |
+<%= link_to 'Back', employee_requests_path(@current_employee) %>
+</div>

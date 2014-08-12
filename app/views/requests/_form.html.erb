@@ -1,0 +1,75 @@
+<% if @request.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+    <ul>
+    <% @request.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+   
+    <div id="request-title">
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+    </div>
+    
+    <p><div id="request-description">
+      <%= f.label :description %>
+      <%= f.text_area :task %>
+    </div></p>
+  
+    <!-- See readme for bootstrap-datepicker (as component) at eternicode/bootstrap-datepicker on github; javascript in domain.js, called in application.js -->
+    
+    <div id="request_dates">
+
+      <div id="request_start_date">
+        <%= f.label :start_date %>
+        <div id='start_date_field' class='input-append date datepicker' data-date= '<%= @current_date %>' >
+          <%= f.text_field :start_date %>
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+      </div>  
+
+      <div id="request_end_date">
+        <%= f.label :end_date %>
+        <div id='end_date_field' class='input-append date datepicker' data-date= '<%= @current_date %>' >
+          <%= f.text_field :end_date %>
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+      </div> 
+    </div>     
+
+    <div id="request_dropdowns">
+    
+      <div id="request_group_dropdown">
+        <%= f.label :group %>
+        <%= collection_select(:request, :group_id, @groups, :id, :name, :prompt => true) %>
+      </div>
+   
+      <div id="request_location_dropdown">
+        <%= f.label :location, 'Office' %>
+        <%= collection_select(:request, :location_id, @locations, :id, :name, :prompt => true) %>
+      </div>  
+    </div>
+
+    <div id="request_skills_checkboxes">
+      <p>Relevant Skills</p>
+      
+        <% all_skills.each do |skill| %>
+          <div class="vertical_checkboxes">
+          <%= check_box_tag "request[request_skill_ids][]", skill.id, @request.skills.to_a.compact.include?(skill) %>
+          <%= skill.name %> 
+          </div>  
+        <% end %>
+      
+    </div>
+  
+
+
+
+ 
+    
+   
+  

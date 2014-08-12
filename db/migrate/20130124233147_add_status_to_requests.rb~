@@ -1,0 +1,4 @@
+class AddStatusToRequests < ActiveRecord::Migration
+  def change
+  end
+end

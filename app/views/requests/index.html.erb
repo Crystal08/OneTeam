@@ -1,0 +1,59 @@
+<div class="textarea">
+<% provide(:title, 'All Requests') %>
+<h1>All Requests</h1>
+</br>
+
+<form>
+  <input class="visibility_checkbox" type="checkbox" onclick="toggle_visibility()"> Summarize Requests?
+</form>  
+
+<% @requests.each do |request| %>
+  <% if request.distance_within?(@employee_location, @num_miles) %>
+    <p class="subtle_emphasis">This request is near you!</p>
+    <div class="highlight_background">
+  <% else %>
+    <div>    
+  <% end %>    
+      <p><%= @user_location %></p>
+      <p><em><%= request.title %></em>, <%= request.start_date %>
+       - <%= request.end_date %>(Open, <%= request.status %>)</p>
+      <div class="request_body">
+      <p>Posted by 
+        <%= request.employee.first_name %> <%= request.employee.last_name %>
+         in <%= request.location.name %> Office (Group: <%= request.group.name %>)</p>
+
+      <p>Description: <%= request.task %></p>
+    
+      <p>Your <em>current skills</em> score for this project: <%= request.current_skills_score(current_employee) %> (<%= request.current_skills_count(current_employee) %> out of <%= pluralize(request.skills.count, 'skill') %>)</p>
+      
+      <p>Your <em>interested skills</em> score for this project: <%= request.desired_skills_score(current_employee) %> (<%= request.desired_skills_count(current_employee) %> out of <%= pluralize(request.skills.count, 'skill') %>)</p>
+
+      <% if request.find_responses(request).find_by_employee_id(current_employee) %>
+          <div class='btn btn-med disabled'>Applied</div>
+      <% else %>
+          <%= button_to "Apply", new_request_response_path(request), 
+            class: 'btn btn-med', :method => "get" %>
+      <% end %> 
+      </div> 
+    </div>
+    
+    
+<hr>
+<% end %>
+<%= will_paginate(@requests) %>
+</div>
+
+<script>
+  var short_view = (localStorage.getItem("short_view")=="true");
+  $(".visibility_checkbox").prop('checked', short_view);
+  $(".request_body").toggle(!short_view);
+
+  function toggle_visibility() {
+    localStorage.setItem("short_view","" + !short_view);
+    $(".request_body").toggle(); 
+  };
+</script>  
+
+
+
+  

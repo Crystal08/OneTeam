@@ -1,0 +1,67 @@
+<nav>
+  <ul class="nav nav-tabs" class="pull-left">
+    <% if signed_in? %>
+      <%= nav_link 'Requests Overview', dashboard_requests_overview_path %>
+<!--Above link to tables from Task 2 -->           
+      <%= nav_link 'Skills Overview', dashboard_skills_overview_path %>
+<!-- Above link to tables from Task 3 -->           
+      <%= nav_link "Guest Developers Overview", dashboard_guest_developers_overview_path %>
+<!-- Above link to tables from Task 4 -->              
+    <% end %>
+  </ul>
+</nav>
+
+<div class="textarea">
+</br>
+<p>Developers participating in requests per office, by home offices</p>
+<table>
+  <tr>
+  <th></th>
+  <th>Chicago</th>
+  <th id="empstats1-3">Mumbai</th>
+  <th id="empstats1-4">Houston</th>
+  <th id="empstats1-5">San Francisco</th>
+  <th id="empstats1-6">Boston</th>
+  <th id="empstats1-7">London</th>
+  </tr>   
+
+<% @dashboard.request_developers_per_office.each do |dev| %>
+  <tr>
+    <td><%= dev["visitors"] %></td>
+    <td class="align-right"><%= dev["Chicago"] %></td>
+    <td class="align-right"><%= dev["Mumbai"] %></td>
+    <td class="align-right"><%= dev["Houston"] %></td>
+    <td class="align-right"><%= dev["San_Fran"] %></td>
+    <td class="align-right"><%= dev["Boston"] %></td>
+    <td class="align-right"><%= dev["London"] %></td>
+<% end %>
+</table>
+</br>
+
+<p>Number of offices worked in by each developer, month by month</p>
+<table>
+  <tr>
+  <th>Developer</th>
+  <th id="empstats2-3">Offices as of: Last month</th>
+  <th id="empstats2-4">-2 months</th>
+  <th id="empstats2-5">-3 months</th>
+  <th id="empstats2-6">-4 months</th>
+  <th id="empstats2-7">-5 months</th>
+  <th id="empstats2-8">-6 months</th>
+  <th id="empstats2-9">Total</th>
+  </tr>   
+
+<% @dashboard.offices_worked_in_for_each_developer.each do |total| %>
+  <tr>
+    <td><%= total["Name"] %></td>
+    <td class="center"><%= total["-1Mo"] %></td>
+    <td class="center"><%= total["-2Mo"] %></td>
+    <td class="center"><%= total["-3Mo"] %></td>
+    <td class="center"><%= total["-4Mo"] %></td>
+    <td class="center"><%= total["-5Mo"] %></td>
+    <td class="center"><%= total["-6Mo"] %></td>
+    <td class="center"><%= total["Total"] %></td>
+<% end %>
+</table>
+</div>
+

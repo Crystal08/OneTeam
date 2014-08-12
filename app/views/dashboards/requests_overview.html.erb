@@ -1,0 +1,76 @@
+<nav>
+  <ul class="nav nav-tabs" class="pull-left">
+    <% if signed_in? %>
+      <%= nav_link 'Requests Overview', dashboard_requests_overview_path %>
+      <%= nav_link 'Skills Overview', dashboard_skills_overview_path %>   
+      <%= nav_link "Guest Developers Overview", dashboard_guest_developers_overview_path %>           
+    <% end %>
+  </ul>
+</nav>
+
+<div class="textarea">
+</br>
+<p>Changes to overall request activity</p>
+<table>
+  <tr>
+  <th>Month</th>
+  <th id="reqstats1-2">Requests: Total</th>
+  <th id="reqstats1-3">Responded To</th>
+  <th id="reqstats1-4">Filled</th>
+  <th id="reqstats1-5">Cancelled</th>
+  </tr>   
+
+<% @dashboard.requests_summary_by_month.each do |total| %>
+  <tr>
+    <td><%= total["month"] %></td>
+    <td class="align-right"><%= total["req"] %></td>
+    <td class="align-right"><%= total["req_w_res"] %></td>
+    <td class="align-right"><%= total["req_w_sel"] %></td>
+    <td class="align-right"><%= total["cancelled"] %></td>
+  </tr>
+<% end %>
+</table> 
+</br>
+
+<p>Breakdown of time to fill requests</p>
+<table>
+  <tr>
+  <th>Less than 1 day</th>
+  <th id="reqstats2-2">1 to 3 days</th>
+  <th id="reqstats2-3">3 to 6 days</th>
+  <th id="reqstats2-4">More than 6 days</th>
+  </tr>
+
+<% @dashboard.requests_time_to_fill.each do |days| %>
+  <tr>
+    <td class="align-right"><%= days["less_than_1"] %></td>
+    <td class="align-right"><%= days["between_1_and_3"] %></td>
+    <td class="align-right"><%= days["between_3_and_6"] %></td>
+    <td class="align-right"><%= days["greater_than_6"] %></td>
+  </tr>
+<% end %>
+</table>
+</br>      
+
+<p>Individual request summaries</p>
+<table>
+  <tr>	
+	<th>Post Date</th>
+	<th>Title</th>
+	<th>Office</th>
+	<th>Selected Developer</th>
+	<th>Developer's Office</th>
+  </tr>
+
+<% @dashboard.requests_summary.each do |req_info| %>
+  <tr>
+    <td><%= req_info["request_post_date"] %></td>
+    <td><%= req_info["title"] %></td>
+    <td><%= req_info["request_location"] %></td>
+    <td><%= req_info["selected_employee"] %></td>
+    <td><%= req_info["employee_location"] %></td>
+  </tr>
+<% end %>  
+</table> 
+ 
+</div>  

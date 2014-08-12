@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>OneTeam</title>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->  
+</head>
+
+<body class="backdrop">
+    
+  <%= render 'layouts/header' %> 
+
+  <div id="tabbed_area" class="container">
+    <nav>
+        <ul class="nav nav-tabs" class="pull-left">
+          <% if signed_in? %>
+            <%= nav_link 'All Requests', requests_path %>
+<!-- Employees link not requested by client            
+            <%#= nav_link 'Employees', employees_path %> -->
+            <%= nav_link 'My Profile', employee_path(current_employee) %>
+            <%= nav_link "Requests I've Posted", employee_requests_path(current_employee) %> 
+            <%= nav_link "OneTeam Dashboard", dashboard_requests_overview_path %> 
+            <div class="pull-right", id="signout">
+            <%= link_to "Sign out",signout_path, method: "delete" %> 
+            </div>        
+          <% end %>
+        </ul>    
+    </nav>
+
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+      <%= yield %>  
+
+    <%= render 'layouts/footer' %>
+
+<!--    <%#= debug(params) if Rails.env.development? %>	-->
+  </div> 
+</body>
+</html>
+

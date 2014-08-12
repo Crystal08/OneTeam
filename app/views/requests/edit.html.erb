@@ -1,0 +1,21 @@
+<div class="textarea">
+<% provide(:title, 'Editing request') %>
+<h1>Editing request</h1>
+
+<%= form_for(@request) do |f| %>
+<%= hidden_field_tag "request[request_skill_ids][]", "" %>
+	  	  
+  <%= render 'form', :f => f %> </br>
+    
+  
+  <div class="row">
+    <div id= "request_edit_controls">
+      <p><%= f.submit "Update request", class: "btn btn-med" %></p>
+    </div>
+  </div>
+  
+<% end %>
+
+  <%= link_to 'Show', @request %> |
+  <%= link_to 'Back', requests_path %>
+</div>

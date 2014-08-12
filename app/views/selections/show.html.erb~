@@ -1,0 +1,17 @@
+<p>
+  <b>Employee:</b>
+  <%= @selection.name %>
+</p>
+
+<p>
+  <b>Request:</b>
+  <%= @selection.task %>
+</p>
+
+<p>
+  <b>Notes:</b>
+  <%= @selection.notes %>
+</p>
+
+<%= link_to 'Edit', edit_response_selection_path(@response, @selection) %> |
+<%= link_to 'Back', employee_requests_path(@current_employee) %>

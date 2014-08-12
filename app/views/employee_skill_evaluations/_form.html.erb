@@ -1,0 +1,39 @@
+
+ <%= form_for(@employee_skill_evaluation) do |f| %>
+  <% if @employee_skill_evaluation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee_skill_evaluation.errors.count, "error") %> prohibited this employee skill evaluation from being saved:</h2>
+
+      <ul>
+      <% @employee_skill_evaluation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :assigned_skill_level %><br />
+    <%= f.number_field :assigned_skill_level  %>
+  </div>
+
+   <div class="field">
+    <%= f.label :evaluation_id %><br />
+    <%= f.number_field :evaluation_id %>
+  </div>
+
+   <div class="field">
+    <%= f.label :skill_experience_points %><br />
+    <%= f.number_field :skill_experience_points %>
+  </div>
+
+  <div class="field">
+    <%= f.label :skill_id %><br />
+    <%= f.number_field :skill_id %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+

@@ -1,0 +1,49 @@
+Emp<% if @employee.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+
+    <ul>
+    <% @employee.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class="row">
+  <div class="span6 offset3">
+   
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+  
+      <%= f.label :years_with_company %>
+      <%= f.text_field :years_with_company %>
+  
+      <%= f.label :manager %>
+      <%= f.text_field :manager %>
+  
+      <%= f.label :position %>
+      <%= f.text_field :position %>
+  
+      <%= f.label :department %>
+      <%= f.text_field :department %>
+  
+      <%= f.label :group %>
+      <%= f.text_field :group %>
+  
+      <%= f.label :location %>
+      <%= f.text_field :location %>
+  
+      <%= f.label :current_skills %>
+      <%= f.text_field :current_skills %>
+  
+      <%= f.label :skills_interested_in %>
+      <%= f.text_field :skills_interested_in %>
+  
+  </div>
+</div>
+
+
+
+
+

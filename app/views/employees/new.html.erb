@@ -1,0 +1,30 @@
+<div class="textarea">
+<div>
+  <% provide(:title, 'Sign up') %>
+  <h1>Sign up</h1>
+</div>
+
+<%= form_for(@employee) do |f| %>
+<%= hidden_field_tag "employee[current_skill_ids][]", "" %>
+<%= hidden_field_tag "employee[desired_skill_ids][]", "" %>
+	  
+    <%= render 'form', :f => f %> </br>
+    
+ 
+  <div class= "extra_vertical">
+    <div class="profile_controls">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    
+      <%= f.label :password_confirmation, "Confirmation" %>
+      <%= f.password_field :password_confirmation %>
+   
+      <%= f.submit "Create my OneTeam account", class: "btn btn-med" %>
+    </div>
+  </div>  
+  
+  
+<% end %>
+
+<%= link_to 'Back', signin_path %>
+</div>

@@ -1,0 +1,258 @@
+@import "bootstrap";
+
+$gray-medium-light: #eaeaea;
+
+* { z-index: 1 }
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-light;
+      background-color: white;
+    }
+  }  
+}
+
+body.backdrop {
+  padding-top: 60px;
+  padding-right: 10px;
+  padding-left: 10px;
+/* image credit: subtlepatterns.com */
+  background-image: url(../assets/pw_maze_white_@2X.png);
+  #logo {
+  line-height: 1;
+  img {
+    height: 70px;
+    z-index: 0;
+    }
+  }  
+}
+
+header {
+height: 75px;
+margin-top:-35px;
+margin-bottom: 0px;
+float: left;
+   hgroup {
+    margin-top:-100px;
+    margin-left: 90px;
+  }
+}
+
+hgroup h1 {
+color: #663366;
+text-shadow: 0.1em 0.1em 0.05em grey;
+}
+
+#signout > a{
+  color: white;
+}
+
+#tabbed_area {
+padding-top: 0px;
+padding-right: 0px;
+padding-left: 0px;
+clear: both;
+padding-bottom: 5px;
+margin-bottom: 0px;
+
+border-radius: 10px;
+}
+
+section {
+  overflow: auto;
+}
+
+.nav {
+  margin-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+ 
+}
+
+.nav-tabs {
+  background-color: #990099;
+  -webkit-border-radius: 10px;
+  -moz-border-radiues: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  display: block;
+}
+
+.nav-tabs li a {
+  color: white;
+}
+
+.nav-tabs li a:hover {
+  font-weight: bold;
+  background-color: gray;
+}
+
+.active {
+  background-color: #990099;
+  font-weight: bold;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+.align-right {
+  text-align: right;
+}
+
+.highlight_background {
+  background-color: rgba(139,134,130,.15);
+  border-radius: 10px;
+}
+
+.subtle_emphasis {
+  font-size: .9em;
+  color: #663366;
+  text-shadow: 0.1em 0.1em 0.1em grey;
+}
+
+.container {
+  background-color: white;
+  padding-top: 0px;
+  top-margin: 0%;
+  width: 95%; 
+  -moz-box-shadow: 0px 5px 5px 5px #888;
+  -webkit-box-shadow: 0px 5px 5px 5px#888;
+  box-shadow: 0px 5px 5px 5px #888;
+}
+
+.container h1 {
+  padding-right: 5px;
+  font-size: 1.9em;
+  color: #990099;
+  text-decoration: underline;
+}
+
+.pull-right {
+  padding-top: 9px;
+  padding-right: 10px;
+}
+
+.extra_vertical {
+    padding-top: 20px;  
+}
+
+.textarea {
+  resize: vertical;
+  width: 90%;
+  border-left: black;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.textarea p {
+  font-size: 1.1em;
+  line-height: 105%;
+}
+
+.textarea em {
+  font-weight:bold;
+  font-style: normal;
+}
+
+.text_indent_small {
+  text-indent:20px;
+}
+
+.text_indent_large {
+  text-indent:40px;
+}
+
+img.gravatar {
+  float: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+}
+
+h2 {
+  font-size: 1.7em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $gray-light;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+btn btn-med disabled> a:hover {
+  text-decoration: none;
+  cursor: default;
+  background-color: transparent;
+  background-image: none; 
+}
+
+/* Below is modification of http://css-tricks.com/examples/hrs/ */
+hr {
+ 
+ position: relative\9; /* for IE only, and next line */
+ right: 45%\9;
+ width: 100%;
+ border: 0; 
+ padding-left: 5px;
+ border-bottom: 4px dashed #990099; 
+ background: #999; 
+}
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-medium-light;
+  color: $gray-darker;
+  a {
+    color: $gray;
+    &:hover {
+      color: $gray-light;
+    }
+  }
+  small {
+    float: left;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 10px;
+    }
+  }
+}
+
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}

@@ -1,0 +1,8 @@
+<div class="textarea">
+<h1>New response</h1>
+to Request "<%= Request.find(params[:request_id]).task %>"
+
+<%= render 'form' %>
+
+<%= link_to 'Back', requests_path %>
+</div>

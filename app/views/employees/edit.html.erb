@@ -1,0 +1,35 @@
+<div class="textarea">
+<p id="notice"><%= notice %></p>
+
+<!-- not sure what this line is doing, check Hartl? -->
+<% provide(:title, @employee) %>
+
+<h1>Edit Profile</h1>
+
+<%= form_for(@employee) do |f| %>
+<%= hidden_field_tag "employee[current_skill_ids][]", "" %>
+<%= hidden_field_tag "employee[desired_skill_ids][]", "" %>
+	  
+  <%= render 'form', :f => f %> 
+  <p></p>
+   
+
+  <div class="profile_controls">
+    <div class="extra_vertical"> 
+      <%= f.submit "Update profile", class: "btn btn-med" %>
+      <%= button_to "Cancel", employee_path, class: "btn btn-med" %>
+    </div>
+  </div>  
+
+<% end %>
+
+<!-- Below not requestd in client mockup 
+<%#= link_to 'Show', @employee %> |
+<%#= link_to 'Back', employees_path %> -->
+</div>
+
+
+
+   
+
+

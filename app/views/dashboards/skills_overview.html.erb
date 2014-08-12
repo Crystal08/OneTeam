@@ -1,0 +1,65 @@
+<nav>
+  <ul class="nav nav-tabs" class="pull-left">
+    <% if signed_in? %>
+      <%= nav_link 'Requests Overview', dashboard_requests_overview_path %>
+<!--Above link to tables from Task 2 -->           
+      <%= nav_link 'Skills Overview', dashboard_skills_overview_path %>
+<!-- Above link to tables from Task 3 -->           
+      <%= nav_link "Guest Developers Overview", dashboard_guest_developers_overview_path %>
+<!-- Above link to tables from Task 4 -->              
+    <% end %>
+  </ul>
+</nav>
+
+<div class="textarea">
+</br>
+<p>Number of employees per office interested in each skill</p>
+<table>
+  <tr>
+  <th class="align-left">Skill</th>
+  <th>Chicago</th>
+  <th id="skillstats1-3">Mumbai</th>
+  <th id="skillstats1-4">Houston</th>
+  <th id="skillstats1-5">San Francisco</th>
+  <th id="skillstats1-6">Boston</th>
+  <th id="skillstats1-7">London</th>
+  </tr>   
+
+<% @dashboard.employees_w_skill_interest_by_location.each do |total_emp| %>
+  <tr>
+    <td><%= total_emp["skill"] %></td>
+    <td class="align-right"><%= total_emp["Chicago"] %></td>
+    <td class="align-right"><%= total_emp["Mumbai"] %></td>
+    <td class="align-right"><%= total_emp["Houston"] %></td>
+    <td class="align-right"><%= total_emp["San_Fran"] %></td>
+    <td class="align-right"><%= total_emp["Boston"] %></td>
+    <td class="align-right"><%= total_emp["London"] %></td>
+<% end %>
+</table> 
+</br>
+
+<p>Average skill interest of employees in each office</p>
+<table>
+  <tr>
+  <th class="align-left">Skill</th>
+  <th>Chicago</th>
+  <th id="skillstats2-3">Mumbai</th>
+  <th id="skillstats2-4">Houston</th>
+  <th id="skillstats2-5">San Francisco</th>
+  <th id="skillstats2-6">Boston</th>
+  <th id="skillstats2-7">London</th>
+  </tr>   
+
+<% @dashboard.average_employee_skill_interest_by_location.each do |avg| %>
+  <tr>
+    <td><%= avg["skill"] %></td>
+    <td class="align-right"><%= avg["Chicago"] %></td>
+    <td class="align-right"><%= avg["Mumbai"] %></td>
+    <td class="align-right"><%= avg["Houston"] %></td>
+    <td class="align-right"><%= avg["San_Fran"] %></td>
+    <td class="align-right"><%= avg["Boston"] %></td>
+    <td class="align-right"><%= avg["London"] %></td>
+<% end %>
+</table>
+
+</div>

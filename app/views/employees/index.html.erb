@@ -1,0 +1,50 @@
+<div class="textarea">
+<% provide(:title, 'All Employees') %>
+<h1>Employees</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Years with company</th>
+    <th>Manager</th>
+    <th>Position</th>
+    <th>Department</th>
+    <th>Group</th>
+    <th>Location</th>
+    <th>Current skills</th>
+    <th>Skills interested in</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @employees.each do |employee| %>
+  <tr>
+    <td><%= employee.first_name %><%= employee.last_name %></td>
+    <td><%= employee.years_with_company %></td>
+    <td><%= employee.manager %></td>
+    <td><%= employee.position %></td>
+    <td><%= employee.department %></td>
+    <td><%= employee.group %></td>
+    <td><%= employee.location %></td>
+    <td><%= employee.current_skills %></td>
+    <td><%= employee.skills_interested_in %></td>
+    <td><%= link_to 'Show', employee %></td>
+        <% if current_employee?(employee) || current_employee.admin? %>
+	  <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+        <% end %>	      
+        <% if current_employee.admin? && !current_employee?(employee) %>
+          <td><%= link_to 'Delete', employee, method: :delete,
+		  data: { confirm: "Are you sure?" } %></td>
+        <% end %>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @employees %>
+
+<br />
+
+<!-- Not needed, I don't have a home page yet (In fact, am  not even using this page right now!- maybe later -->
+<%#= link_to 'Home', root_url %>
+</div>

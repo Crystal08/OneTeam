@@ -1,0 +1,44 @@
+<div class="textarea">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @request.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @request.task %>
+</p>
+
+<!-- The below section is clunky. This logic should be somewhere else- the controller? Also, how to put a comma after items in a list, EXCEPT for the last one? -->
+<p>
+  <b>Skills needed:</b>
+  <% @request.skills.each do |rs| %>
+    <%= rs.name %>
+  <% end %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @request.location.name %>
+</p>
+
+<p>
+  <b>Start Date:</b>
+  <%= @request.start_date %>
+</p>
+
+<p>
+  <b>End Date:</b>
+  <%= @request.end_date %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%= @request.group.name %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', employee_requests_path(current_employee) %>
+</div>

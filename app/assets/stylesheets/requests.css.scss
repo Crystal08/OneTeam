@@ -1,0 +1,124 @@
+// Place all the styles related to the Requests controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#request-title{
+  margin-top: 20px;  
+  display: block;
+  label{
+    display: inline;
+    margin-right: 20px;
+  } 
+  input[type="text"] {
+    width:30%;
+  }
+}
+#request-description{
+    display: block;
+    textarea {
+      width: 50%;
+      height: 60px;
+    } 
+    padding-bottom: 15px;
+  }
+
+#request_dates{
+  display: block;
+  label{
+    display: inline;
+    position: relative;
+    top: 10px;
+  }
+  padding-bottom: 20px;
+}
+ 
+#request_start_date{
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+#start_date_field{
+  display: inline;
+  }
+  
+#end_date_field{
+  display: inline;
+  position: relative;
+  left: 10px;
+  }
+
+#request_dropdowns{
+  display: block;
+  label {
+    display: inline;
+  }
+  select {
+    width: 230px;
+    position: relative;
+    left: 30px;
+  }
+}  
+
+#request_group_dropdown{
+  display: inline-block;
+  select{
+    width: 200px;
+  }
+}
+  
+#request_location_dropdown{
+  display: inline-block;
+  position: relative;
+  left: 40px;
+  select{
+      width: 200px;
+      position: relative;
+      left: 10px;
+  }
+} 
+
+#request_skills_checkboxes{
+  padding-top: 10px;
+  padding-bottom: 0px;
+  label{
+    display: block;
+    width: 75px;
+    padding-top: 10px;
+  }
+} 
+
+.vertical_checkboxes{
+  display: block;
+  padding-bottom: 10px;
+  input{
+    position: relative;
+    top: -2.5px;
+    margin-right: 15px;
+  }
+}    
+ 
+#request-controls {
+  display: inline-block;
+  div {
+  padding-top: 15px;
+  display: inline-block;
+  }
+  .button_to {
+    display: inline-block;
+    position: relative;
+    left: 50px;
+  }
+  input {
+    width:150px;
+  }
+}
+
+#request_edit_controls {
+  position: relative;
+  top: 5px;
+  left: 15px;
+}
+  
+
+
+

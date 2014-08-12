@@ -1,0 +1,18 @@
+<p>
+  <b>Employee:</b>
+  <%= @response.employee_id %>
+</p>
+
+<p>
+  <b>Request:</b>
+  <%= @response.request_id %>
+</p>
+
+<p>
+  <b>Comments:</b>
+  <%= @response.comments %>
+</p>
+
+
+<%= link_to 'Edit', edit_request_response_path(@request,@response) %> 
+<%= link_to 'Back to Requests', requests_path %>

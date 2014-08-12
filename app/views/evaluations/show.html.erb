@@ -1,0 +1,32 @@
+<div class="textarea">
+<p>
+  <b>Project:</b>
+  <%= @request.title %>
+</p>
+
+<p>
+  <b>Employee:</b>
+  <%= @employee.full_name %>
+</p>
+
+<p>
+  <% if !@evaluation.employee_skill_evaluations.nil? %>
+    <table>
+    <tr><b>Skill Proficiency Levels:</b></tr>
+    <% @evaluation.employee_skill_evaluations.each do |skill_eval| %>
+      <tr><td><em><%= Skill.find(skill_eval.skill_id).name %></em></td>
+      	  <td>Skill level: <%= skill_eval.assigned_skill_level %></td>
+      	  <td>Skill experience:  <%= skill_eval.skill_experience_points %></td>
+      </tr>
+    <% end %> 
+    </table> 
+  <% end %>  
+</p>
+
+<%= link_to 'Edit', edit_response_evaluation_path(@response,@evaluation) %> |
+<%= link_to 'Back', employee_requests_path(current_employee) %>
+</div>
+
+
+
+

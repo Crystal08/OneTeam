@@ -1,0 +1,155 @@
+<div class="textarea">
+<p id="notice"><%= notice %></p>
+<% provide(:title, @employee) %>
+
+<h1><%= @employee.full_name %>'s Profile</h1>
+
+<% if current_employee == @employee %>
+<%= link_to 'Edit My Profile', edit_employee_path(@employee) %></br>
+<% end %>
+
+<h1 class = "pull-left">
+  <%= gravatar_for @employee %>
+</h1>
+</br>
+
+<p>
+  <b>First Name:</b>
+  <%= @employee.first_name %>
+</p> 
+
+<p>
+  <b>Last Name:</b>
+  <%= @employee.last_name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @employee.email %>
+</p>
+
+<p>
+  <b>Office:</b>
+  <%= @employee.location.name %>
+</p>
+
+<p>
+  <b>Department:</b>
+  <%= @employee.department.name %>
+</p>
+
+<p>
+  <b>Group:</b>
+  <%= @employee.group.name %>
+</p>
+
+<p>
+  <b>Job Title:</b>
+  <%= @employee.position.name %>
+</p>
+
+<p>
+  <b>Immediate Supervisor:</b>
+  <%= @employee.manager %>
+</p>
+
+<p>
+  <b>Years with Company:</b>
+  <%= @employee.years_with_company %>
+</p>
+</br>
+
+<p>
+  <b>Current Skills:</b>
+  <% @employee.employee_current_skills.each do |cs| %>
+    <%= cs.skill_name %>(<%= cs.skill_level%>)  
+  <% end %>  
+</p>
+
+<p>
+  <b>Desired Skills:</b>
+  <% @employee.employee_desired_skills.each do |ds| %>
+    <%= ds.skill_name %>(<%= ds.interest_level%>)
+  <% end %>  
+</p>
+</br>
+
+<p>
+  <b>Short description about <%=@employee.first_name %>:</b>
+  <%= @employee.about_me %>
+</p>
+</br>
+
+<p>
+  <b>My Projects and Skill Points:</b></br>
+<p>
+
+<table class="text_indent_small">
+<tr>
+  <td>Skill</td>
+  <td>Total Experience Points</td>
+  <% if current_employee == @employee %>
+    <td>Average Skill Levels</td>
+  <% end %>  
+</tr>
+
+<% all_skills.each do |skill| %>
+  <tr>
+      <td><%= skill.name %></td>
+      <td class="center"><%= @employee.skill_experience_total(skill.id) %></td>
+      <% if current_employee == @employee %>
+        <td class="center"><%= @employee.average_skill_level(skill.id) %></td>
+      <% end %>  
+  </tr>  
+<% end %>               
+</table></br>
+
+
+<% @my_projects.each do |my_project| %>
+  <% if !my_project.done? %>
+
+    <p><%= my_project.title %>: <%= my_project.start_date_str %>
+     - <%= my_project.end_date_str %>(<%= my_project.status %>)</p>
+    <p>Description: <%= my_project.task %></p>
+  <% end %>
+<% end %>  
+
+<hr>
+
+<% @my_projects.each do |my_project| %>
+  <% if my_project.done? %> 
+
+    <p><%= my_project.title %>:<%= my_project.start_date_str %>
+     - <%= my_project.end_date_str %>(<%= my_project.status %>)</p>
+    <p>Description: <%= my_project.task %></p>
+    
+    <% if my_project.evaluated?(@employee) %>
+    <p>Project Evaluation: </p>
+      <table class="text_indent_small">
+        <tr>
+          <td>Skill</td>
+          <td>Experience Points</td>
+          <% if current_employee == @employee %>
+            <td>Skill Levels</td>
+          <% end %>  
+        </tr>
+
+        <% all_skills.each do |skill| %>
+          <tr>
+            <td><%= skill.name %></td>
+            <td class="center"><%= @employee.skill_experience(my_project, skill.id) %></td>
+            <% if current_employee == @employee %>
+              <td class="center"><%= @employee.skill_level(my_project, skill.id) %></td>
+            <% end %>  
+          </tr>
+        <% end %>   
+      </table></br>
+    <% else %>
+      <p> Project not yet evaluated </p></br>
+    <% end %>
+  <% end %>       
+<% end %>         
+
+</div>
+
+

@@ -1,0 +1,30 @@
+<div class="textarea">
+<h1>Responses</h1> 
+to Request "<%= @request.task %>"
+<table>
+  <tr>	 
+    <th>Response</th>
+    <th>Posted by</th>
+    <th>Comments</th>
+    <th>Choose One:</th>
+  </tr>
+
+<% @response.each do |response| %>
+  <tr>  
+    <td><%= response.id %></td>
+    <td><%= link_to(employee_path(response.employee_id)) do %>
+        <%= response.employee.first_name %> <%= response.employee.last_name %> 
+        <% end %></td>
+    <td><%= response.comments %></td>
+    <td><%= link_to 'Select this developer?', 
+	    new_response_selection_path(response, @selection)%></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @response %>
+
+<br />
+
+<%= link_to 'Back to My Requests', employee_requests_path(current_employee) %>
+</div>

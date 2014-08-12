@@ -1,0 +1,122 @@
+<% if @employee.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+
+    <ul>
+    <% @employee.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+    <div id="employee_name">
+      <%= f.label :first_name %>
+      <%= f.text_field :first_name %>
+
+      <%= f.label :last_name %>
+      <%= f.text_field :last_name %>
+    </div>  
+
+    <div id="employee_contact">
+      
+      <div id="employee_contact_email"> 
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>  
+      
+      <div id="employee_location_dropdown">
+        <%= f.label :location, 'Office' %>
+        <%= collection_select(:employee, :location_id, @locations, :id, :name, :prompt => true) %>
+      </div>  
+      
+      <div id="employee_department_dropdown">
+        <%= f.label :department %>
+        <%= collection_select(:employee, :department_id, @departments, :id, :name, :prompt => true) %>
+      </div>
+
+      <div id="employee_group_dropdown">
+        <%= f.label :group %>
+        <%= collection_select(:employee, :group_id, @groups, :id, :name, :prompt => true) %>
+      </div>  
+    </div> 
+
+    <div id="employee_company_info"> 
+
+      <div id="employee_position_dropdown">
+        <%= f.label :position, 'Job Title' %>
+        <%= collection_select(:employee, :position_id, @positions, :id, :name, :prompt => true) %>
+      </div>  
+
+      <div id="employee_immediate_manager">
+        <%= f.label :manager, 'Immediate Supervisor' %>
+        <%= f.text_field :manager %>
+      </div>  
+
+      <div id="employee_years">
+        <%= f.label :years_with_company %>
+        <%= f.number_field :years_with_company, :in => 0..10, :step => 1 %>
+      </div>
+    </div>
+
+    <div id="employee_self_description">
+      <%= f.label :about_me, 'Write a short description about yourself' %>
+      <%= f.text_area :about_me %>
+    </div>
+
+    <div id="employee_current_skills">
+      <p>Current Skills</p>
+        <ul>
+          <li><%= "0 = No Experience" %></li>
+          <li><%= "1 = Beginner" %></li>
+          <li><%= "2 = Beginner-Proficient" %></li>
+          <li><%= "3 = Proficient" %></li>
+          <li><%= "4 = Expert" %></li>
+        </ul>
+      <table>     
+        <% all_skills.each do |skill| %>
+          <tr>  
+            <td><%= skill.name %></td>  
+            <td><% (0..4).each do |level_number| %>
+            <%= level_number %>
+            <%= radio_button_tag "employee[current_skills][#{skill.id}]", "#{level_number}", @employee.has_skill_level?(skill.id, level_number) %>
+            <% end %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>  
+
+    <div id="employee_desired_skills">
+      <p>Desired Skills</p>  
+        <ul>
+          <li><%= "0 = Not Interested" %></li>
+          <li><%= "1 = Slightly Interested" %></li>
+          <li><%= "2 = Somewhat Interested" %></li>
+          <li><%= "3 = Interested" %></li>
+          <li><%= "4 = Very Interested" %></li>
+        </ul>
+      <table>    
+        <% all_skills.each do |skill| %>
+          <tr> 
+            <td><%= skill.name %></td>
+            <td><% (0..4).each do |interest_number| %>
+            <%= interest_number %>
+            <%= radio_button_tag "employee[desired_skills][#{skill.id}","#{interest_number}", @employee.has_interest_level?(skill.id, interest_number) %>
+            <% end %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>  
+          
+    <!--        <td><%#= check_box_tag "employee[desired_skill_ids][]", skill.id, @employee.desired_skills.compact.include?(skill) %></td>
+          </tr>
+        <%# end %>
+      </table>
+    </div> -->
+
+ 
+
+
+
+
+
