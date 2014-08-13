@@ -60,7 +60,6 @@ padding-left: 0px;
 clear: both;
 padding-bottom: 5px;
 margin-bottom: 0px;
-
 border-radius: 10px;
 }
 
@@ -72,7 +71,6 @@ section {
   margin-bottom: 0px;
   padding-left: 0px;
   padding-right: 0px;
- 
 }
 
 .nav-tabs {
@@ -208,7 +206,6 @@ btn btn-med disabled> a:hover {
 
 /* Below is modification of http://css-tricks.com/examples/hrs/ */
 hr {
- 
  position: relative\9; /* for IE only, and next line */
  right: 45%\9;
  width: 100%;
@@ -241,7 +238,6 @@ footer {
     }
   }
 }
-
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
